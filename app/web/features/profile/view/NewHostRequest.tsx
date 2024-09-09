@@ -13,12 +13,13 @@ import makeStyles from "@mui/styles/makeStyles";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import Datepicker from "components/Datepicker";
+import StyledLink from "components/StyledLink";
 import TextField from "components/TextField";
 import dayjs from "dayjs";
 import { useProfileUser } from "features/profile/hooks/useProfileUser";
 import { useLiteUser } from "features/userQueries/useLiteUsers";
 import { RpcError } from "grpc-web";
-import { useTranslation } from "i18n";
+import { Trans, useTranslation } from "i18n";
 import { GLOBAL, PROFILE } from "i18n/namespaces";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -41,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
+  },
+  helpText: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
   request: {
     display: "flex",
@@ -145,6 +150,25 @@ export default function NewHostRequest({
         ) : (
           t("profile:request_form.send_request", { name: user.name })
         )}
+      </Typography>
+      <Typography variant="body1" className={classes.helpText}>
+        <Trans i18nKey="profile:request_form.guide_link_help_text">
+          Not quite sure how to send a great request? Read our{" "}
+          <StyledLink
+            variant="body1"
+            href="https://help.couchers.org/hc/couchersorg-help-center/articles/1715658357-how-to-write-a-request-that-gets-accepted"
+          >
+            quick reference on writing good requests
+          </StyledLink>{" "}
+          or our{" "}
+          <StyledLink
+            variant="body1"
+            href="https://help.couchers.org/hc/couchersorg-help-center/articles/1715658357-how-to-write-a-request-that-gets-accepted"
+          >
+            full guide on sending a request that gets accepted
+          </StyledLink>
+          .
+        </Trans>
       </Typography>
       {error && <Alert severity="error">{error.message}</Alert>}
       {hostError ? (
