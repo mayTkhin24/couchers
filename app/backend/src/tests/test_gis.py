@@ -13,15 +13,31 @@ def _(testconfig):
     pass
 
 
-def test_GetUsers(testing_communities):
-    _, token = generate_user()
+class TestGIS:
+    @staticmethod
+    def test_GetUsers(testing_communities):
+        _, token = generate_user()
 
-    refresh_materialized_views_rapid(None)
+        refresh_materialized_views_rapid(None)
 
-    with gis_session(token) as gis:
-        http_body = gis.GetUsers(empty_pb2.Empty())
-        assert http_body.content_type == "application/json"
-        data = json.loads(http_body.data)
-        print(data)
-        assert data["type"] == "FeatureCollection"
-        assert len(data["features"]) > 1
+        with gis_session(token) as gis:
+            http_body = gis.GetUsers(empty_pb2.Empty())
+            assert http_body.content_type == "application/json"
+            data = json.loads(http_body.data)
+            print(data)
+            assert data["type"] == "FeatureCollection"
+            assert len(data["features"]) > 1
+
+    @staticmethod
+    def test_GetClusteredUsers(testing_communities):
+        _, token = generate_user()
+
+        refresh_materialized_views_rapid(None)
+
+        with gis_session(token) as gis:
+            http_body = gis.GetClusteredUsers(empty_pb2.Empty())
+            assert http_body.content_type == "application/json"
+            data = json.loads(http_body.data)
+            print(data)
+            assert data["type"] == "FeatureCollection"
+            assert len(data["features"]) > 1
