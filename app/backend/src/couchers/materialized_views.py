@@ -1,8 +1,8 @@
 import logging
 
 from google.protobuf import empty_pb2
-from sqlalchemy import Index, event
-from sqlalchemy.sql import func, literal_column
+from sqlalchemy import Index, Integer, event
+from sqlalchemy.sql import func, literal, literal_column, union
 from sqlalchemy.sql import select as sa_select
 from sqlalchemy_utils.view import (
     CreateView,
@@ -120,6 +120,48 @@ lite_users = create_materialized_view_with_different_ddl(
     make_lite_users_selectable_create,
     Base.metadata,
     [Index("uq_lite_users_id", make_lite_users_selectable_create.c.id, unique=True)],
+)
+
+
+# emits something along the lines of
+# WITH anon_1 AS (
+#   SELECT id,
+#     geom,
+#     ST_ClusterDBSCAN(geom, eps := .15, minpoints := 5) OVER (ORDER BY id) AS cluster_id
+#   FROM users
+#   WHERE geom IS NOT NULL
+# )
+
+cluster_cte = (
+    sa_select(
+        User.id,
+        User.geom,
+        func.ST_ClusterDBSCAN(User.geom, eps=0.15, minpoints=5).over(order_by=User.id).label("cluster_id"),
+    )
+    .where(User.geom != None)
+    .cte()
+)
+
+clusters = (
+    sa_select(func.ST_Centroid(func.ST_Collect(cluster_cte.c.geom)).label("geom"), func.count().label("count"))
+    .select_from(cluster_cte)
+    .where(cluster_cte.c.cluster_id != None)
+    .group_by(cluster_cte.c.cluster_id)
+)
+
+isolated_users = (
+    sa_select(cluster_cte.c.geom.label("geom"), literal(1, type_=Integer).label("count"))
+    .select_from(cluster_cte)
+    .where(cluster_cte.c.cluster_id == None)
+)
+
+clustered_users_selectable = union([clusters, isolated_users])
+
+clustered_users = create_materialized_view(
+    "clustered_users",
+    clustered_users_selectable,
+    Base.metadata,
+    [Index("uq_clustered_users_cluster_id", clustered_users_selectable.c.cluster_id, unique=True)],
 )
 
 
