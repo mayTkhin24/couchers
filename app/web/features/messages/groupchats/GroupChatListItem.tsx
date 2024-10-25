@@ -15,7 +15,7 @@ import {
   isControlMessage,
   messageTargetId,
 } from "features/messages/utils";
-import useLiteUsers from "features/userQueries/useLiteUsers";
+import { useLiteUsers } from "features/userQueries/useLiteUsers";
 import { useTranslation } from "i18n";
 import { MESSAGES } from "i18n/namespaces";
 import { GroupChat } from "proto/conversations_pb";

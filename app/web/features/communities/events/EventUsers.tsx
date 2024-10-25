@@ -2,7 +2,7 @@ import { Card, CircularProgress, Typography } from "@material-ui/core";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import UserSummary from "components/UserSummary";
-import useLiteUsers from "features/userQueries/useLiteUsers";
+import { useLiteUsers } from "features/userQueries/useLiteUsers";
 import { RpcError } from "grpc-web";
 import { useTranslation } from "i18n";
 import { COMMUNITIES } from "i18n/namespaces";

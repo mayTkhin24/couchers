@@ -1,4 +1,4 @@
-import useLiteUsers from "features/userQueries/useLiteUsers";
+import { useLiteUsers } from "features/userQueries/useLiteUsers";
 import { GroupChat, Message } from "proto/conversations_pb";
 import { TFunction } from "react-i18next";
 import { firstName } from "utils/names";

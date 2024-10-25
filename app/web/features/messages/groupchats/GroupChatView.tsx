@@ -26,7 +26,7 @@ import {
   groupChatMessagesKey,
   groupChatsListKey,
 } from "features/queryKeys";
-import useLiteUsers from "features/userQueries/useLiteUsers";
+import { useLiteUsers } from "features/userQueries/useLiteUsers";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { RpcError } from "grpc-web";
 import { useTranslation } from "i18n";

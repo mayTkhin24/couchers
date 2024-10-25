@@ -6,7 +6,7 @@ import { service } from "service";
 
 import { userStaleTime } from "./constants";
 
-export default function useLiteUsers(ids: (number | undefined)[]) {
+function useLiteUsers(ids: (number | undefined)[]) {
   const nonFalseyIds = ids?.filter((id): id is number => !!id);
   const query = useQuery<GetLiteUsersRes.AsObject, RpcError>({
     queryKey: liteUsersKey(nonFalseyIds),
@@ -32,13 +32,15 @@ export default function useLiteUsers(ids: (number | undefined)[]) {
 }
 
 // should is returned when stale if subsequent refetch queries fail
-export function useLiteUser(id: number | undefined) {
+function useLiteUser(id: number | undefined) {
   const query = useQuery<LiteUser.AsObject, RpcError>({
     queryKey: liteUserKey(id),
     queryFn: () => service.user.getLiteUser(id?.toString() || ""),
     staleTime: userStaleTime,
-    enabled: !!id,
+    enabled: id !== undefined,
   });
 
   return query;
 }
+
+export { useLiteUser, useLiteUsers };

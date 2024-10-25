@@ -1,5 +1,5 @@
 import { List } from "@material-ui/core";
-import useLiteUsers from "features/userQueries/useLiteUsers";
+import { useLiteUsers } from "features/userQueries/useLiteUsers";
 import { ListReferencesRes } from "proto/references_pb";
 import makeStyles from "utils/makeStyles";
 

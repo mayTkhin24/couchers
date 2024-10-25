@@ -5,7 +5,6 @@ import {
   GetLiteUsersReq,
   GetUserReq,
   LanguageAbility,
-  LiteUser,
   NullableBoolValue,
   NullableStringValue,
   NullableUInt32Value,
@@ -110,7 +109,7 @@ export async function getUser(user: string): Promise<User.AsObject> {
  * @param {string} user
  * @returns {Promise<LiteUser.AsObject>}
  */
-export async function getLiteUser(user: string): Promise<LiteUser.AsObject> {
+export async function getLiteUser(user: string) {
   const userReq = new GetLiteUserReq();
   userReq.setUser(user || "");
 

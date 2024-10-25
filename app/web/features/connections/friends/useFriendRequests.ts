@@ -1,5 +1,5 @@
 import { friendRequestKey, FriendRequestType } from "features/queryKeys";
-import useLiteUsers from "features/userQueries/useLiteUsers";
+import { useLiteUsers } from "features/userQueries/useLiteUsers";
 import { FriendRequest } from "proto/api_pb";
 import { useQuery } from "react-query";
 import { service } from "service";

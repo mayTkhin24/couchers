@@ -13,7 +13,7 @@ import {
   DialogTitle,
 } from "components/Dialog";
 import TextBody from "components/TextBody";
-import useLiteUsers from "features/userQueries/useLiteUsers";
+import { useLiteUsers } from "features/userQueries/useLiteUsers";
 import { useTranslation } from "i18n";
 import { GLOBAL, MESSAGES } from "i18n/namespaces";
 import { LiteUser } from "proto/api_pb";
