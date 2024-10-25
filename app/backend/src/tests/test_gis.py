@@ -3,9 +3,9 @@ import json
 import pytest
 from google.protobuf import empty_pb2
 
-from couchers.materialized_views import refresh_materialized_views_rapid
+from couchers.materialized_views import refresh_materialized_views, refresh_materialized_views_rapid
 from tests.test_communities import testing_communities  # noqa
-from tests.test_fixtures import db, generate_user, gis_session, testconfig  # noqa
+from tests.test_fixtures import generate_user, gis_session, testconfig  # noqa
 
 
 @pytest.fixture(autouse=True)
@@ -32,7 +32,7 @@ class TestGIS:
     def test_GetClusteredUsers(testing_communities):
         _, token = generate_user()
 
-        refresh_materialized_views_rapid(None)
+        refresh_materialized_views(None)
 
         with gis_session(token) as gis:
             http_body = gis.GetClusteredUsers(empty_pb2.Empty())

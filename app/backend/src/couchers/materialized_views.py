@@ -2,7 +2,7 @@ import logging
 
 from google.protobuf import empty_pb2
 from sqlalchemy import Index, Integer, event
-from sqlalchemy.sql import func, literal, literal_column, union
+from sqlalchemy.sql import func, literal, literal_column, union_all
 from sqlalchemy.sql import select as sa_select
 from sqlalchemy_utils.view import (
     CreateView,
@@ -111,57 +111,67 @@ def make_lite_users_selectable(create=False):
     )
 
 
-make_lite_users_selectable_select = make_lite_users_selectable(create=False)
-make_lite_users_selectable_create = make_lite_users_selectable(create=True)
+lite_users_selectable_select = make_lite_users_selectable(create=False)
+lite_users_selectable_create = make_lite_users_selectable(create=True)
 
 lite_users = create_materialized_view_with_different_ddl(
     "lite_users",
-    make_lite_users_selectable_select,
-    make_lite_users_selectable_create,
+    lite_users_selectable_select,
+    lite_users_selectable_create,
     Base.metadata,
-    [Index("uq_lite_users_id", make_lite_users_selectable_create.c.id, unique=True)],
+    [Index("uq_lite_users_id", lite_users_selectable_create.c.id, unique=True)],
 )
 
 
-# emits something along the lines of
-# WITH anon_1 AS (
-#   SELECT id,
-#     geom,
-#     ST_ClusterDBSCAN(geom, eps := .15, minpoints := 5) OVER (ORDER BY id) AS cluster_id
-#   FROM users
-#   WHERE geom IS NOT NULL
-# )
+def make_clustered_users_selectable(create=False):
+    # emits something along the lines of
+    # WITH anon_1 AS (
+    #   SELECT id,
+    #     geom,
+    #     ST_ClusterDBSCAN(geom, eps := .15, minpoints := 5) OVER (ORDER BY id) AS cluster_id
+    #   FROM users
+    #   WHERE geom IS NOT NULL
+    # )
 
-cluster_cte = (
-    sa_select(
-        User.id,
-        User.geom,
-        func.ST_ClusterDBSCAN(User.geom, eps=0.15, minpoints=5).over(order_by=User.id).label("cluster_id"),
+    cluster_cte = (
+        sa_select(
+            User.id,
+            User.geom,
+            # DBSCAN clustering with epsilon=.15 deg (~17 km), minpoints=5, cluster will be NULL for not in any cluster
+            func.ST_ClusterDBSCAN(User.geom, 0.15, 5).over(order_by=User.id).label("cluster_id"),
+        )
+        .where(User.geom != None)
+        .cte("clustered")
     )
-    .where(User.geom != None)
-    .cte()
-)
 
-clusters = (
-    sa_select(func.ST_Centroid(func.ST_Collect(cluster_cte.c.geom)).label("geom"), func.count().label("count"))
-    .select_from(cluster_cte)
-    .where(cluster_cte.c.cluster_id != None)
-    .group_by(cluster_cte.c.cluster_id)
-)
+    if create:
+        centroid_geom = literal_column("ST_Centroid(ST_Collect(clustered.geom))")
+        cluster_geom = literal_column("clustered.geom")
+    else:
+        centroid_geom = func.ST_Centroid(func.ST_Collect(cluster_cte.c.geom))
+        cluster_geom = cluster_cte.c.geom
 
-isolated_users = (
-    sa_select(cluster_cte.c.geom.label("geom"), literal(1, type_=Integer).label("count"))
-    .select_from(cluster_cte)
-    .where(cluster_cte.c.cluster_id == None)
-)
+    clustered_users = (
+        sa_select(centroid_geom.label("geom"), func.count().label("count"))
+        .select_from(cluster_cte)
+        .where(cluster_cte.c.cluster_id != None)
+        .group_by(cluster_cte.c.cluster_id)
+    )
 
-clustered_users_selectable = union([clusters, isolated_users])
+    isolated_users = (
+        sa_select(cluster_geom.label("geom"), literal(1, type_=Integer).label("count"))
+        .select_from(cluster_cte)
+        .where(cluster_cte.c.cluster_id == None)
+    )
 
-clustered_users = create_materialized_view(
-    "clustered_users",
-    clustered_users_selectable,
-    Base.metadata,
-    [Index("uq_clustered_users_cluster_id", clustered_users_selectable.c.cluster_id, unique=True)],
+    return union_all(clustered_users, isolated_users)
+
+
+clustered_users_selectable_select = make_clustered_users_selectable(create=False)
+clustered_users_selectable_create = make_clustered_users_selectable(create=True)
+
+clustered_users = create_materialized_view_with_different_ddl(
+    "clustered_users", clustered_users_selectable_select, clustered_users_selectable_create, Base.metadata
 )
 
 
@@ -170,6 +180,7 @@ def refresh_materialized_views(payload: empty_pb2.Empty):
     with session_scope() as session:
         refresh_materialized_view(session, "cluster_subscription_counts", concurrently=True)
         refresh_materialized_view(session, "cluster_admin_counts", concurrently=True)
+        refresh_materialized_view(session, "clustered_users")
 
 
 def refresh_materialized_views_rapid(payload: empty_pb2.Empty):
