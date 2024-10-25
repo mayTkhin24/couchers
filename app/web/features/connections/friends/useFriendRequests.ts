@@ -28,10 +28,14 @@ export default function useFriendRequests(
   const {
     data: usersData,
     isLoading: isUsersLoading,
-    errors: usersErrors,
+    error: userError,
   } = useLiteUsers(userIds);
 
-  const errors = error ? [error.message, ...usersErrors] : usersErrors;
+  const errors = error
+    ? [error.message, userError?.message]
+    : userError?.message
+    ? [userError.message]
+    : [];
 
   const isLoading = isFriendReqLoading || isUsersLoading;
 
@@ -41,10 +45,10 @@ export default function useFriendRequests(
           ...friendRequest,
           friend: usersData.get(friendRequest.userId),
         }))
-      : void 0;
+      : [];
 
   return {
-    data,
+    data: isLoading ? undefined : data,
     errors,
     isError: !!errors.length,
     isLoading,

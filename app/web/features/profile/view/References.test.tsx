@@ -10,7 +10,7 @@ import { service } from "service";
 import references from "test/fixtures/references.json";
 import users from "test/fixtures/users.json";
 import wrapper from "test/hookWrapper";
-import { getLiteUser } from "test/serviceMockDefaults";
+import { getLiteUser, getLiteUsers } from "test/serviceMockDefaults";
 import { MockedService, t } from "test/utils";
 
 import { referenceBadgeLabel } from "../constants";
@@ -18,8 +18,8 @@ import { ProfileUserProvider } from "../hooks/useProfileUser";
 import { REFERENCE_LIST_ITEM_TEST_ID } from "./ReferenceListItem";
 import References from "./References";
 
-const getLiteUserMock = service.user.getLiteUser as MockedService<
-  typeof service.user.getLiteUser
+const getLiteUsersMock = service.user.getLiteUsers as MockedService<
+  typeof service.user.getLiteUsers
 >;
 const getReferencesReceivedMock = service.references
   .getReferencesReceivedForUser as MockedService<
@@ -57,7 +57,7 @@ const [
 
 describe("References", () => {
   beforeEach(() => {
-    getLiteUserMock.mockImplementation(getLiteUser);
+    getLiteUsersMock.mockImplementation(getLiteUsers);
     getReferencesReceivedMock.mockResolvedValue({
       nextPageToken: "",
       referencesList: [friendReference, guestReference1, guestReference2],

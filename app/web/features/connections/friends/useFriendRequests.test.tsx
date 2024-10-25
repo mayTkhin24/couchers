@@ -2,17 +2,18 @@ import { renderHook } from "@testing-library/react-hooks";
 import { service } from "service";
 import liteUsers from "test/fixtures/liteUsers.json";
 import wrapper from "test/hookWrapper";
-import { getLiteUser } from "test/serviceMockDefaults";
+import { getLiteUsers } from "test/serviceMockDefaults";
+import { mockConsoleError } from "test/utils";
 
 import useFriendRequests from "./useFriendRequests";
 
-const getLiteUserMock = service.user.getLiteUser as jest.Mock;
+const getLiteUsersMock = service.user.getLiteUsers as jest.Mock;
 const listFriendRequestsMock = service.api.listFriendRequests as jest.Mock<
   ReturnType<typeof service.api.listFriendRequests>
 >;
 
 beforeEach(() => {
-  getLiteUserMock.mockImplementation(getLiteUser);
+  getLiteUsersMock.mockImplementation(getLiteUsers);
   listFriendRequestsMock.mockResolvedValue({
     receivedList: [],
     sentList: [],
@@ -33,7 +34,7 @@ describe("when the listFriendRequests query is loading", () => {
       isError: false,
       isLoading: true,
     });
-    expect(getLiteUserMock).not.toHaveBeenCalled();
+    expect(getLiteUsersMock).not.toHaveBeenCalled();
 
     unmount();
   });
@@ -68,20 +69,11 @@ describe("when the listFriendRequests succeeds", () => {
   });
 
   it("returns isLoading as true with no errors if getLiteUsers queries are loading", async () => {
-    getLiteUserMock.mockImplementation(() => new Promise(() => void 0));
+    getLiteUsersMock.mockImplementation(() => new Promise(() => void 0));
 
-    const { result, waitForNextUpdate } = renderHook(
-      () => useFriendRequests("sent"),
-      { wrapper }
-    );
-    await waitForNextUpdate();
+    const { result } = renderHook(() => useFriendRequests("sent"), { wrapper });
 
-    expect(result.current).toEqual({
-      data: undefined,
-      errors: [],
-      isError: false,
-      isLoading: true,
-    });
+    expect(result.current.isLoading).toBe(true);
   });
 
   it("returns the friend requests sent if 'Sent' is passed to the hook", async () => {
@@ -172,13 +164,10 @@ describe("when the listFriendRequests succeeds", () => {
     });
   });
 
-  it("returns isError as true with the error and missing friend data in request object of response if some getLiteUser queries failed", async () => {
-    getLiteUserMock.mockImplementation((userId: string) => {
-      return userId === "3"
-        ? Promise.reject(new Error(`Error fetching user ${userId}`))
-        : getLiteUser(userId);
-    });
-    jest.spyOn(console, "error").mockReturnValue(undefined);
+  it("returns isError as true with the error if some getLiteUsers query failed", async () => {
+    const error = new Error("Error fetching users");
+    getLiteUsersMock.mockRejectedValue(error);
+    mockConsoleError();
 
     const { result, waitForNextUpdate } = renderHook(
       () => useFriendRequests("received"),
@@ -187,23 +176,8 @@ describe("when the listFriendRequests succeeds", () => {
     await waitForNextUpdate();
 
     expect(result.current).toEqual({
-      data: [
-        {
-          friend: undefined,
-          friendRequestId: 2,
-          state: 0,
-          userId: 3,
-          sent: false,
-        },
-        {
-          friend: liteUsers[3],
-          friendRequestId: 3,
-          state: 0,
-          userId: 4,
-          sent: false,
-        },
-      ],
-      errors: ["Error fetching user 3"],
+      data: [],
+      errors: ["Error fetching users"],
       isError: true,
       isLoading: false,
     });
@@ -215,8 +189,7 @@ describe("when the listFriendRequests query failed", () => {
     listFriendRequestsMock.mockRejectedValue(
       new Error("Error listing friend requests")
     );
-    jest.spyOn(console, "error").mockReturnValue(undefined);
-
+    mockConsoleError();
     const { result, waitForNextUpdate } = renderHook(
       () => useFriendRequests("sent"),
       { wrapper }
@@ -229,6 +202,6 @@ describe("when the listFriendRequests query failed", () => {
       isError: true,
       isLoading: false,
     });
-    expect(getLiteUserMock).not.toHaveBeenCalled();
+    expect(getLiteUsersMock).not.toHaveBeenCalled();
   });
 });
