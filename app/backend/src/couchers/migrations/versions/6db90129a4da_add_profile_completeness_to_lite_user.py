@@ -31,7 +31,7 @@ def upgrade():
             users.geom_radius as radius,
             not (users.is_banned or users.is_deleted) as is_visible,
             uploads.filename as avatar_filename,
-            (users.avatar_key is not null) and character_length(users.about_me) >= 150 as completed_profile
+            (users.avatar_key is not null) and character_length(users.about_me) >= 150 as has_completed_profile
         FROM users
         LEFT OUTER JOIN uploads
         ON uploads.key = users.avatar_key;
