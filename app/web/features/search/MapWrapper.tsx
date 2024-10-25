@@ -63,18 +63,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface mapWrapperProps {
-  selectedResult:
-    | Pick<User.AsObject, "username" | "userId" | "lng" | "lat">
-    | undefined;
+  selectedResult: Pick<User.AsObject, "userId" | "lng" | "lat"> | undefined;
   isLoading: boolean;
   locationResult: GeocodeResult | undefined;
   setLocationResult: Dispatch<SetStateAction<GeocodeResult>>;
   results: InfiniteData<UserSearchRes.AsObject> | undefined;
   setIsFiltersOpen: Dispatch<SetStateAction<boolean>>;
   setSelectedResult: Dispatch<
-    SetStateAction<
-      Pick<User.AsObject, "username" | "userId" | "lng" | "lat"> | undefined
-    >
+    SetStateAction<Pick<User.AsObject, "userId" | "lng" | "lat"> | undefined>
   >;
   map: MutableRefObject<MaplibreMap | undefined>;
   setWasSearchPerformed: Dispatch<SetStateAction<boolean>>;
@@ -116,11 +112,10 @@ export default function MapWrapper({
 
       if (!props || !geom) return;
 
-      const username = props.username;
       const userId = props.id;
 
       const [lng, lat] = geom.coordinates;
-      setSelectedResult({ username, userId, lng, lat });
+      setSelectedResult({ userId, lng, lat });
     },
     [setSelectedResult]
   );

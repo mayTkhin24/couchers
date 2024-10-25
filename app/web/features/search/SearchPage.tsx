@@ -99,7 +99,7 @@ export default function SearchPage({
   >(undefined);
   const [completeProfileFilter, setCompleteProfileFilter] = useState(false);
   const [selectedResult, setSelectedResult] = useState<
-    Pick<User.AsObject, "username" | "userId" | "lng" | "lat"> | undefined
+    Pick<User.AsObject, "userId" | "lng" | "lat"> | undefined
   >();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
