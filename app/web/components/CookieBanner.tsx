@@ -1,6 +1,4 @@
-import { Snackbar, SnackbarCloseReason, Typography } from "@material-ui/core";
-import IconButton from "components/IconButton";
-import { CloseIcon } from "components/Icons";
+import { SnackbarCloseReason, Typography } from "@material-ui/core";
 import StyledLink from "components/StyledLink";
 import { useAuthContext } from "features/auth/AuthProvider";
 import { Trans, useTranslation } from "i18n";
@@ -11,16 +9,18 @@ import makeStyles from "utils/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "&.MuiSnackbar-root": {
-      left: theme.spacing(1),
-      right: theme.spacing(1),
-      transform: "unset",
-    },
-    "& .MuiSnackbarContent-root": {
-      flexGrow: "1",
-      flexWrap: "nowrap",
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
+    position: "fixed",
+    zIndex: theme.zIndex.snackbar,
+    left: theme.spacing(0),
+    right: theme.spacing(0),
+    transform: "translateY(-100%)",
+    backgroundColor: theme.palette.primary.contrastText,
+    top: "100vh",
+    padding: theme.spacing(2, 4),
+    "& .content": {
+      width: "75%",
+      margin: "0 auto",
+      textAlign: "center",
     },
   },
   link: {
@@ -49,8 +49,21 @@ export default function CookieBanner() {
 
   //specifically not using our snackbar, which is designed for alerts
   return isMounted ? (
-    <Snackbar
-      message={
+    <div
+      /*   open={!hasSeen}
+      onClose={handleClose} */
+      className={classes.root}
+      aria-live="polite"
+      /*  action={
+        <IconButton
+          aria-label={t("close")}
+          onClick={(e) => handleClose(e, "button")}
+        >
+          <CloseIcon />
+        </IconButton>
+      } */
+    >
+      <div className="content">
         <Typography variant="body1">
           <Trans t={t} i18nKey="cookie_message">
             We use cookies to ensure that we give you the best experience on our
@@ -62,19 +75,7 @@ export default function CookieBanner() {
             .
           </Trans>
         </Typography>
-      }
-      open={!hasSeen}
-      onClose={handleClose}
-      className={classes.root}
-      aria-live="polite"
-      action={
-        <IconButton
-          aria-label={t("close")}
-          onClick={(e) => handleClose(e, "button")}
-        >
-          <CloseIcon />
-        </IconButton>
-      }
-    />
+      </div>
+    </div>
   ) : null;
 }
