@@ -50,18 +50,8 @@ export default function CookieBanner() {
   //specifically not using our snackbar, which is designed for alerts
   return isMounted ? (
     <div
-      /*   open={!hasSeen}
-      onClose={handleClose} */
       className={classes.root}
       aria-live="polite"
-      /*  action={
-        <IconButton
-          aria-label={t("close")}
-          onClick={(e) => handleClose(e, "button")}
-        >
-          <CloseIcon />
-        </IconButton>
-      } */
     >
       <div className="content">
         <Typography variant="body1">
