@@ -65,6 +65,9 @@ export const useGroupChatViewStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       height: `calc(100vh - ${theme.shape.navPaddingSmUp})`,
     },
+    [theme.breakpoints.down("sm")]: {
+      height: `calc(100vh - ${theme.shape.navPaddingXs})`,
+    },
     alignItems: "stretch",
     display: "flex",
     flexDirection: "column",
@@ -79,6 +82,9 @@ export const useGroupChatViewStyles = makeStyles((theme) => ({
     marginInlineEnd: theme.spacing(2),
     marginInlineStart: theme.spacing(2),
     "& > *": { marginInlineEnd: theme.spacing(2) },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.9rem",
+    },
   },
   requestedDatesWrapper: {
     display: "flex",

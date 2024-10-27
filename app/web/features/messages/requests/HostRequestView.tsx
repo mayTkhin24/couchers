@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography, useMediaQuery } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import Alert from "components/Alert";
 import CircularProgress from "components/CircularProgress";
@@ -38,6 +38,7 @@ import {
   useQueryClient,
 } from "react-query";
 import { service } from "service";
+import { theme } from "theme";
 import { numNights } from "utils/date";
 import dayjs from "utils/dayjs";
 import { firstName } from "utils/names";
@@ -51,6 +52,7 @@ export default function HostRequestView({
 }) {
   const { t } = useTranslation(MESSAGES);
   const classes = useGroupChatViewStyles();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { data: hostRequest, error: hostRequestError } = useQuery<
     HostRequest.AsObject,
@@ -154,23 +156,9 @@ export default function HostRequestView({
 
   const handleBack = () => router.back();
 
-  return !hostRequestId ? (
-    <Alert severity="error">{t("host_request_view.error_message")}</Alert>
-  ) : (
-    <div className={classes.pageWrapper}>
-      <div className={classes.header}>
-        <HeaderButton
-          onClick={handleBack}
-          aria-label={t("host_request_view.back_button_a11y_label")}
-        >
-          <BackIcon />
-        </HeaderButton>
-
-        <PageTitle className={classes.title}>
-          {!title || hostRequestError ? <Skeleton width="100" /> : title}
-        </PageTitle>
-      </div>
-      <UserSummary user={otherUser}>
+  const renderUserSummary = () => (
+    <>
+      <UserSummary user={otherUser} smallAvatar={isMobile}>
         {hostRequest && (
           <div className={classes.requestedDatesWrapper}>
             <Typography
@@ -182,21 +170,44 @@ export default function HostRequestView({
                 hostRequest.toDate
               ).format("LL")}`}
             </Typography>
-            <Typography
-              component="p"
-              variant="h3"
-              className={classes.numNights}
-            >
-              (
-              {t("host_request_view.request_duration", {
-                count: numNights(hostRequest.toDate, hostRequest.fromDate),
-              })}
-              )
-            </Typography>
+            {!isMobile && (
+              <Typography
+                component="p"
+                variant="h3"
+                className={classes.numNights}
+              >
+                (
+                {t("host_request_view.request_duration", {
+                  count: numNights(hostRequest.toDate, hostRequest.fromDate),
+                })}
+                )
+              </Typography>
+            )}
           </div>
         )}
       </UserSummary>
-      <Divider />
+      {isMobile && <Divider spacing={1} />}
+    </>
+  );
+
+  return !hostRequestId ? (
+    <Alert severity="error">{t("host_request_view.error_message")}</Alert>
+  ) : (
+    <div className={classes.pageWrapper}>
+      <div className={classes.header}>
+        <HeaderButton
+          onClick={handleBack}
+          aria-label={t("host_request_view.back_button_a11y_label")}
+        >
+          <BackIcon fontSize={isMobile ? "small" : "default"} />
+        </HeaderButton>
+
+        <PageTitle className={classes.title}>
+          {!title || hostRequestError ? <Skeleton width="100" /> : title}
+        </PageTitle>
+      </div>
+      {!isMobile && renderUserSummary()}
+      <Divider spacing={1} />
       {(respondMutation.error || sendMutation.error || hostRequestError) && (
         <Alert severity={"error"}>
           {respondMutation.error?.message ||
@@ -223,20 +234,35 @@ export default function HostRequestView({
                 hasNextPage={!!hasNextPage}
                 isError={!!messagesError}
               >
+                {isMobile && renderUserSummary()}
                 <MessageList
                   markLastSeen={markLastSeen}
                   messages={messagesRes.pages
                     .map((page) => page.messagesList)
                     .flat()}
                 />
+                {isMobile && (
+                  <div className={classes.footer}>
+                    <HostRequestSendField
+                      hostRequest={hostRequest}
+                      sendMutation={sendMutation}
+                      respondMutation={respondMutation}
+                    />
+                  </div>
+                )}
               </InfiniteMessageLoader>
-              <div className={classes.footer}>
-                <HostRequestSendField
-                  hostRequest={hostRequest}
-                  sendMutation={sendMutation}
-                  respondMutation={respondMutation}
-                />
-              </div>
+              {/**
+               * If it's mobile we don't want the send field to be sticky, rather show in scrollable area at the bottom
+               */}
+              {!isMobile && (
+                <div className={classes.footer}>
+                  <HostRequestSendField
+                    hostRequest={hostRequest}
+                    sendMutation={sendMutation}
+                    respondMutation={respondMutation}
+                  />
+                </div>
+              )}
             </>
           )}
         </>
