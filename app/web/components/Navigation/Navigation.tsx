@@ -66,185 +66,185 @@ const loggedInDrawerMenu = (
   t: TFunction<"global", undefined>,
   pingData: PingData
 ): Array<MenuItemProps> => [
-    {
-      name: t("nav.dashboard"),
-      route: dashboardRoute,
-    },
-    {
-      name: t("nav.messages"),
-      route: messagesRoute,
-      notificationCount:
-        (pingData?.unseenMessageCount ?? 0) +
-        (pingData?.unseenReceivedHostRequestCount ?? 0) +
-        (pingData?.unseenSentHostRequestCount ?? 0),
-    },
-    {
-      name: t("nav.map_search"),
-      route: searchRoute,
-    },
-    {
-      name: t("nav.events"),
-      route: eventsRoute,
-    },
-    {
-      name: t("nav.forum"),
-      route: forumURL,
-      externalLink: true,
-    },
-  ];
+  {
+    name: t("nav.dashboard"),
+    route: dashboardRoute,
+  },
+  {
+    name: t("nav.messages"),
+    route: messagesRoute,
+    notificationCount:
+      (pingData?.unseenMessageCount ?? 0) +
+      (pingData?.unseenReceivedHostRequestCount ?? 0) +
+      (pingData?.unseenSentHostRequestCount ?? 0),
+  },
+  {
+    name: t("nav.map_search"),
+    route: searchRoute,
+  },
+  {
+    name: t("nav.events"),
+    route: eventsRoute,
+  },
+  {
+    name: t("nav.forum"),
+    route: forumURL,
+    externalLink: true,
+  },
+];
 
 // shown on desktop and big screens on top of the screen
 const loggedInNavMenu = (
   t: TFunction<"global", undefined>,
   pingData: PingData
 ): Array<MenuItemProps> => [
-    {
-      name: t("nav.dashboard"),
-      route: dashboardRoute,
-    },
-    {
-      name: t("nav.messages"),
-      route: messagesRoute,
-      notificationCount:
-        (pingData?.unseenMessageCount ?? 0) +
-        (pingData?.unseenReceivedHostRequestCount ?? 0) +
-        (pingData?.unseenSentHostRequestCount ?? 0),
-    },
-    {
-      name: t("nav.map_search"),
-      route: searchRoute,
-    },
-    {
-      name: t("nav.events"),
-      route: eventsRoute,
-    },
-    {
-      name: t("nav.forum"),
-      route: forumURL,
-      externalLink: true,
-    },
-  ];
+  {
+    name: t("nav.dashboard"),
+    route: dashboardRoute,
+  },
+  {
+    name: t("nav.messages"),
+    route: messagesRoute,
+    notificationCount:
+      (pingData?.unseenMessageCount ?? 0) +
+      (pingData?.unseenReceivedHostRequestCount ?? 0) +
+      (pingData?.unseenSentHostRequestCount ?? 0),
+  },
+  {
+    name: t("nav.map_search"),
+    route: searchRoute,
+  },
+  {
+    name: t("nav.events"),
+    route: eventsRoute,
+  },
+  {
+    name: t("nav.forum"),
+    route: forumURL,
+    externalLink: true,
+  },
+];
 
 const loggedOutNavMenu = (
   t: TFunction<"global", undefined>
 ): Array<MenuItemProps> => [
-    {
-      name: t("nav.about"),
-      route: "/#",
-    },
-    {
-      name: t("nav.blog"),
-      route: blogRoute,
-    },
-    {
-      name: t("nav.our_plan"),
-      route: planRoute,
-    },
-    {
-      name: t("nav.faq"),
-      route: faqRoute,
-    },
-    {
-      name: t("nav.mission"),
-      route: missionRoute,
-    },
-    {
-      name: t("nav.the_team"),
-      route: teamRoute,
-    },
-    {
-      name: t("nav.forum"),
-      route: forumURL,
-      externalLink: true,
-    },
-  ];
+  {
+    name: t("nav.about"),
+    route: "/#",
+  },
+  {
+    name: t("nav.blog"),
+    route: blogRoute,
+  },
+  {
+    name: t("nav.our_plan"),
+    route: planRoute,
+  },
+  {
+    name: t("nav.faq"),
+    route: faqRoute,
+  },
+  {
+    name: t("nav.mission"),
+    route: missionRoute,
+  },
+  {
+    name: t("nav.the_team"),
+    route: teamRoute,
+  },
+  {
+    name: t("nav.forum"),
+    route: forumURL,
+    externalLink: true,
+  },
+];
 
 const loggedOutDrawerMenu = (
   t: TFunction<"global", undefined>
 ): Array<MenuItemProps> => [
-    {
-      name: t("login"),
-      route: loginRoute,
-    },
-    {
-      name: t("sign_up"),
-      route: signupRoute,
-    },
-    {
-      name: t("nav.about"),
-      route: "/",
-    },
-    {
-      name: t("nav.blog"),
-      route: blogRoute,
-    },
-    {
-      name: t("nav.our_plan"),
-      route: planRoute,
-    },
-    {
-      name: t("nav.faq"),
-      route: faqRoute,
-    },
-    {
-      name: t("nav.mission"),
-      route: missionRoute,
-    },
-    {
-      name: t("nav.the_team"),
-      route: teamRoute,
-    },
-    {
-      name: t("nav.forum"),
-      route: forumURL,
-      externalLink: true,
-    },
-  ];
+  {
+    name: t("login"),
+    route: loginRoute,
+  },
+  {
+    name: t("sign_up"),
+    route: signupRoute,
+  },
+  {
+    name: t("nav.about"),
+    route: "/",
+  },
+  {
+    name: t("nav.blog"),
+    route: blogRoute,
+  },
+  {
+    name: t("nav.our_plan"),
+    route: planRoute,
+  },
+  {
+    name: t("nav.faq"),
+    route: faqRoute,
+  },
+  {
+    name: t("nav.mission"),
+    route: missionRoute,
+  },
+  {
+    name: t("nav.the_team"),
+    route: teamRoute,
+  },
+  {
+    name: t("nav.forum"),
+    route: forumURL,
+    externalLink: true,
+  },
+];
 
 // shown on desktop and big screens in the top right corner when logged in
 const loggedInMenuDropDown = (
   t: TFunction<"global", undefined>,
   pingData: PingData
 ): Array<MenuItemProps> => [
-    {
-      name: t("nav.profile"),
-      route: routeToProfile(),
-      hasBottomDivider: true,
-    },
-    {
-      name: t("nav.messages"),
-      route: messagesRoute,
-      notificationCount:
-        (pingData?.unseenMessageCount ?? 0) +
-        (pingData?.unseenReceivedHostRequestCount ?? 0) +
-        (pingData?.unseenSentHostRequestCount ?? 0),
-    },
-    {
-      name: t("nav.account_settings"),
-      route: settingsRoute,
-    },
-    {
-      name: t("nav.feature_preview"),
-      route: featurePreviewRoute,
-      hasBottomDivider: true,
-    },
-    {
-      name: t("nav.help"),
-      route: helpCenterURL,
-    },
-    {
-      name: t("nav.donate"),
-      route: donationsRoute,
-    },
-    {
-      name: t("nav.volunteer"),
-      route: volunteerRoute,
-    },
-    {
-      name: t("nav.log_out"),
-      route: logoutRoute,
-    },
-  ];
+  {
+    name: t("nav.profile"),
+    route: routeToProfile(),
+    hasBottomDivider: true,
+  },
+  {
+    name: t("nav.messages"),
+    route: messagesRoute,
+    notificationCount:
+      (pingData?.unseenMessageCount ?? 0) +
+      (pingData?.unseenReceivedHostRequestCount ?? 0) +
+      (pingData?.unseenSentHostRequestCount ?? 0),
+  },
+  {
+    name: t("nav.account_settings"),
+    route: settingsRoute,
+  },
+  {
+    name: t("nav.feature_preview"),
+    route: featurePreviewRoute,
+    hasBottomDivider: true,
+  },
+  {
+    name: t("nav.help"),
+    route: helpCenterURL,
+  },
+  {
+    name: t("nav.donate"),
+    route: donationsRoute,
+  },
+  {
+    name: t("nav.volunteer"),
+    route: volunteerRoute,
+  },
+  {
+    name: t("nav.log_out"),
+    route: logoutRoute,
+  },
+];
 
 const drawerWidth = 240;
 
@@ -376,25 +376,25 @@ export default function Navigation() {
         {(authState.authenticated && isMounted
           ? loggedInDrawerMenu
           : loggedOutDrawerMenu)(t, pingData).map(
-            ({ name, route, notificationCount, externalLink }) => (
-              <ListItem button key={name}>
-                {externalLink ? (
-                  <ExternalNavButton
-                    route={route}
-                    label={name}
-                    labelVariant="h2"
-                  />
-                ) : (
-                  <NavButton
-                    route={route}
-                    label={name}
-                    labelVariant="h2"
-                    notificationCount={notificationCount}
-                  />
-                )}
-              </ListItem>
-            )
-          )}
+          ({ name, route, notificationCount, externalLink }) => (
+            <ListItem button key={name}>
+              {externalLink ? (
+                <ExternalNavButton
+                  route={route}
+                  label={name}
+                  labelVariant="h2"
+                />
+              ) : (
+                <NavButton
+                  route={route}
+                  label={name}
+                  labelVariant="h2"
+                  notificationCount={notificationCount}
+                />
+              )}
+            </ListItem>
+          )
+        )}
       </List>
     </div>
   );
@@ -524,23 +524,23 @@ export default function Navigation() {
               {(authState.authenticated && isMounted
                 ? loggedInNavMenu
                 : loggedOutNavMenu)(t, pingData).map(
-                  ({ name, route, notificationCount, externalLink }) =>
-                    externalLink ? (
-                      <ExternalNavButton
-                        route={route}
-                        label={name}
-                        labelVariant="h3"
-                        key={`${name}-nav-button`}
-                      />
-                    ) : (
-                      <NavButton
-                        route={route}
-                        label={name}
-                        key={`${name}-nav-button`}
-                        notificationCount={notificationCount}
-                      />
-                    )
-                )}
+                ({ name, route, notificationCount, externalLink }) =>
+                  externalLink ? (
+                    <ExternalNavButton
+                      route={route}
+                      label={name}
+                      labelVariant="h3"
+                      key={`${name}-nav-button`}
+                    />
+                  ) : (
+                    <NavButton
+                      route={route}
+                      label={name}
+                      key={`${name}-nav-button`}
+                      notificationCount={notificationCount}
+                    />
+                  )
+              )}
             </div>
           </Hidden>
         </div>
@@ -555,7 +555,6 @@ export default function Navigation() {
             ) : (
               <GuestMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
             )}
-
           </div>
         </Hidden>
       </Toolbar>

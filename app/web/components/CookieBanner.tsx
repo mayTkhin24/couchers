@@ -49,10 +49,7 @@ export default function CookieBanner() {
 
   //specifically not using our snackbar, which is designed for alerts
   return isMounted ? (
-    <div
-      className={classes.root}
-      aria-live="polite"
-    >
+    <div className={classes.root} aria-live="polite">
       <div className="content">
         <Typography variant="body1">
           <Trans t={t} i18nKey="cookie_message">
