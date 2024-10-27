@@ -1,8 +1,7 @@
-import { SnackbarCloseReason, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import StyledLink from "components/StyledLink";
 import { useAuthContext } from "features/auth/AuthProvider";
 import { Trans, useTranslation } from "i18n";
-import { usePersistedState } from "platform/usePersistedState";
 import { tosRoute } from "routes";
 import { useIsMounted } from "utils/hooks";
 import makeStyles from "utils/makeStyles";
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CookieBanner() {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [hasSeen, setHasSeen] = usePersistedState("hasSeenCookieBanner", false);
+  // const [hasSeen, setHasSeen] = usePersistedState("hasSeenCookieBanner", false);
   // since we are using localStorage, make sure don't render unless mounted
   // or there will be hydration mismatches
   const isMounted = useIsMounted().current;
@@ -39,13 +38,13 @@ export default function CookieBanner() {
 
   if (auth.authState.authenticated) return null;
 
-  const handleClose = (
-    event: unknown,
-    reason: SnackbarCloseReason | "button"
-  ) => {
-    if (reason !== "button") return;
-    setHasSeen(true);
-  };
+  /*   const handleClose = (
+      event: unknown,
+      reason: SnackbarCloseReason | "button"
+    ) => {
+      if (reason !== "button") return;
+      setHasSeen(true);
+    }; */
 
   //specifically not using our snackbar, which is designed for alerts
   return isMounted ? (
