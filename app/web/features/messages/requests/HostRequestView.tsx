@@ -2,7 +2,6 @@ import { Typography, useMediaQuery } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import Alert from "components/Alert";
 import CircularProgress from "components/CircularProgress";
-import Divider from "components/Divider";
 import HeaderButton from "components/HeaderButton";
 import { BackIcon } from "components/Icons";
 import PageTitle from "components/PageTitle";
@@ -158,7 +157,11 @@ export default function HostRequestView({
 
   const userSummarySection = (
     <>
-      <UserSummary user={otherUser} smallAvatar={isMobile}>
+      <UserSummary
+        className={classes.userSummary}
+        user={otherUser}
+        smallAvatar={isMobile}
+      >
         {hostRequest && (
           <div className={classes.requestedDatesWrapper}>
             <Typography
@@ -166,9 +169,15 @@ export default function HostRequestView({
               variant="h3"
               className={classes.requestedDates}
             >
-              {`${dayjs(hostRequest.fromDate).format("LL")} - ${dayjs(
-                hostRequest.toDate
-              ).format("LL")}`}
+              {`${
+                isMobile
+                  ? dayjs(hostRequest.fromDate).format("ll")
+                  : dayjs(hostRequest.fromDate).format("LL")
+              } - ${
+                isMobile
+                  ? dayjs(hostRequest.fromDate).format("ll")
+                  : dayjs(hostRequest.toDate).format("LL")
+              }`}
             </Typography>
             {!isMobile && (
               <Typography
@@ -186,7 +195,6 @@ export default function HostRequestView({
           </div>
         )}
       </UserSummary>
-      {isMobile && <Divider spacing={1} />}
     </>
   );
 
@@ -207,7 +215,6 @@ export default function HostRequestView({
         </PageTitle>
       </div>
       {!isMobile && userSummarySection}
-      <Divider spacing={1} />
       {(respondMutation.error || sendMutation.error || hostRequestError) && (
         <Alert severity={"error"}>
           {respondMutation.error?.message ||
@@ -226,6 +233,7 @@ export default function HostRequestView({
           {messagesRes && hostRequest && (
             <>
               <InfiniteMessageLoader
+                className={classes.messageLoader}
                 earliestMessageId={
                   messagesRes.pages[messagesRes.pages.length - 1].lastMessageId
                 }
