@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
           [theme.breakpoints.down("xs")]: {
             gridTemplateColumns: "1fr",
             gridGap: theme.spacing(2),
+            padding: theme.spacing(2),
+
             //break out of page padding
             left: "50%",
             marginLeft: "-50vw",
