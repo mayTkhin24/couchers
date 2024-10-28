@@ -156,7 +156,7 @@ export default function HostRequestView({
 
   const handleBack = () => router.back();
 
-  const renderUserSummary = (
+  const userSummarySection = (
     <>
       <UserSummary user={otherUser} smallAvatar={isMobile}>
         {hostRequest && (
@@ -206,7 +206,7 @@ export default function HostRequestView({
           {!title || hostRequestError ? <Skeleton width="100" /> : title}
         </PageTitle>
       </div>
-      {!isMobile && renderUserSummary}
+      {!isMobile && userSummarySection}
       <Divider spacing={1} />
       {(respondMutation.error || sendMutation.error || hostRequestError) && (
         <Alert severity={"error"}>
@@ -234,7 +234,7 @@ export default function HostRequestView({
                 hasNextPage={!!hasNextPage}
                 isError={!!messagesError}
               >
-                {isMobile && renderUserSummary}
+                {isMobile && userSummarySection}
                 <MessageList
                   markLastSeen={markLastSeen}
                   messages={messagesRes.pages
