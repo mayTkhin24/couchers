@@ -48,7 +48,6 @@ export const useAppRouteStyles = makeStyles((theme) => ({
   "@global html": {
     scrollPaddingTop: `calc(${theme.shape.navPaddingXs} + ${theme.spacing(2)})`,
     height: "100%",
-    overflow: "hidden",
   },
   [theme.breakpoints.up("sm")]: {
     "@global html": {
@@ -59,7 +58,6 @@ export const useAppRouteStyles = makeStyles((theme) => ({
   },
   "@global body": {
     height: "100%",
-    overflow: "hidden",
   },
   "@global #__next": {
     display: "flex",
@@ -89,6 +87,8 @@ export default function AppRoute({
 
   const isNativeEmbed = useIsNativeEmbed();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // isMobile is browser mobile
+  const shouldShowFooter = !noFooter && !isNativeEmbed && !isMobile;
+  const shouldShowCookieBanner = !isPrivate && !isNativeEmbed && !isMobile;
 
   //there must be the same loading state on auth'd pages on server and client
   //for hydration matching, so we will display a loader until mounted.
@@ -134,10 +134,10 @@ export default function AppRoute({
             {/* Have to wrap this in a fragment because of https://github.com/mui-org/material-ui/issues/21711 */}
             <>{children}</>
           </Container>
-          {!noFooter && !isNativeEmbed && !isMobile && <Footer />}
+          {shouldShowFooter && <Footer />}
         </>
       )}
-      {!isPrivate && !isNativeEmbed && !isMobile && <CookieBanner />}
+      {shouldShowCookieBanner && <CookieBanner />}
     </ErrorBoundary>
   );
 }
