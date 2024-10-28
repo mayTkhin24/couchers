@@ -26,6 +26,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     border: `1px solid ${theme.palette.grey[300]}`,
     borderRadius: theme.spacing(1),
+
+    "&:hover": {
+      backgroundColor: theme.palette.grey[50],
+    },
   },
   attendees: {
     display: "flex",
