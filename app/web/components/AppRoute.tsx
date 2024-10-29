@@ -1,4 +1,4 @@
-import { Container, useMediaQuery } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import classNames from "classnames";
 import CircularProgress from "components/CircularProgress";
 import CookieBanner from "components/CookieBanner";
@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import { useIsNativeEmbed } from "platform/nativeLink";
 import { ReactNode, useEffect, useState } from "react";
 import { jailRoute, loginRoute } from "routes";
-import { theme } from "theme";
 import makeStyles from "utils/makeStyles";
 
 import Navigation from "./Navigation";
@@ -86,9 +85,6 @@ export default function AppRoute({
   const isJailed = authState.jailed;
 
   const isNativeEmbed = useIsNativeEmbed();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // isMobile is browser mobile
-  const shouldShowFooter = !noFooter && !isNativeEmbed && !isMobile;
-  const shouldShowCookieBanner = !isPrivate && !isNativeEmbed && !isMobile;
 
   //there must be the same loading state on auth'd pages on server and client
   //for hydration matching, so we will display a loader until mounted.
@@ -134,10 +130,10 @@ export default function AppRoute({
             {/* Have to wrap this in a fragment because of https://github.com/mui-org/material-ui/issues/21711 */}
             <>{children}</>
           </Container>
-          {shouldShowFooter && <Footer />}
+          {!noFooter && !isNativeEmbed && <Footer />}
         </>
       )}
-      {shouldShowCookieBanner && <CookieBanner />}
+      {!isPrivate && !isNativeEmbed && <CookieBanner />}
     </ErrorBoundary>
   );
 }
