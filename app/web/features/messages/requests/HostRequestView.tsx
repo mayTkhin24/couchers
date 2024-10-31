@@ -1,6 +1,7 @@
 import { Typography, useMediaQuery } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import Alert from "components/Alert";
+import Avatar from "components/Avatar";
 import CircularProgress from "components/CircularProgress";
 import HeaderButton from "components/HeaderButton";
 import { BackIcon } from "components/Icons";
@@ -40,9 +41,40 @@ import { service } from "service";
 import { theme } from "theme";
 import { numNights } from "utils/date";
 import dayjs from "utils/dayjs";
+import makeStyles from "utils/makeStyles";
 import { firstName } from "utils/names";
 
 import { requestStatusToTransKey } from "../constants";
+
+const useLocalStyles = makeStyles((theme) => ({
+  avatar: {
+    height: "2rem",
+    width: "2rem",
+  },
+  largeUserSummary: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+
+    [theme.breakpoints.down("sm")]: {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+      paddingBottom: theme.spacing(1),
+    },
+
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(1),
+    },
+  },
+  smallUserSummary: {
+    display: "flex",
+    alignItems: "center",
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    padding: theme.spacing(1, 2),
+  },
+  shortUserInfo: {
+    display: "flex",
+    flexDirection: "column",
+    marginLeft: theme.spacing(2),
+  },
+}));
 
 export default function HostRequestView({
   hostRequestId,
@@ -51,6 +83,8 @@ export default function HostRequestView({
 }) {
   const { t } = useTranslation(MESSAGES);
   const classes = useGroupChatViewStyles();
+  const localClasses = useLocalStyles();
+
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { data: hostRequest, error: hostRequestError } = useQuery<
@@ -155,13 +189,9 @@ export default function HostRequestView({
 
   const handleBack = () => router.back();
 
-  const userSummarySection = (
-    <>
-      <UserSummary
-        className={classes.userSummary}
-        user={otherUser}
-        smallAvatar={isMobile}
-      >
+  const largeUserSummarySection = (
+    <div className={localClasses.largeUserSummary}>
+      <UserSummary user={otherUser} smallAvatar={isMobile}>
         {hostRequest && (
           <div className={classes.requestedDatesWrapper}>
             <Typography
@@ -169,33 +199,63 @@ export default function HostRequestView({
               variant="h3"
               className={classes.requestedDates}
             >
-              {`${
-                isMobile
-                  ? dayjs(hostRequest.fromDate).format("ll")
-                  : dayjs(hostRequest.fromDate).format("LL")
-              } - ${
-                isMobile
-                  ? dayjs(hostRequest.fromDate).format("ll")
-                  : dayjs(hostRequest.toDate).format("LL")
-              }`}
+              {`${dayjs(hostRequest.fromDate).format("LL")} - ${dayjs(
+                hostRequest.toDate
+              ).format("LL")}`}
             </Typography>
-            {!isMobile && (
-              <Typography
-                component="p"
-                variant="h3"
-                className={classes.numNights}
-              >
-                (
-                {t("host_request_view.request_duration", {
-                  count: numNights(hostRequest.toDate, hostRequest.fromDate),
-                })}
-                )
-              </Typography>
-            )}
+            <Typography
+              component="p"
+              variant="h3"
+              className={classes.numNights}
+            >
+              (
+              {t("host_request_view.request_duration", {
+                count: numNights(hostRequest.toDate, hostRequest.fromDate),
+              })}
+              )
+            </Typography>
           </div>
         )}
       </UserSummary>
-    </>
+    </div>
+  );
+
+  const smallUserSummarySection = (
+    <div className={localClasses.smallUserSummary}>
+      {!otherUser ? (
+        <Skeleton variant="circle" className={localClasses.avatar} />
+      ) : (
+        <Avatar
+          className={localClasses.avatar}
+          user={otherUser}
+          isProfileLink
+        />
+      )}
+      <div className={localClasses.shortUserInfo}>
+        <Typography component="p" variant="body2">
+          {!otherUser ? (
+            <Skeleton />
+          ) : (
+            `${
+              (otherUser?.name.length ?? 0) < 25
+                ? otherUser?.name
+                : otherUser?.name.substring(0, 25) + "..."
+            }, ${otherUser?.age}, ${otherUser?.city.split(",")[2]}` // get only country
+          )}
+        </Typography>
+        {hostRequest && (
+          <Typography
+            component="p"
+            variant="h3"
+            className={classes.requestedDates}
+          >
+            {`${dayjs(hostRequest.fromDate).format("ll")} - ${dayjs(
+              hostRequest.fromDate
+            ).format("ll")}`}
+          </Typography>
+        )}
+      </div>
+    </div>
   );
 
   return !hostRequestId ? (
@@ -214,7 +274,7 @@ export default function HostRequestView({
           {!title || hostRequestError ? <Skeleton width="100" /> : title}
         </PageTitle>
       </div>
-      {!isMobile && userSummarySection}
+      {isMobile ? smallUserSummarySection : largeUserSummarySection}
       {(respondMutation.error || sendMutation.error || hostRequestError) && (
         <Alert severity={"error"}>
           {respondMutation.error?.message ||
@@ -242,7 +302,6 @@ export default function HostRequestView({
                 hasNextPage={!!hasNextPage}
                 isError={!!messagesError}
               >
-                {isMobile && userSummarySection}
                 <MessageList
                   markLastSeen={markLastSeen}
                   messages={messagesRes.pages

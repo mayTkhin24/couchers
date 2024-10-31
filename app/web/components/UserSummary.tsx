@@ -55,7 +55,6 @@ export const USER_TITLE_SKELETON_TEST_ID = "user-title-skeleton";
 export interface UserSummaryProps {
   avatarIsLink?: boolean;
   children?: React.ReactNode;
-  className?: string;
   smallAvatar?: boolean;
   nameOnly?: boolean;
   headlineComponent?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
@@ -66,7 +65,6 @@ export interface UserSummaryProps {
 export default function UserSummary({
   avatarIsLink = true,
   children,
-  className,
   smallAvatar = false,
   nameOnly = false,
   headlineComponent = "h2",
@@ -101,7 +99,7 @@ export default function UserSummary({
   );
 
   return (
-    <div className={classNames(classes.root, className)}>
+    <div className={classes.root}>
       <ListItemAvatar>
         {!user ? (
           <Skeleton variant="circle" className={avatarClassNames} />

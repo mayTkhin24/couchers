@@ -127,15 +127,6 @@ export const useGroupChatViewStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     width: "100%",
   },
-  userSummary: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-    padding: theme.spacing(1) + " !important",
-
-    [theme.breakpoints.down("sm")]: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
-      paddingBottom: theme.spacing(1) + " !important",
-    },
-  },
 }));
 
 export default function GroupChatView({ chatId }: { chatId: number }) {
