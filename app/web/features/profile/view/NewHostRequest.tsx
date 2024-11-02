@@ -138,7 +138,7 @@ export default function NewHostRequest({
         )}
       </Typography>
       {error && <Alert severity="error">{error.message}</Alert>}
-      {hostError?.message ? (
+      {hostError ? (
         <Alert severity={"error"}>{hostError?.message}</Alert>
       ) : (
         <form onSubmit={onSubmit}>

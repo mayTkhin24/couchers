@@ -26,29 +26,30 @@ export default function useFriendRequests(
   );
 
   const {
-    data: usersData,
-    isLoading: isUsersLoading,
-    error: userError,
+    data: liteUsersData,
+    isLoading: isLiteUsersLoading,
+    error: liteUserError,
   } = useLiteUsers(userIds);
 
   const errors = error
-    ? [error.message, userError?.message]
-    : userError?.message
-    ? [userError.message]
+    ? [error.message, liteUserError?.message]
+    : liteUserError?.message
+    ? [liteUserError.message]
     : [];
 
-  const isLoading = isFriendReqLoading || isUsersLoading;
+  const isLoading = isFriendReqLoading || isLiteUsersLoading;
 
-  const data =
-    !isLoading && usersData
-      ? (friendRequestLists ?? []).map((friendRequest) => ({
-          ...friendRequest,
-          friend: usersData.get(friendRequest.userId),
-        }))
-      : [];
+  const formattedFriendRequests = !liteUsersData
+    ? []
+    : (friendRequestLists ?? []).map((friendRequest) => ({
+        ...friendRequest,
+        friend: liteUsersData.get(friendRequest.userId),
+      }));
+
+  const data = !isLoading ? formattedFriendRequests : undefined;
 
   return {
-    data: isLoading ? undefined : data,
+    data,
     errors,
     isError: !!errors.length,
     isLoading,

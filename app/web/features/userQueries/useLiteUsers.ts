@@ -10,13 +10,18 @@ function useLiteUsers(ids: (number | undefined)[]) {
   const nonFalseyIds = ids?.filter((id): id is number => !!id);
   const query = useQuery<GetLiteUsersRes.AsObject, RpcError>({
     queryKey: liteUsersKey(nonFalseyIds),
-    queryFn: () => service.user.getLiteUsers(nonFalseyIds),
+    queryFn: () => {
+      const result = service.user.getLiteUsers(nonFalseyIds);
+      console.log("result: ", result);
+      return result;
+    },
     staleTime: userStaleTime,
     enabled: nonFalseyIds.length > 0, // run only if there are valid liteUserIds
   });
 
+  const isDataUndefined = !query.data || !query.data.responsesList;
   const usersById =
-    query.isLoading || query?.data?.responsesList === undefined
+    query.isLoading || isDataUndefined
       ? undefined
       : new Map(
           query?.data?.responsesList.map((response) => [
