@@ -101,7 +101,7 @@ describe("useLiteUsers & useLiteUser", () => {
       const error = new RpcError(500, "Some error", {});
       mockGetLiteUsers.mockRejectedValue(error);
 
-      const { result, waitForNextUpdate} = renderHook(
+      const { result, waitForNextUpdate } = renderHook(
         () => useLiteUsers([1, 2, 3]),
         { wrapper }
       );
@@ -224,9 +224,7 @@ describe("useLiteUsers & useLiteUser", () => {
       expect(mockGetLiteUsers).toHaveBeenCalledTimes(1);
 
       // Mock a new response for the refetch
-      mockGetLiteUsers.mockRejectedValue(
-        new RpcError(500, "Some error", {})
-      );
+      mockGetLiteUsers.mockRejectedValue(new RpcError(500, "Some error", {}));
 
       // Invalidate the query to mark the data as stale
       queryClient.invalidateQueries(liteUsersKey(ids));
@@ -408,9 +406,7 @@ describe("useLiteUsers & useLiteUser", () => {
       expect(mockGetLiteUser).toHaveBeenCalledTimes(1);
 
       // Mock a new response for the refetch
-      mockGetLiteUser.mockRejectedValue(
-        new RpcError(500, "Some error", {})
-      );
+      mockGetLiteUser.mockRejectedValue(new RpcError(500, "Some error", {}));
 
       // Invalidate the query to mark the data as stale
       queryClient.invalidateQueries(liteUserKey(1));
