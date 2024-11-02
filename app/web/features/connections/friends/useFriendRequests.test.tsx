@@ -164,7 +164,7 @@ describe("when the listFriendRequests succeeds", () => {
     });
   });
 
-  it("returns isError as true with the error if some getLiteUsers query failed", async () => {
+  it("returns isError as true with the error if the getLiteUsers query failed", async () => {
     const error = new Error("Error fetching users");
     getLiteUsersMock.mockRejectedValue(error);
     mockConsoleError();
