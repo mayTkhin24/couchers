@@ -84,8 +84,8 @@ export const layers: Record<LayerKeys, AnyLayer> = {
         ["boolean", ["feature-state", "selected"], false],
         theme.palette.secondary.main,
         ["==", ["get", "has_completed_profile"], true],
+        theme.palette.primary.main,
         theme.palette.grey[500],
-        theme.palette.grey[300],
       ],
       "icon-halo-width": 2,
       "icon-halo-color": [
@@ -93,7 +93,7 @@ export const layers: Record<LayerKeys, AnyLayer> = {
         ["boolean", ["feature-state", "selected"], false],
         theme.palette.secondary.main,
         ["==", ["get", "has_completed_profile"], true],
-        theme.palette.grey[500],
+        theme.palette.primary.main,
         theme.palette.grey[500],
       ],
       "icon-halo-blur": 2,
