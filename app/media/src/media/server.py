@@ -219,7 +219,7 @@ def create_app_from_env():
     MEDIA_UPLOAD_LOCATION = Path(os.environ["MEDIA_UPLOAD_LOCATION"])
 
     # CORS allowed origin
-    MEDIA_CORS_ORIGIN = Path(os.environ["MEDIA_CORS_ORIGIN"])
+    MEDIA_CORS_ORIGIN = os.environ["MEDIA_CORS_ORIGIN"]
 
     THUMBNAIL_SIZE = 200
 
