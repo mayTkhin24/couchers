@@ -27,7 +27,7 @@ import {
   groupChatMessagesKey,
   groupChatsListKey,
 } from "features/queryKeys";
-import useUsers from "features/userQueries/useUsers";
+import { useLiteUsers } from "features/userQueries/useLiteUsers";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { RpcError } from "grpc-web";
 import { useTranslation } from "i18n";
@@ -196,7 +196,9 @@ export default function GroupChatView({ chatId }: { chatId: number }) {
   //for title text
   const currentUserId = useAuthContext().authState.userId!;
   const isChatAdmin = groupChat?.adminUserIdsList.includes(currentUserId);
-  const groupChatMembersQuery = useUsers(groupChat?.memberUserIdsList ?? []);
+  const groupChatMembersQuery = useLiteUsers(
+    groupChat?.memberUserIdsList ?? []
+  );
 
   const {
     data: messagesRes,
