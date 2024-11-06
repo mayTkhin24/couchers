@@ -30,16 +30,15 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     position: "absolute",
-    top: '50%',
-    transform: 'translateY(-50%)',
+    top: "50%",
+    transform: "translateY(-50%)",
     right: theme.spacing(1),
-  }
+  },
 }));
 
 export default function CookieBanner() {
   const { t } = useTranslation();
   const classes = useStyles();
-  // const [hasSeen, setHasSeen] = usePersistedState("hasSeenCookieBanner", false);
   // since we are using localStorage, make sure don't render unless mounted
   // or there will be hydration mismatches
   const isMounted = useIsMounted().current;
@@ -47,8 +46,6 @@ export default function CookieBanner() {
   const [hasSeen, setHasSeen] = usePersistedState("hasSeenCookieBanner", false);
 
   if (auth.authState.authenticated) return null;
-
-
 
   //specifically not using our snackbar, which is designed for alerts
   return isMounted && !hasSeen ? (
