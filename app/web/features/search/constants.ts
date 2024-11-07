@@ -28,9 +28,7 @@ export const selectedUserZoom = 10;
 
 export type Coordinates = [number, number, number, number];
 
-export type MapClickedCallback = (
-  ev: MapLayerMouseEvent
-) => void;
+export type MapClickedCallback = (ev: MapLayerMouseEvent) => void;
 
 export interface SearchParams extends UserSearchFilters {
   location?: string;
