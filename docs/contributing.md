@@ -1,17 +1,17 @@
 # Developer Contributor Guide
 
-We collaborate on code through git, hosted on GitHub. If you are a software engineer (web/mobile/backend), you should request write access to the codebase. If you'd like to contribute regularly, reach out to @aapeliv or @bakeiro to join our Slack channel. This is where our main communication happens. We also do video meetings every week where we discuss priorities, architecture, etc.
+We collaborate on code through git, hosted on GitHub. If you are a software engineer (web/mobile/backend), you should request write access to the codebase. If you'd like to contribute regularly, reach out to @aapeliv to join our Slack channel. This is where our main communication happens. We also do video meetings every week where we discuss priorities, architecture, etc.
 
 ## Finding an issue
 
 If you are looking for something to help with related to software development, our [Couchers Engineering](https://github.com/orgs/Couchers-org/projects/6) project board is the best place to look! We keep track of the prioritized issues there.
 
 
-Tickets that are ready are under the "Ready" column. The higher the ticket, the bigger the priority, so try to choose from the top if you can. You can also choose a ticket from the "Abandoned" column if you want. These are tickets that were started, but abandoned and need someone to take them over the finish line.
+Tickets that are ready to be picked up are under the "Ready" column. The higher the ticket, the bigger the priority, so try to choose from the top if you can. You can also choose a ticket from the "Abandoned" column if you want. These are tickets that were started, but abandoned and need someone to take them over the finish line.
 
 Once you begin a ticket, please assign yourself to it and move it into the "In Progress" column so we know who is working on what. 
 
-If you need clarification on a ticket, you can leave a comment and tag a contributor, or even better, leave a comment on our Slack Channel (reach out to @aapeliv or @bakeiro to join).
+If you need clarification on a ticket, you can leave a comment and tag a contributor, or even better, leave a comment on our Slack Channel (reach out to @aapeliv to join).
 
 ## The development process
 
