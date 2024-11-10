@@ -15,7 +15,7 @@ If you need clarification on a ticket, you can leave a comment and tag a contrib
 
 ## The development process
 
-All our code is in one repository (monorepo). We currently use the pull request model as our git workflow, our main development branch is `develop`.
+All our code is in one repository (monorepo). We currently use the pull request model as our git workflow, our main development branch is `develop`. 
 
 1. Create a new branch off `develop`:
     - `git switch develop`
