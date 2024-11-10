@@ -1,11 +1,11 @@
+import { MailOutline } from "@mui/icons-material";
 import {
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Typography,
-} from "@material-ui/core";
-import { MailOutline } from "@material-ui/icons";
+} from "@mui/material";
 import Alert from "components/Alert";
 import CustomColorSwitch from "components/CustomColorSwitch";
 import { NotificationNewIcon } from "components/Icons";
@@ -124,7 +124,7 @@ export default function NotificationSettingsSubListItem({
         )}
       </Typography>
       <List component="div" disablePadding>
-        <ListItem button className={classes.nested}>
+        <ListItem component="button" className={classes.nested}>
           <ListItemIcon>
             <NotificationNewIcon fontSize="medium" />
           </ListItemIcon>
@@ -137,7 +137,7 @@ export default function NotificationSettingsSubListItem({
             status={status}
           />
         </ListItem>
-        <ListItem button className={classes.nested}>
+        <ListItem component="button" className={classes.nested}>
           <ListItemIcon>
             <MailOutline fontSize="medium" />
           </ListItemIcon>

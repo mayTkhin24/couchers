@@ -1,4 +1,5 @@
-import { Container, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Container, Grid, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import Divider from "components/Divider";
 import HtmlMeta from "components/HtmlMeta";
 import PageTitle from "components/PageTitle";

@@ -1,4 +1,4 @@
-import { Alert as MuiAlert } from "@material-ui/lab/";
+import { Alert as MuiAlert } from "@mui/lab/";
 import { usePersistedState } from "platform/usePersistedState";
 import React, { useEffect } from "react";
 

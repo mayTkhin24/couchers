@@ -1,4 +1,4 @@
-import { FormControlLabel, Typography } from "@material-ui/core";
+import { FormControlLabel, Typography } from "@mui/material";
 import classNames from "classnames";
 import Alert from "components/Alert";
 import Button from "components/Button";
@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
     justifyItems: "start",
   },
   container: {
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       gridTemplateColumns: "1fr",
-      gridGap: theme.spacing(2),
+      gap: theme.spacing(2),
     },
     display: "grid",
   },

@@ -5,10 +5,10 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Skeleton,
   Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Skeleton } from "@material-ui/lab";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import Datepicker from "components/Datepicker";

@@ -1,4 +1,5 @@
-import { Chip, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import { Chip, useMediaQuery, useTheme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import React, { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export function EnvironmentBanner() {
   const theme = useTheme();
   const classes = useStyles();
-  const isBelowSm = useMediaQuery(theme.breakpoints.down("sm"));
+  const isBelowSm = useMediaQuery(theme.breakpoints.down("md"));
   const [isShown, setIsShown] = useState(
     process.env.NEXT_PUBLIC_COUCHERS_ENV !== "prod"
   );

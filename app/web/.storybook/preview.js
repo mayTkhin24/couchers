@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@material-ui/core";
+import { ThemeProvider, StyledEngineProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import { theme } from "../theme";
@@ -25,17 +25,19 @@ export const decorators = [
       },
     });
     return (
-      <Suspense fallback="loading...">
+      (<Suspense fallback="loading...">
         <AuthContext.Provider
           value={{ authState: { authenticated: true, userId: 1 } }}
         >
-          <ThemeProvider theme={theme}>
-            <QueryClientProvider client={client}>
-              <Story {...context} />
-            </QueryClientProvider>
-          </ThemeProvider>
+          <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>
+              <QueryClientProvider client={client}>
+                <Story {...context} />
+              </QueryClientProvider>
+            </ThemeProvider>
+          </StyledEngineProvider>
         </AuthContext.Provider>
-      </Suspense>
+      </Suspense>)
     );
   },
 ];

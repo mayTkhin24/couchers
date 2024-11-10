@@ -6,7 +6,7 @@ import {
   Link as MuiLink,
   Theme,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { eventImagePlaceholderUrl } from "appConstants";
 import Alert from "components/Alert";
 import Button from "components/Button";
@@ -226,13 +226,11 @@ export default function EventPage({
           {eventError?.message || setEventAttendanceError?.message || ""}
         </Alert>
       )}
-
       {showInviteCommunitySuccess && (
         <Snackbar severity="success">
           {t("communities:invite_community_dialog.toast_success")}
         </Snackbar>
       )}
-
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -261,7 +259,10 @@ export default function EventPage({
                     >
                       {t("communities:virtual_event")}
                     </Typography>
-                    <MuiLink href={event.onlineInformation.link}>
+                    <MuiLink
+                      href={event.onlineInformation.link}
+                      underline="hover"
+                    >
                       {t("communities:event_link")}
                     </MuiLink>
                   </div>

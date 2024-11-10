@@ -1,5 +1,5 @@
-import { CircularProgress, Typography } from "@material-ui/core";
-import { Alert, Alert as MuiAlert } from "@material-ui/lab/";
+import { Alert, Alert as MuiAlert } from "@mui/lab/";
+import { CircularProgress, Typography } from "@mui/material";
 import HtmlMeta from "components/HtmlMeta";
 import PageTitle from "components/PageTitle";
 import { AUTH } from "i18n/namespaces";

@@ -1,4 +1,4 @@
-import { Chip, SvgIcon } from "@material-ui/core";
+import { Chip, SvgIcon } from "@mui/material";
 import classNames from "classnames";
 import { useAuthContext } from "features/auth/AuthProvider";
 import Link from "next/link";

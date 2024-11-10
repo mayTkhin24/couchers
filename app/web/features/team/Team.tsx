@@ -4,9 +4,9 @@ import {
   CardContent,
   Container,
   Grid,
-  makeStyles,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import Button from "components/Button";
 import HtmlMeta from "components/HtmlMeta";
 import { EmailIcon, GlobeIcon, LinkedInIcon, PinIcon } from "components/Icons";

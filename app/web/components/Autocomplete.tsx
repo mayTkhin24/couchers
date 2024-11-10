@@ -1,7 +1,7 @@
 import {
   Autocomplete as MuiAutocomplete,
   AutocompleteProps as MuiAutocompleteProps,
-} from "@material-ui/lab";
+} from "@mui/material";
 import classNames from "classnames";
 import React from "react";
 import makeStyles from "utils/makeStyles";
@@ -53,18 +53,19 @@ export default function Autocomplete<
   return (
     <MuiAutocomplete
       {...otherProps}
+      options={otherProps.options}
       className={classNames(classes.root, className)}
       id={id}
       renderInput={(params) => (
         <TextField
-          variant={variant}
           {...params}
+          variant={variant}
           error={!!error}
           label={label}
           placeholder={placeholder}
           helperText={error || helperText}
-          InputProps={
-            endAdornment
+          slotProps={{
+            input: endAdornment
               ? {
                   ...params.InputProps,
                   endAdornment: (
@@ -74,8 +75,8 @@ export default function Autocomplete<
                     </>
                   ),
                 }
-              : params.InputProps
-          }
+              : params.InputProps,
+          }}
         />
       )}
     ></MuiAutocomplete>

@@ -4,7 +4,7 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import {
   AccountSecurityIcon,
   AccountSettingsIcon,
@@ -87,7 +87,7 @@ export default function NotificationSettingsListItem({
   return (
     <>
       <ListItem
-        button
+        component="button"
         className={classes.listItem}
         onClick={handleCollapseClick}
       >

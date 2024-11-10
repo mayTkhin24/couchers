@@ -4,7 +4,7 @@ import {
   IconButton,
   InputLabel,
   Select,
-} from "@material-ui/core";
+} from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import {
@@ -111,6 +111,7 @@ export default function FlagButton({
         className={className}
         onClick={() => setIsOpen(true)}
         color="primary"
+        size="large"
       >
         <FlagIcon />
       </IconButton>

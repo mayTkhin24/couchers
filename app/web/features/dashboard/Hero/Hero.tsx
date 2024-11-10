@@ -1,4 +1,4 @@
-import { Container } from "@material-ui/core";
+import { Container } from "@mui/material";
 import { DASHBOARD } from "i18n/namespaces";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";

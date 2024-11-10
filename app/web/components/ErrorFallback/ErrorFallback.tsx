@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import Actions from "components/Actions";
 import Button from "components/Button";
 import ReportButton from "components/Navigation/ReportButton";

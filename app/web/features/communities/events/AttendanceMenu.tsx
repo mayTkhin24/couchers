@@ -1,5 +1,5 @@
-import { ListItemText } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { ListItemText } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import Button from "components/Button";
 import { CheckIcon, ExpandLessIcon, ExpandMoreIcon } from "components/Icons";
 import Menu, { MenuItem } from "components/Menu";
@@ -82,7 +82,6 @@ export default function AttendanceMenu({
         MenuListProps={{
           "aria-labelledby": buttonId,
         }}
-        getContentAnchorEl={null}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",

@@ -1,4 +1,4 @@
-import { Switch, SwitchProps } from "@material-ui/core";
+import { Switch, SwitchProps } from "@mui/material";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { theme } from "theme";

@@ -1,4 +1,4 @@
-import { Divider, Typography } from "@material-ui/core";
+import { Divider, Typography } from "@mui/material";
 import classNames from "classnames";
 import Alert from "components/Alert";
 import CircularProgress from "components/CircularProgress";
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
     bottom: 0,
     zIndex: 1,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       position: "absolute",
       background: `linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 1)), url("${MobileAuthBg.src}")`,
     },
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       alignSelf: "flex-end",
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       width: "100%",
     },
   },

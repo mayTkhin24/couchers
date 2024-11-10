@@ -1,4 +1,4 @@
-import { Snackbar, SnackbarCloseReason, Typography } from "@material-ui/core";
+import { Snackbar, SnackbarCloseReason, Typography } from "@mui/material";
 import IconButton from "components/IconButton";
 import { CloseIcon } from "components/Icons";
 import StyledLink from "components/StyledLink";
@@ -71,6 +71,7 @@ export default function CookieBanner() {
         <IconButton
           aria-label={t("close")}
           onClick={(e) => handleClose(e, "button")}
+          size="large"
         >
           <CloseIcon />
         </IconButton>

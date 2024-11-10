@@ -1,4 +1,4 @@
-import { Container } from "@material-ui/core";
+import { Container } from "@mui/material";
 import classNames from "classnames";
 import CircularProgress from "components/CircularProgress";
 import CookieBanner from "components/CookieBanner";

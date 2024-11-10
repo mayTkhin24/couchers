@@ -1,4 +1,4 @@
-import { Link as MuiLink, Typography } from "@material-ui/core";
+import { Link as MuiLink, Typography } from "@mui/material";
 import classNames from "classnames";
 import Button from "components/Button";
 import { COPYRIGHT, NON_PROFIT } from "components/Footer/constants";
@@ -235,6 +235,7 @@ function FooterLink({ href, children }: { href: string; children: ReactNode }) {
           color="textSecondary"
           target="_blank"
           rel="noopener"
+          underline="hover"
         >
           {children}
         </MuiLink>

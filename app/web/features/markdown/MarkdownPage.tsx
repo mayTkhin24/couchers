@@ -1,10 +1,5 @@
-import {
-  Breadcrumbs,
-  Container,
-  Link,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Breadcrumbs, Container, Link, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import HtmlMeta from "components/HtmlMeta";
 import markdown from "markdown-it";
 

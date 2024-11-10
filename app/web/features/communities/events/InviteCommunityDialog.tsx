@@ -1,4 +1,4 @@
-import { DialogProps, Link as MuiLink } from "@material-ui/core";
+import { DialogProps, Link as MuiLink } from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import {
@@ -59,6 +59,7 @@ export default function InviteCommunityDialog({
             href={
               "https://help.couchers.org/hc/couchersorg-help-center/articles/1720304409-how-does-the-invite-the-community-feature-work"
             }
+            underline="hover"
           >
             {t("communities:invite_community_dialog.link")}
           </MuiLink>

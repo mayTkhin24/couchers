@@ -1,4 +1,4 @@
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import { CalendarIcon } from "components/Icons";
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   eventsListContainer: {
     display: "grid",
     rowGap: theme.spacing(3),
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       //break out of page padding
       left: "50%",
       marginLeft: "-50vw",

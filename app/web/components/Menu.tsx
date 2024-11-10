@@ -3,7 +3,7 @@ import {
   MenuItem as MuiMenuItem,
   MenuItemProps as MuiMenuItemProps,
   MenuProps,
-} from "@material-ui/core";
+} from "@mui/material";
 import classNames from "classnames";
 import React from "react";
 import makeStyles from "utils/makeStyles";
@@ -45,7 +45,6 @@ export const MenuItem = React.forwardRef(
           [classes.itemMessage]: props.hasNotification,
           [classes.itemDivider]: props.hasBottomDivider,
         })}
-        button={true}
         ref={ref}
       />
     );

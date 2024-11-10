@@ -4,7 +4,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-} from "@material-ui/core";
+} from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import {

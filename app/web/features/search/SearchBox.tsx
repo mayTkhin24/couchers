@@ -6,7 +6,7 @@ import {
   Radio,
   RadioGroup,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { CrossIcon } from "components/Icons";
 import LocationAutocomplete from "components/LocationAutocomplete";
 import TextField from "components/TextField";
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     marginInlineStart: "auto",
   },
   mobileHide: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       display: "none",
     },
   },

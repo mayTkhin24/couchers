@@ -1,4 +1,5 @@
-import { Select, Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Button from "components/Button";
 import { AddIcon } from "components/Icons";
 import { MenuItem } from "components/Menu";
@@ -68,7 +69,7 @@ export default function References() {
   const { userId, friends } = useProfileUser();
   const { data: availableReferences } = useListAvailableReferences(userId);
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: SelectChangeEvent<ReferenceTypeState>) => {
     setReferenceType(event.target.value as ReferenceTypeState);
   };
 

@@ -1,4 +1,4 @@
-import { Divider, Typography } from "@material-ui/core";
+import { Divider, Typography } from "@mui/material";
 import classNames from "classnames";
 import Alert from "components/Alert";
 import HtmlMeta from "components/HtmlMeta";

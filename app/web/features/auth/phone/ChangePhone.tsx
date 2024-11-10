@@ -1,6 +1,6 @@
 import "react-phone-number-input/style.css";
 
-import { Typography, useMediaQuery, useTheme } from "@material-ui/core";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import StyledLink from "components/StyledLink";

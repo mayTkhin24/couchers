@@ -1,4 +1,4 @@
-import { Pagination } from "@material-ui/lab";
+import { Pagination } from "@mui/material";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useAuthContext } from "features/auth/AuthProvider";
 import { useTranslation } from "i18n";
@@ -29,8 +29,8 @@ jest.mock("features/auth/AuthProvider", () => ({
   useAuthContext: jest.fn(),
 }));
 
-jest.mock("@material-ui/lab", () => ({
-  ...jest.requireActual("@material-ui/lab"),
+jest.mock("@mui/lab", () => ({
+  ...jest.requireActual("@mui/lab"),
   Pagination: jest.fn(),
 }));
 

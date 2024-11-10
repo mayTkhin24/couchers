@@ -1,4 +1,4 @@
-import Hidden from "@material-ui/core/Hidden";
+import { useMediaQuery } from "@mui/material";
 import Alert from "components/Alert";
 import CircularProgress from "components/CircularProgress";
 import { useListAvailableReferences } from "features/profile/hooks/referencesHooks";
@@ -17,7 +17,7 @@ import makeStyles from "utils/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       margin: 0,
       width: "100%",
     },
@@ -46,6 +46,7 @@ export default function LeaveReferencePage({
 }) {
   const { t } = useTranslation([GLOBAL, PROFILE]);
   const classes = useStyles();
+  const isBelowSmall = useMediaQuery(theme.breakpoints.md("down"));
 
   const {
     data: user,
@@ -74,7 +75,6 @@ export default function LeaveReferencePage({
         </Alert>
       )}
       {(isUserLoading || isAvailableReferencesLoading) && <CircularProgress />}
-
       {availableReferences &&
         user &&
         ((referenceType ===
@@ -87,9 +87,9 @@ export default function LeaveReferencePage({
           )) ? (
           <div className={classes.root}>
             <ProfileUserProvider user={user}>
-              <Hidden smDown>
+              {isBelowSmall && (
                 <UserOverview showHostAndMeetAvailability={false} />
-              </Hidden>
+              )}
               <div className={classes.form}>
                 <ReferenceForm
                   hostRequestId={hostRequestId}

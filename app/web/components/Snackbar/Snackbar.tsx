@@ -1,5 +1,5 @@
-import { Snackbar as MuiSnackbar } from "@material-ui/core";
-import { Alert as MuiAlert } from "@material-ui/lab/";
+import { Alert as MuiAlert } from "@mui/lab/";
+import { Snackbar as MuiSnackbar } from "@mui/material";
 import { ReactNode, useState } from "react";
 
 import { grpcErrorStrings, ObscureGrpcErrorMessages } from "../../appConstants";

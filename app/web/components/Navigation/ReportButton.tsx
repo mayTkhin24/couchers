@@ -4,7 +4,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@material-ui/core";
+} from "@mui/material";
 import { supportEmail } from "appConstants";
 import Alert from "components/Alert";
 import Button from "components/Button";
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   startIcon: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       margin: 0,
     },
   },
@@ -68,7 +68,7 @@ export default function ReportButton({
 }) {
   const { t } = useTranslation("global");
   const theme = useTheme();
-  const isBelowMd = useMediaQuery(theme.breakpoints.down("sm"));
+  const isBelowMd = useMediaQuery(theme.breakpoints.down("md"));
 
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
@@ -174,7 +174,9 @@ export default function ReportButton({
               <Typography variant="body1" paragraph>
                 {t("report.content.dialog_message")}
               </Typography>
-              <Link href={`mailto:${supportEmail}`}>{supportEmail}</Link>
+              <Link href={`mailto:${supportEmail}`} underline="hover">
+                {supportEmail}
+              </Link>
             </DialogContent>
             <DialogActions>
               <Button

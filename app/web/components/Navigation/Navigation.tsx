@@ -2,14 +2,14 @@ import {
   AppBar,
   Badge,
   Drawer,
-  Hidden,
   IconButton,
   List,
   ListItem,
   Toolbar,
   Typography,
-} from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
+  useMediaQuery,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
 import classNames from "classnames";
 import Button from "components/Button";
 import { GlobalMessage } from "components/GlobalMessage";
@@ -46,6 +46,7 @@ import {
   teamRoute,
   volunteerRoute,
 } from "routes";
+import { theme } from "theme";
 import makeStyles from "utils/makeStyles";
 
 import LoggedInMenu from "./LoggedInMenu";
@@ -300,7 +301,7 @@ const useStyles = makeStyles((theme) => ({
   bug: {
     alignItems: "center",
     display: "flex",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       paddingRight: theme.spacing(2),
     },
   },
@@ -363,6 +364,8 @@ export default function Navigation() {
   const { authState } = useAuthContext();
 
   const [isMounted, setIsMounted] = useState(false);
+  const isBelowSmall = useMediaQuery(theme.breakpoints.down("md"));
+
   useEffect(() => setIsMounted(true), []);
 
   const { t } = useTranslation(GLOBAL);
@@ -374,7 +377,7 @@ export default function Navigation() {
           ? loggedInDrawerMenu
           : loggedOutDrawerMenu)(t, pingData).map(
           ({ name, route, notificationCount, externalLink }) => (
-            <ListItem button key={name}>
+            <ListItem component="button" key={name}>
               {externalLink ? (
                 <ExternalNavButton
                   route={route}
@@ -476,47 +479,52 @@ export default function Navigation() {
         }}
       >
         <div className={classes.nav}>
-          <Hidden mdUp implementation="css">
-            <IconButton
-              className={classes.icon}
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Drawer
-              variant="temporary"
-              anchor="left"
-              open={open}
-              onClick={handleDrawerClose}
-              ModalProps={{
-                keepMounted: true, // better open performance on mobile
-                onClose: handleDrawerClose,
-              }}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-            >
-              <div className={classes.drawerHeader}>
-                <div
-                  className={classNames(authClasses.logo, classes.drawerTitle)}
-                >
-                  {t("couchers")}
+          {isBelowSmall && (
+            <>
+              <IconButton
+                className={classes.icon}
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+              >
+                <MenuIcon sx={{ color: theme.palette.text.primary }} />
+              </IconButton>
+              <Drawer
+                variant="temporary"
+                anchor="left"
+                open={open}
+                onClick={handleDrawerClose}
+                ModalProps={{
+                  keepMounted: true, // better open performance on mobile
+                  onClose: handleDrawerClose,
+                }}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+              >
+                <div className={classes.drawerHeader}>
+                  <div
+                    className={classNames(
+                      authClasses.logo,
+                      classes.drawerTitle
+                    )}
+                  >
+                    {t("couchers")}
+                  </div>
+                  <IconButton
+                    className={classes.icon}
+                    aria-label="close drawer"
+                    onClick={handleDrawerClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
                 </div>
-                <IconButton
-                  className={classes.icon}
-                  aria-label="close drawer"
-                  onClick={handleDrawerClose}
-                >
-                  <CloseIcon />
-                </IconButton>
-              </div>
-              {drawerItems}
-            </Drawer>
-          </Hidden>
+                {drawerItems}
+              </Drawer>
+            </>
+          )}
           <CouchersLogo />
-          <Hidden smDown implementation="css">
+          {!isBelowSmall && (
             <div className={classes.flex}>
               {(authState.authenticated && isMounted
                 ? loggedInNavMenu
@@ -539,31 +547,29 @@ export default function Navigation() {
                   )
               )}
             </div>
-          </Hidden>
+          )}
         </div>
-        <Hidden implementation="css">
-          <div className={classes.menuContainer}>
-            <ReportButton />
-            {authState.authenticated && isMounted ? (
-              <LoggedInMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen}>
-                {menuItems}
-              </LoggedInMenu>
-            ) : (
-              <>
-                <Hidden smDown implementation="css">
-                  <Link href={signupRoute} passHref>
-                    <Button variant="contained" color="secondary">
-                      {t("sign_up")}
-                    </Button>
-                  </Link>
-                </Hidden>
-                <Link href={loginRoute} passHref>
-                  <Button variant="outlined">{t("login")}</Button>
+        <div className={classes.menuContainer}>
+          <ReportButton />
+          {authState.authenticated && isMounted ? (
+            <LoggedInMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen}>
+              {menuItems}
+            </LoggedInMenu>
+          ) : (
+            <>
+              {isBelowSmall && (
+                <Link href={signupRoute} passHref>
+                  <Button variant="contained" color="secondary">
+                    {t("sign_up")}
+                  </Button>
                 </Link>
-              </>
-            )}
-          </div>
-        </Hidden>
+              )}
+              <Link href={loginRoute} passHref>
+                <Button variant="outlined">{t("login")}</Button>
+              </Link>
+            </>
+          )}
+        </div>
       </Toolbar>
       <GlobalMessage />
     </AppBar>

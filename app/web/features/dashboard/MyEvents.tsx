@@ -3,7 +3,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@material-ui/core";
+} from "@mui/material";
 import classNames from "classnames";
 import Alert from "components/Alert";
 import Button from "components/Button";
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   upcomingEventContainer: {
     [theme.breakpoints.up("sm")]: {
       display: "grid",
-      gridGap: theme.spacing(3),
+      gap: theme.spacing(3),
       gridTemplateColumns: "repeat(2, 1fr)",
     },
   },
@@ -57,7 +57,7 @@ export default function MyEvents() {
   const { t } = useTranslation([COMMUNITIES, DASHBOARD]);
   const classes = { ...useCommunityPageStyles(), ...useStyles() };
   const theme = useTheme();
-  const isBelowSm = useMediaQuery(theme.breakpoints.down("xs"));
+  const isBelowSm = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { data, error, fetchNextPage, hasNextPage, isFetching, isLoading } =
     useInfiniteQuery<ListMyEventsRes.AsObject, RpcError>({

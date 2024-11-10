@@ -1,4 +1,4 @@
-import { CircularProgress, List, Typography } from "@material-ui/core";
+import { CircularProgress, List, Typography } from "@mui/material";
 import Snackbar from "components/Snackbar";
 import { AUTH } from "i18n/namespaces";
 import { useTranslation } from "next-i18next";

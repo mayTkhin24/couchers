@@ -1,5 +1,4 @@
-import { CircularProgress, Theme, useMediaQuery } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import { Alert, CircularProgress, Theme, useMediaQuery } from "@mui/material";
 import Button from "components/Button";
 import { ProfileUserProvider } from "features/profile/hooks/useProfileUser";
 import UserOverview from "features/profile/view/UserOverview";

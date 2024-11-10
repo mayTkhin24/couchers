@@ -7,7 +7,7 @@ import {
   FormHelperText,
   Typography,
   TypographyVariant,
-} from "@material-ui/core";
+} from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import { communityGuidelinesQueryKey } from "features/queryKeys";
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     display: "grid",
     gridTemplateColumns: "auto 1fr",
-    gridGap: theme.spacing(2, 2),
+    gap: theme.spacing(2, 2),
   },
   avatar: {
     backgroundColor: theme.palette.grey[300],

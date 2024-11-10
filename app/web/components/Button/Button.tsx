@@ -1,4 +1,4 @@
-import { Button as MuiButton, ButtonProps, useTheme } from "@material-ui/core";
+import { Button as MuiButton, ButtonProps, useTheme } from "@mui/material";
 import classNames from "classnames";
 import Sentry from "platform/sentry";
 import React, { ElementType, ForwardedRef, forwardRef } from "react";
