@@ -47,6 +47,7 @@ def create_app(
     main_server_address: str,
     main_server_use_ssl: bool,
     media_upload_location: Path,
+    media_cors_origin: str,
     thumbnail_size: int,
 ):
     # Create the directories
@@ -149,7 +150,7 @@ def create_app(
                 "full_url": f"{media_server_base_url}/img/full/{filename}",
                 "thumbnail_url": f"{media_server_base_url}/img/thumbnail/{filename}",
             })
-            res.access_control_allow_origin = "*"
+            res.access_control_allow_origin = media_cors_origin
             return res
         except Exception as e:
             os.remove(path)
@@ -217,6 +218,9 @@ def create_app_from_env():
 
     MEDIA_UPLOAD_LOCATION = Path(os.environ["MEDIA_UPLOAD_LOCATION"])
 
+    # CORS allowed origin
+    MEDIA_CORS_ORIGIN = os.environ["MEDIA_CORS_ORIGIN"]
+
     THUMBNAIL_SIZE = 200
 
     return create_app(
@@ -226,6 +230,7 @@ def create_app_from_env():
         MAIN_SERVER_ADDRESS,
         MAIN_SERVER_USE_SSL,
         MEDIA_UPLOAD_LOCATION,
+        MEDIA_CORS_ORIGIN,
         THUMBNAIL_SIZE,
     )
 
