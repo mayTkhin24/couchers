@@ -55,7 +55,6 @@ export default function Datepicker({
       rules={rules}
       render={({ value, onChange }) => (
         <DatePicker
-          className={className}
           data-testid={testId}
           label={label}
           value={value}
@@ -95,6 +94,7 @@ export default function Datepicker({
               }}
               InputProps={{
                 ...props.InputProps,
+                className,
                 "aria-label": t("components.datepicker.change_date"),
               }}
               variant="standard"
