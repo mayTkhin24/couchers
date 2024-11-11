@@ -1,7 +1,8 @@
-import { Switch, SwitchProps, styled } from "@mui/material";
+import { styled, Switch, SwitchProps } from "@mui/material";
 import { useEffect, useState } from "react";
-import CircularProgress from "./CircularProgress";
 import { theme } from "theme";
+
+import CircularProgress from "./CircularProgress";
 
 interface CustomSwitchProps extends Omit<SwitchProps, "color"> {
   checked: boolean;

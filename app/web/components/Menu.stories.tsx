@@ -11,7 +11,7 @@ export default {
 
 const Template: Story<any> = (args) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const menuAnchor = React.useRef<HTMLAnchorElement>(null);
+  const menuAnchor = React.useRef<HTMLButtonElement>(null);
   return (
     <>
       <Button onClick={() => setIsOpen(true)} ref={menuAnchor}>

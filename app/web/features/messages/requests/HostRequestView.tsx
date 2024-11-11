@@ -266,7 +266,7 @@ export default function HostRequestView({
           onClick={handleBack}
           aria-label={t("host_request_view.back_button_a11y_label")}
         >
-          <BackIcon fontSize={isMobile ? "small" : "default"} />
+          <BackIcon sx={{ fontSize: isMobile ? "small" : "default" }} />
         </HeaderButton>
 
         <PageTitle className={classes.title}>

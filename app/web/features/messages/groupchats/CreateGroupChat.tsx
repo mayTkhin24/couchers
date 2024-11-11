@@ -1,8 +1,4 @@
-import {
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
+import { ListItemAvatar, ListItemButton, ListItemText } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import Alert from "components/Alert";
 import Autocomplete from "components/Autocomplete";
