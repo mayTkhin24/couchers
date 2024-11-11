@@ -1,8 +1,9 @@
 import { Box, Button, Grid, Link } from "@mui/material";
-import Markdown from "components/Markdown";
 import TextField from "components/TextField";
-import React, { useState } from "react";
+import React, { lazy, useState } from "react";
 import makeStyles from "utils/makeStyles";
+
+const Markdown = lazy(() => import("components/MarkdownNoSSR"));
 
 const useStyles = makeStyles({
   reverseAlignment: {

@@ -1,15 +1,16 @@
 import { Typography, useTheme } from "@mui/material";
 import Divider from "components/Divider";
-import Markdown from "components/Markdown";
 import { useTranslation } from "i18n";
 import { GLOBAL, PROFILE } from "i18n/namespaces";
 import { User } from "proto/api_pb";
+import { lazy } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import makeStyles from "utils/makeStyles";
 
 import { useRegions } from "../hooks/useRegions";
 import { AgeGenderLanguagesLabels, RemainingAboutLabels } from "./userLabels";
 
+const Markdown = lazy(() => import("components/MarkdownNoSSR"));
 interface AboutProps {
   user: User.AsObject;
 }

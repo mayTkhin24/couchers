@@ -37,6 +37,7 @@ export type AppButtonProps<
   P = Record<string, unknown>
 > = ButtonProps<D, P> & {
   loading?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>;
 };
 
 function _Button<D extends ElementType = "button", P = Record<string, unknown>>(
@@ -56,10 +57,13 @@ function _Button<D extends ElementType = "button", P = Record<string, unknown>>(
   const [waiting, setWaiting] = useSafeState(isMounted, false);
   const classes = useStyles();
   const theme = useTheme();
-  async function asyncOnClick(event: unknown) {
+  async function asyncOnClick(event: React.MouseEvent<HTMLButtonElement>) {
     try {
       setWaiting(true);
+
+      if (onClick) {
       await onClick(event);
+      }
     } catch (e) {
       Sentry.captureException(e);
     } finally {

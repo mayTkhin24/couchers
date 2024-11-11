@@ -2,13 +2,14 @@ import { Card } from "@mui/material";
 import Alert from "components/Alert";
 import CircularProgress from "components/CircularProgress";
 import NewComment from "components/Comments/NewComment";
-import Markdown from "components/Markdown";
 import { useTranslation } from "next-i18next";
 import { Reply } from "proto/threads_pb";
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { service } from "service";
 import isGrpcError from "service/utils/isGrpcError";
 import makeStyles from "utils/makeStyles";
+
+const Markdown = lazy(() => import("components/MarkdownNoSSR"));
 
 const useStyles = makeStyles(() => ({
   card: {
