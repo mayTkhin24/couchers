@@ -147,13 +147,17 @@ export default function ReportButton({
           <>
             <DialogContent>
               <Button
-                onClick={() => setType("bug")}
+                onClick={() => {
+                  setType("bug");
+                }}
                 className={classes.typeButton}
               >
                 {t("report.bug.button_label")}
               </Button>
               <Button
-                onClick={() => setType("content")}
+                onClick={() => {
+                  setType("content");
+                }}
                 className={classes.typeButton}
               >
                 {t("report.content.button_label")}

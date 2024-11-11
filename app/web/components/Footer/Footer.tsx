@@ -25,6 +25,7 @@ import {
   tosRoute,
   volunteerRoute,
 } from "routes";
+import { theme } from "theme";
 import makeStyles from "utils/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
@@ -177,6 +178,10 @@ export default function Footer() {
               variant="outlined"
               color="primary"
               className={classes.button}
+              sx={{
+                color: theme.palette.common.black,
+                borderColor: theme.palette.grey[300],
+              }}
             >
               <GithubIcon />
               <span>{t("nav.github")}</span>
@@ -188,6 +193,10 @@ export default function Footer() {
                 variant="outlined"
                 color="primary"
                 className={classes.button}
+                sx={{
+                  color: theme.palette.common.black,
+                  borderColor: theme.palette.grey[300],
+                }}
               >
                 Powered by ▲
               </Button>

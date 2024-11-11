@@ -177,7 +177,7 @@ export default function PushNotificationSettings({
           onClick={
             isPushEnabled ? turnPushNotificationsOff : turnPushNotificationsOn
           }
-          color={theme.palette.primary.main}
+          customColor={theme.palette.primary.main}
           isLoading={isLoading}
         />
       </div>

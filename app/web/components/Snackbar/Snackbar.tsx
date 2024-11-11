@@ -1,4 +1,4 @@
-import { Alert as MuiAlert } from "@mui/lab/";
+import { Alert as MuiAlert } from "@mui/material";
 import { Snackbar as MuiSnackbar } from "@mui/material";
 import { ReactNode, useState } from "react";
 

@@ -1,5 +1,4 @@
-import { Alert as MuiAlert } from "@mui/lab/";
-import { Typography } from "@mui/material";
+import { Alert as MuiAlert, Typography } from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import { accountInfoQueryKey } from "features/queryKeys";

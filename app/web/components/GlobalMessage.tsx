@@ -1,4 +1,4 @@
-import { Alert as MuiAlert } from "@mui/lab/";
+import { Alert as MuiAlert } from "@mui/material";
 import { usePersistedState } from "platform/usePersistedState";
 import React, { useEffect } from "react";
 
@@ -34,6 +34,7 @@ export function GlobalMessage() {
         const response = await fetch(
           process.env.NEXT_PUBLIC_GLOBAL_MESSAGE_URL
         );
+        console.log("global message response", response);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

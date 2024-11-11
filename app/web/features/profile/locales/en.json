@@ -159,7 +159,8 @@
         "request_description": "Share your plans for the visit and include why you're requesting to stay with this particular host",
         "request_description_empty": "Please write a request message",
         "stay_type_a11y_text": "stay type",
-        "success": "Request sent!"
+        "success": "Request sent!",
+        "guest_count": "Number of guests"
     },
     "reference_filter_label": {
         "friend": "From friends",

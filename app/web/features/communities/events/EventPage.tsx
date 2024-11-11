@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { routeToEditEvent, routeToEvent } from "routes";
 import { service } from "service";
+import { theme } from "theme";
 import { timestamp2Date } from "utils/date";
 import dayjs from "utils/dayjs";
 import makeStyles from "utils/makeStyles";
@@ -289,6 +290,10 @@ export default function EventPage({
                         component="a"
                         variant="outlined"
                         disabled={event.isCancelled || isPastEvent}
+                        sx={{
+                          color: theme.palette.common.black,
+                          borderColor: theme.palette.grey[300],
+                        }}
                       >
                         {t("communities:edit_event")}
                       </Button>
@@ -347,6 +352,7 @@ export default function EventPage({
                 <Typography variant="h2">
                   {t("communities:details_subheading_colon")}
                 </Typography>
+                {/* @ts-ignore @TODO until we sort out the Markdown thing*/}
                 <Markdown source={event.content} topHeaderLevel={3} />
               </Card>
               <EventOrganizers eventId={event.eventId} />

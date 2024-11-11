@@ -13,6 +13,7 @@ import { ReferenceType } from "proto/references_pb";
 import React from "react";
 import { ReferenceStep, referenceTypeRoute } from "routes";
 import { ReferenceTypeStrings } from "service/references";
+import { theme } from "theme";
 import makeStyles from "utils/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +47,7 @@ export default function LeaveReferencePage({
 }) {
   const { t } = useTranslation([GLOBAL, PROFILE]);
   const classes = useStyles();
-  const isBelowSmall = useMediaQuery(theme.breakpoints.md("down"));
+  const isBelowSmall = useMediaQuery(theme.breakpoints.down("md"));
 
   const {
     data: user,

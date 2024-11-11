@@ -37,13 +37,16 @@ interface MenuItemProps extends Omit<MuiMenuItemProps, "className"> {
 
 export const MenuItem = React.forwardRef(
   (props: MenuItemProps, ref: React.ForwardedRef<HTMLLIElement>) => {
+    const { hasNotification, hasBottomDivider, ...restProps } = props;
+
     const classes = useStyles();
+
     return (
       <MuiMenuItem
-        {...props}
+        {...restProps}
         className={classNames(classes.item, {
-          [classes.itemMessage]: props.hasNotification,
-          [classes.itemDivider]: props.hasBottomDivider,
+          [classes.itemMessage]: hasNotification,
+          [classes.itemDivider]: hasBottomDivider,
         })}
         ref={ref}
       />

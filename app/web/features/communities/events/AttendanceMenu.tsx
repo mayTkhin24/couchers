@@ -7,6 +7,7 @@ import { useTranslation } from "i18n";
 import { COMMUNITIES } from "i18n/namespaces";
 import { AttendanceState } from "proto/events_pb";
 import { useState } from "react";
+import { theme } from "theme";
 
 const useStyles = makeStyles((theme) => ({
   menuListItem: {
@@ -66,6 +67,10 @@ export default function AttendanceMenu({
         loading={loading}
         variant={isAttending ? "outlined" : "contained"}
         disabled={disabled}
+        sx={{
+          color: isAttending ? theme.palette.common.black : theme.palette.common.white,
+          borderColor: theme.palette.grey[300],
+        }}
       >
         {isAttending
           ? t("communities:going_to_event")
