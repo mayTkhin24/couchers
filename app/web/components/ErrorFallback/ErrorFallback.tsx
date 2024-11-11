@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { baseRoute } from "routes";
 import makeStyles from "utils/makeStyles";
+import { theme } from "theme";
 
 const useStyles = makeStyles((theme) => ({
   report: {
@@ -38,7 +39,14 @@ export default function ErrorFallback({ isFatal }: { isFatal?: boolean }) {
       <Actions>
         {!isFatal && (
           <Link href={baseRoute} passHref>
-            <Button variant="outlined" component="a">
+            <Button
+              variant="outlined"
+              component="a"
+              sx={{
+                color: theme.palette.common.black,
+                borderColor: theme.palette.grey[300],
+              }}
+            >
               {t("error.fallback.home_page_link_label")}
             </Button>
           </Link>

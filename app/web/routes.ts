@@ -60,6 +60,8 @@ export function routeToEditProfile(tab?: EditUserTab) {
 const userBaseRoute = "/user";
 
 export function routeToUser(username: string, tab?: UserTab) {
+
+  console.log('routeToUser', username, tab);
   return `${userBaseRoute}/${username}${tab ? `/${tab}` : ""}`;
 }
 
