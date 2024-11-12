@@ -64,8 +64,8 @@ export default function Autocomplete<
           label={label}
           placeholder={placeholder}
           helperText={error || helperText}
-          slotProps={{
-            input: endAdornment
+          InputProps={
+            endAdornment
               ? {
                   ...params.InputProps,
                   endAdornment: (
@@ -75,8 +75,8 @@ export default function Autocomplete<
                     </>
                   ),
                 }
-              : params.InputProps,
-          }}
+              : params.InputProps
+          }
         />
       )}
     ></MuiAutocomplete>

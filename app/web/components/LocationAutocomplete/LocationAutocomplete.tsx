@@ -1,4 +1,4 @@
-import { AutocompleteChangeReason } from "@mui/material/useAutocomplete";
+import { AutocompleteChangeReason } from "@mui/material";
 import Autocomplete from "components/Autocomplete";
 import IconButton from "components/IconButton";
 import { SearchIcon } from "components/Icons";
