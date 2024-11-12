@@ -1,5 +1,5 @@
 import type {} from "@mui/lab/themeAugmentation";
-import { createTheme } from "@mui/material";
+import { createTheme, Theme } from "@mui/material";
 import { ThemeOptions } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
 
@@ -18,6 +18,11 @@ const navBarHeightXs = 3.5; //rem
 const navBarHeightSmUp = 4; //rem
 
 const breakpoints = createBreakpoints({});
+
+declare module "@mui/styles/defaultTheme" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
 
 declare module "@mui/material/styles" {
   interface Shape {

@@ -4,7 +4,6 @@ import "fonts";
 import {
   CssBaseline,
   StyledEngineProvider,
-  Theme,
   ThemeProvider,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -22,11 +21,6 @@ import React, { ReactNode, useEffect } from "react";
 import TagManager from "react-gtm-module";
 import { polyfill } from "seamless-scroll-polyfill";
 import { theme } from "theme";
-
-declare module "@mui/styles/defaultTheme" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
 
 type AppWithLayoutProps = Omit<AppProps, "Component"> & {
   Component: AppProps["Component"] & {
