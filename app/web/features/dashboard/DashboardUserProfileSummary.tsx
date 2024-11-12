@@ -7,6 +7,7 @@ import { DASHBOARD } from "i18n/namespaces";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import { routeToEditProfile, routeToProfile } from "routes";
+import { theme } from "theme";
 import makeStyles from "utils/makeStyles";
 
 import MinimalUserProfileCard from "./MinimalUserProfileCard";
@@ -21,7 +22,14 @@ function DashboardUserProfileSummaryActions() {
         </Button>
       </Link>
       <Link href={routeToProfile()} passHref>
-        <Button component="a" variant="outlined">
+        <Button
+          component="a"
+          variant="outlined"
+          sx={{
+            color: theme.palette.common.black,
+            borderColor: theme.palette.grey[300],
+          }}
+        >
           {t("dashboard:profile_summary_view")}
         </Button>
       </Link>
