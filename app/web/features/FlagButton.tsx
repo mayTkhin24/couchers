@@ -26,6 +26,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { service } from "service";
 import { ReportInput } from "service/reporting";
+import { theme } from "theme";
 import makeStyles from "utils/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
@@ -195,6 +196,10 @@ export default function FlagButton({
             <Button
               onClick={() => handleClose({}, "button")}
               variant="outlined"
+              sx={{
+                color: theme.palette.common.black,
+                borderColor: theme.palette.grey[300],
+              }}
             >
               {t("cancel")}
             </Button>
