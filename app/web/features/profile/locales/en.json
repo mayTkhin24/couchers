@@ -197,5 +197,6 @@
     "profile_tag_input": {
         "header_text": "Press 'Enter' to add\n<support_link>Email us</support_link> to add an entry",
         "remove_button_a11y_text": "Remove {{tag}}"
-    }
+    },
+    "view_in_admin_console": "View user in admin console"
 }
