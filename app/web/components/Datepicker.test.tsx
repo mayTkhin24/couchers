@@ -76,7 +76,7 @@ describe("DatePicker", () => {
     timezoneMock.register("US/Eastern");
     const mockDate = new Date("2021-03-20 00:00");
     //@ts-ignore - ts thinks we mock Date() but actually we want to mock new Date()
-    const spy = jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+    jest.spyOn(global, "Date").mockImplementation(() => mockDate);
 
     let date: Dayjs | undefined;
     render(<Form setDate={(d) => (date = d)} />, { wrapper });
@@ -87,16 +87,13 @@ describe("DatePicker", () => {
     await waitFor(() => {
       expect(date?.format().split("T")[0]).toBe(undefined);
     });
-
-    timezoneMock.unregister();
-    spy.mockRestore();
   });
 
   it("selecting today works with timezone UTC", async () => {
     timezoneMock.register("UTC");
     const mockDate = new Date("2021-03-20 00:00");
     //@ts-ignore - ts thinks we mock Date() but actually we want to mock new Date()
-    const spy = jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+    jest.spyOn(global, "Date").mockImplementation(() => mockDate);
 
     let date: Dayjs | undefined;
     render(<Form setDate={(d) => (date = d)} />, { wrapper });
@@ -113,7 +110,7 @@ describe("DatePicker", () => {
     timezoneMock.register("Europe/London");
     const mockDate = new Date("2021-03-20 00:00");
     //@ts-ignore - ts thinks we mock Date() but actually we want to mock new Date()
-    const spy = jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+    jest.spyOn(global, "Date").mockImplementation(() => mockDate);
 
     let date: Dayjs | undefined;
     render(<Form setDate={(d) => (date = d)} />, { wrapper });
@@ -130,7 +127,7 @@ describe("DatePicker", () => {
     timezoneMock.register("Brazil/East");
     const mockDate = new Date("2021-03-20 00:00");
     //@ts-ignore - ts thinks we mock Date() but actually we want to mock new Date()
-    const spy = jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+    jest.spyOn(global, "Date").mockImplementation(() => mockDate);
 
     let date: Dayjs | undefined;
     render(<Form setDate={(d) => (date = d)} />, { wrapper });
@@ -147,7 +144,7 @@ describe("DatePicker", () => {
     timezoneMock.register("Australia/Adelaide");
     const mockDate = new Date("2021-03-20 00:00");
     //@ts-ignore - ts thinks we mock Date() but actually we want to mock new Date()
-    const spy = jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+    jest.spyOn(global, "Date").mockImplementation(() => mockDate);
 
     let date: Dayjs | undefined;
     render(<Form setDate={(d) => (date = d)} />, { wrapper });

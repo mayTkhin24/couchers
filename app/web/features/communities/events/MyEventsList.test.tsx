@@ -15,7 +15,6 @@ jest.mock("../events/hooks", () => ({
   useListMyEvents: jest.fn(),
 }));
 
-
 jest.mock("@mui/material", () => ({
   ...jest.requireActual("@mui/material"),
   Pagination: jest.fn(),

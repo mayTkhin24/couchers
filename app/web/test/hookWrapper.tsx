@@ -1,4 +1,4 @@
-import { StyledEngineProvider, Theme, ThemeProvider } from "@mui/material";
+import { StyledEngineProvider, ThemeProvider } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React, { Suspense } from "react";

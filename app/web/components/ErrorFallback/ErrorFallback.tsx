@@ -8,8 +8,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { baseRoute } from "routes";
-import makeStyles from "utils/makeStyles";
 import { theme } from "theme";
+import makeStyles from "utils/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   report: {
