@@ -45,6 +45,11 @@ export default function ErrorFallback({ isFatal }: { isFatal?: boolean }) {
               sx={{
                 color: theme.palette.common.black,
                 borderColor: theme.palette.grey[300],
+
+                "&:hover": {
+                  borderColor: theme.palette.grey[300],
+                  backgroundColor: "#3135390A",
+                },
               }}
             >
               {t("error.fallback.home_page_link_label")}

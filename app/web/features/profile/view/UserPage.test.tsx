@@ -85,7 +85,7 @@ describe("User page", () => {
     });
 
     describe("and a tab is opened", () => {
-      it("updates the url with the chosen tab value", async () => {
+      it.only("updates the url with the chosen tab value", async () => {
         renderUserPage("funnycat");
 
         expect(mockRouter.pathname).toBe("/user/funnycat");
@@ -96,6 +96,7 @@ describe("User page", () => {
 
         // @TODO(NA) For the life of me cannot get this second click to work after mui v5 upgrade
         // It works in the real app though. Giving up for now.
+        // Mui introduced support for Next.js AppRouter, but we need to upgrade to Next v13 first for it, that might help
 
         // userEvent.click(await screen.findByText(sectionLabels(t).about));
 
@@ -118,6 +119,7 @@ describe("User page", () => {
 
       // @TODO(NA) For the life of me cannot get this second click to work after mui v5 upgrade
       // It works in the real app though. Giving up for now.
+      // Mui introduced support for Next.js AppRouter, but we need to upgrade to Next v13 first for it, that might help
 
       // userEvent.click(await screen.findByText(sectionLabels(t).about));
 

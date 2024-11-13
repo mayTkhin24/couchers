@@ -106,7 +106,19 @@ export default function MyEvents() {
           </HorizontalScroller>
           {hasNextPage && !isBelowSm && (
             <div className={classes.loaderContainer}>
-              <Button onClick={() => fetchNextPage()} variant="outlined">
+              <Button
+                onClick={() => fetchNextPage()}
+                variant="outlined"
+                sx={{
+                  color: theme.palette.common.black,
+                  borderColor: theme.palette.grey[300],
+
+                  "&:hover": {
+                    borderColor: theme.palette.grey[300],
+                    backgroundColor: "#3135390A",
+                  },
+                }}
+              >
                 {t("communities:see_more_events_label")}
               </Button>
             </div>

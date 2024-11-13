@@ -55,6 +55,11 @@ function LoggedInUserActions({ tab }: { tab: UserTab }) {
           sx={{
             color: theme.palette.common.black,
             borderColor: theme.palette.grey[300],
+
+            "&:hover": {
+              borderColor: theme.palette.grey[300],
+              backgroundColor: "#3135390A",
+            },
           }}
         >
           {t("profile:my_connections")}

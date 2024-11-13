@@ -72,6 +72,11 @@ export default function AttendanceMenu({
             ? theme.palette.common.black
             : theme.palette.common.white,
           borderColor: theme.palette.grey[300],
+
+          "&:hover": {
+            borderColor: theme.palette.grey[300],
+            backgroundColor: "#3135390A",
+          },
         }}
       >
         {isAttending
