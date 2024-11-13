@@ -6,7 +6,6 @@ import {
   StyledEngineProvider,
   ThemeProvider,
 } from "@mui/material";
-import { AppCacheProvider } from "@mui/material-nextjs/v13-pagesRouter";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { EnvironmentBanner } from "components/EnvironmentBanner";
@@ -54,20 +53,18 @@ function MyApp({ Component, pageProps }: AppWithLayoutProps) {
   return (
     <StyledEngineProvider injectFirst>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <AppCacheProvider {...pageProps}>
-          <ThemeProvider theme={theme}>
-            <ErrorBoundary isFatal>
-              <ReactQueryClientProvider>
-                <AuthProvider>
-                  <CssBaseline />
-                  <EnvironmentBanner />
-                  <HtmlMeta />
-                  {getLayout(React.createElement(Component, pageProps))}
-                </AuthProvider>
-              </ReactQueryClientProvider>
-            </ErrorBoundary>
-          </ThemeProvider>
-        </AppCacheProvider>
+        <ThemeProvider theme={theme}>
+          <ErrorBoundary isFatal>
+            <ReactQueryClientProvider>
+              <AuthProvider>
+                <CssBaseline />
+                <EnvironmentBanner />
+                <HtmlMeta />
+                {getLayout(React.createElement(Component, pageProps))}
+              </AuthProvider>
+            </ReactQueryClientProvider>
+          </ErrorBoundary>
+        </ThemeProvider>
       </LocalizationProvider>
     </StyledEngineProvider>
   );

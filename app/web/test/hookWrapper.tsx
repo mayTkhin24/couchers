@@ -1,5 +1,4 @@
 import { StyledEngineProvider, ThemeProvider } from "@mui/material";
-import { AppCacheProvider } from "@mui/material-nextjs/v13-pagesRouter";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React, { Suspense } from "react";
@@ -24,13 +23,11 @@ export default function hookWrapper({
     <Suspense fallback="loading...">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <StyledEngineProvider injectFirst>
-          <AppCacheProvider>
-            <ThemeProvider theme={theme}>
-              <QueryClientProvider client={client}>
-                <AuthProvider>{children}</AuthProvider>
-              </QueryClientProvider>
-            </ThemeProvider>
-          </AppCacheProvider>
+          <ThemeProvider theme={theme}>
+            <QueryClientProvider client={client}>
+              <AuthProvider>{children}</AuthProvider>
+            </QueryClientProvider>
+          </ThemeProvider>
         </StyledEngineProvider>
       </LocalizationProvider>
     </Suspense>
@@ -53,13 +50,11 @@ export function getHookWrapperWithClient() {
     <Suspense fallback="loading...">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <StyledEngineProvider injectFirst>
-          <AppCacheProvider>
-            <ThemeProvider theme={theme}>
-              <QueryClientProvider client={client}>
-                <AuthProvider>{children}</AuthProvider>
-              </QueryClientProvider>
-            </ThemeProvider>
-          </AppCacheProvider>
+          <ThemeProvider theme={theme}>
+            <QueryClientProvider client={client}>
+              <AuthProvider>{children}</AuthProvider>
+            </QueryClientProvider>
+          </ThemeProvider>
         </StyledEngineProvider>
       </LocalizationProvider>
     </Suspense>
