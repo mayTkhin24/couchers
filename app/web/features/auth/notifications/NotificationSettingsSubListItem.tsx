@@ -26,24 +26,6 @@ export interface NotificationSettingsSubListItemProps {
   push: boolean;
 }
 
-// const useStyles = makeStyles((theme) => ({
-//   descriptionText: {
-//     fontSize: theme.spacing(1.8),
-//     color: theme.palette.text.secondary,
-//   },
-//   nested: {
-//     display: "flex",
-//     paddingLeft: theme.spacing(4),
-//     width: "100%",
-//     "&:hover": {
-//       backgroundColor: "transparent",
-//     },
-//     "&:not(:first-child)": {
-//       borderTop: `1px solid ${theme.palette.divider}`,
-//     },
-//   },
-// }));
-
 const StyledDescriptionText = styled(Typography)(({ theme }) => ({
   fontSize: theme.spacing(1.8),
   color: theme.palette.text.secondary,
@@ -53,10 +35,13 @@ const StyledListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
   display: "flex",
   paddingLeft: theme.spacing(4),
   width: "100%",
+  background: "transparent",
+  border: "none",
+
   "&:hover": {
     backgroundColor: "transparent",
   },
-  "&:not(:first-child)": {
+  "&:not(:first-of-type)": {
     borderTop: `1px solid ${theme.palette.divider}`,
   },
 }));

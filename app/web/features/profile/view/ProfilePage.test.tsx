@@ -73,7 +73,8 @@ describe("Profile page", () => {
         // @TODO(NA) For the life of me cannot get this second click to work after mui v5 upgrade
         // It works in the real app though. Giving up for now.
         // Mui introduced support for Next.js AppRouter, but we need to upgrade to Next v13 first for it, that might help
-
+        // https://github.com/mui/material-ui/blob/HEAD/CHANGELOG.old.md#5140
+        
         // userEvent.click(await screen.findByText(t("profile:heading.about_me")));
 
         // expect(mockRouter.pathname).toBe("/profile/about");

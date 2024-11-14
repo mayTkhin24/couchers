@@ -22,11 +22,9 @@ export default {
   decorators: [
     (Story) => (
       <StyledEngineProvider injectFirst>
-        (
         <ThemeProvider theme={theme}>
           <Story />
         </ThemeProvider>
-        )
       </StyledEngineProvider>
     ),
   ],

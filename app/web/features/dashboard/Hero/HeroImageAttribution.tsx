@@ -45,7 +45,6 @@ export default function HeroImageAttribution() {
 
   return (
     <StyledEngineProvider injectFirst>
-      (
       <ThemeProvider theme={heroBackgroundTheme}>
         <Typography
           className={classes.attribution}
@@ -76,7 +75,6 @@ export default function HeroImageAttribution() {
           </Trans>
         </Typography>
       </ThemeProvider>
-      )
     </StyledEngineProvider>
   );
 }

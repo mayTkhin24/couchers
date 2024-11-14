@@ -29,37 +29,6 @@ interface GroupsByType {
   [key: string]: GroupAction[];
 }
 
-// const useStyles = makeStyles((theme) => ({
-//   descriptionText: {
-//     fontSize: theme.spacing(1.8),
-//     color: theme.palette.text.secondary,
-//   },
-//   list: {
-//     border: `1px solid ${theme.palette.divider}`,
-//     marginTop: theme.spacing(1),
-//     display: "flex",
-//     flexDirection: "column",
-//     padding: `0 ${theme.spacing(1)}`,
-//   },
-//   loading: {
-//     position: "absolute",
-//   },
-//   notificationSettingsContainer: {
-//     display: "flex",
-//     flexDirection: "column",
-//     padding: theme.spacing(4),
-//     margin: "0 auto",
-//     width: "100%",
-//     [theme.breakpoints.up("md")]: {
-//       width: "50%",
-//     },
-//   },
-//   notificationDescription: {
-//     margin: theme.spacing(1, 0),
-//     paddingBottom: theme.spacing(3),
-//   },
-// }));
-
 const StyledNotificationSettingsContainer = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",

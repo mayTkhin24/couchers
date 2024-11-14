@@ -31,10 +31,13 @@ export interface NotificationSettingsListItemProps {
 }
 
 const StyledListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
+  background: "transparent",
+  border: "none",
+
   "&:hover": {
     backgroundColor: "transparent",
   },
-  "&:not(:first-child)": {
+  "&:not(:first-of-type)": {
     borderTop: `1px solid ${theme.palette.divider}`,
   },
 }));

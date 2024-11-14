@@ -167,6 +167,15 @@ export default function ReportButton({
               <Button
                 onClick={() => handleClose({}, "button")}
                 variant="outlined"
+                sx={{
+                  color: theme.palette.common.black,
+                  borderColor: theme.palette.grey[300],
+
+                  "&:hover": {
+                    borderColor: theme.palette.grey[300],
+                    backgroundColor: "#3135390A",
+                  },
+                }}
               >
                 {t("cancel")}
               </Button>
@@ -186,6 +195,15 @@ export default function ReportButton({
               <Button
                 onClick={() => handleClose({}, "button")}
                 variant="outlined"
+                sx={{
+                  color: theme.palette.common.black,
+                  borderColor: theme.palette.grey[300],
+
+                  "&:hover": {
+                    borderColor: theme.palette.grey[300],
+                    backgroundColor: "#3135390A",
+                  },
+                }}
               >
                 {t("cancel")}
               </Button>
@@ -240,6 +258,15 @@ export default function ReportButton({
               <Button
                 onClick={() => handleClose({}, "button")}
                 variant="outlined"
+                sx={{
+                  color: theme.palette.common.black,
+                  borderColor: theme.palette.grey[300],
+        
+                  "&:hover": {
+                    borderColor: theme.palette.grey[300],
+                    backgroundColor: "#3135390A",
+                  },
+                }}
               >
                 {t("cancel")}
               </Button>
