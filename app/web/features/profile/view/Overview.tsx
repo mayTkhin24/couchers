@@ -1,7 +1,5 @@
 import Alert from "components/Alert";
 import Button from "components/Button";
-import IconButton from "components/IconButton";
-import { SettingsIcon } from "components/Icons";
 import ProfileIncompleteDialog from "components/ProfileIncompleteDialog/ProfileIncompleteDialog";
 import { useAuthContext } from "features/auth/AuthProvider";
 import useAccountInfo from "features/auth/useAccountInfo";
@@ -11,7 +9,6 @@ import MessageUserButton from "features/profile/actions/MessageUserButton";
 import UserOverview from "features/profile/view/UserOverview";
 import { GLOBAL, PROFILE } from "i18n/namespaces";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { HostingStatus } from "proto/api_pb";
 import { useState } from "react";
@@ -24,6 +21,7 @@ import {
 import makeStyles from "utils/makeStyles";
 
 import { useProfileUser } from "../hooks/useProfileUser";
+import AdminPanelUserButton from "./AdminPanelUserButton";
 
 const useStyles = makeStyles((theme) => ({
   modButtons: {
@@ -66,7 +64,6 @@ function DefaultActions({
 }) {
   const { t } = useTranslation([GLOBAL, PROFILE]);
   const classes = useStyles();
-  const router = useRouter();
   const user = useProfileUser();
   const disableHosting =
     user.hostingStatus === HostingStatus.HOSTING_STATUS_CANT_HOST;
@@ -110,20 +107,7 @@ function DefaultActions({
           contentRef={`profile/${user.userId}`}
           authorUser={user.userId}
         />
-
-        {accountInfo?.isSuperuser && (
-          <IconButton
-            aria-label={t("profile:view_in_admin_console")}
-            onClick={() =>
-              router.push(
-                `${process.env.NEXT_PUBLIC_CONSOLE_BASE_URL}/admin/user/${user.username}`
-              )
-            }
-            color="primary"
-          >
-            <SettingsIcon />
-          </IconButton>
-        )}
+        <AdminPanelUserButton username={user.username} />
       </div>
 
       {mutationError && <Alert severity="error">{mutationError}</Alert>}
