@@ -226,14 +226,14 @@ test:backend:
     # no docker login
     default: false
   services:
-    - name: postgis/postgis:16-3.4
+    - name: postgis/postgis:17-3.5
       alias: postgres
       command: ["postgres", "-c", "fsync=off"]
   variables:
     POSTGRES_PASSWORD: c765064a49d18a95
     DATABASE_CONNECTION_STRING: "postgresql://postgres:c765064a49d18a95@postgres/postgres"
   before_script:
-    # install latest postgres from their repos to get pg_dump compatible with postgres 13
+    # install latest postgres from their repos to get pg_dump compatible with later postgres
     - sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
     - wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
     - apt-get update
