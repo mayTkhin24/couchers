@@ -9,6 +9,8 @@ set -e
 sudo apt-get -y update
 sudo apt-get -y dist-upgrade
 
+sudo apt-get install -y age
+
 # install docker
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 sudo install -m 0755 -d /etc/apt/keyrings
