@@ -15,6 +15,7 @@ declare module "@mui/styles/defaultTheme" {
 
 const useStyles = makeStyles((theme) => ({
   textGradient: {
+    backgroundColor: "white",
     background: `-webkit-linear-gradient(0deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
     "-webkit-background-clip": "text",
     "-webkit-text-fill-color": "transparent",
@@ -38,12 +39,8 @@ export default function HeroButton() {
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={heroTheme}>
           <Link href={searchRoute} passHref>
-            <Button
-              className={classes.textGradient}
-              variant="contained"
-              size="large"
-            >
-              {t("show_map")}
+            <Button variant="contained" size="large">
+              <span className={classes.textGradient}>{t("show_map")}</span>
             </Button>
           </Link>
         </ThemeProvider>

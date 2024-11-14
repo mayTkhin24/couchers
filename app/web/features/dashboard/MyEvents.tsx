@@ -24,11 +24,13 @@ import makeStyles from "utils/makeStyles";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "grid",
-    justifyItems: "start",
     rowGap: theme.spacing(2),
     margin: theme.spacing(2, 0, 3),
   },
   upcomingEventContainer: {
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+
     [theme.breakpoints.up("sm")]: {
       display: "grid",
       gap: theme.spacing(3),
@@ -37,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
   },
   eventCard: {
     width: "90%",
-    [theme.breakpoints.up("sm")]: {
-      width: "auto",
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
     },
   },
   allUpcomingEventsLink: {
