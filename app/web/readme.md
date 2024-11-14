@@ -4,7 +4,7 @@ This is the react/nextjs web frontend for Couchers.org. We are using Typescript 
 
 Communication with the backend is via [protobuf messages](https://github.com/protocolbuffers/protobuf-javascript) over [grpc-web](https://github.com/grpc/grpc-web). You can find some helpful documentation on [protobuf messages in javascript here](https://protobuf.dev/protobuf-javascript/).
 
-*Readme last updated: 2024/09/11.*
+*Readme last updated: 2024/11/14.*
 
 ## Quick Start
 
@@ -69,6 +69,12 @@ If you're getting logged out right after logging in, it's possible that 3rd part
 This method uses the staging backend/database at <https://next.couchershq.org/> (what we call "next"), and the pre-built protos from today's `develop` branch (they change pretty rarely). You might eventually want to change both of these, but this should get you up and running!
 
 If you have any trouble, someone will be happy to help, just ask!
+
+## Logging in
+
+If you followed the Quick Start instructions, it points to the staging ("next") instance: please create a new account. It's separate from the prod instance but otherwise fully functional and you'll receive a real signup link.
+
+If you are running the backend locally, use username `aapeli` and password `Aapeli's password`.
 
 ## How to contribute
 
@@ -150,7 +156,7 @@ In the project directory, you can run:
 
 ### `yarn start`
 
-Runs the app in the development mode.<br />
+Runs the app in development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />

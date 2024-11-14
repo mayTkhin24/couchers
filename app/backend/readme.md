@@ -2,13 +2,13 @@
 
 This is the backend for Couchers.org built in Python. The React web frontend and React Native apps make API calls to it using [gRPC](https://grpc.io/) which are defined via [Protocol Buffers](https://protobuf.dev/). The business logic manipulates a [PostgreSQL](https://www.postgresql.org/) database via [SQLAlchemy](https://www.sqlalchemy.org/). Geospatial features are provided by the [PostGIS extension](https://postgis.net/).
 
-*Readme last updated: 2024/09/11.*
+*Readme last updated: 2024/11/14.*
 
 ## Quick Start
 
 *These instructions should work directly on Linux and macOS. If you are using Windows, please [install Ubuntu via WSL2](https://documentation.ubuntu.com/wsl/en/latest/guides/install-ubuntu-wsl2/), then follow these instructions inside Ubuntu.*
 
-You need Docker engine installed. Please refer to the [Docker install documentation](https://docs.docker.com/engine/install/) for how to get it.
+You need Docker engine installed. Please refer to the [Docker install documentation](https://docs.docker.com/engine/install/) for how to set it up.
 
 Next, run the follwoing commands to get up and running:
 
@@ -31,7 +31,7 @@ This will not currently run the frontend, to do that, please follow the instruct
 
 ### Running tests in docker
 
-You can run all tests in docker with the following command, executed in the `app` folder:
+You can run all backend tests in docker with the following command, executed in the `app` folder:
 
 ```sh
 docker compose -f docker-compose.test.yml up --build
@@ -46,7 +46,7 @@ docker compose -f docker-compose.test.yml up --no-deps postgres_tests
 
 ## Create a virtual environment and enter it, then install the requirements.
 cd backend
-python3.12 -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
@@ -56,12 +56,28 @@ DATABASE_CONNECTION_STRING="postgresql://postgres:06b3890acd2c235c41be0bbfe22f1b
 
 ## Q/A:
 
-Q: When running tests python is not connecting to the db. What do I do?
+### Q: I can't connect to the DB!
 
-A: Doublecheck that your DB test container is running. Then make sure the DATABASE_CONNECTION_STRING is similar to the one set in `backend.test.env`. Besides `localhost` it should be the same - if it is different the docs may be out of date. Please submit a PR to fix the docs.
-
-Q: I can't connect to the DB!
-
-A: First doublecheck what port the DB is listening on - run `docker compose up postgres` and it should say something like `listening on IPv6 address "::", port 6545`. Then doublecheck you have the right password. There are TWO passwords - one for the test db and one for the normal db! See app/postgres.dev.env and app/postgres.test.env
+**A**: First doublecheck what port the DB is listening on - run `docker compose up postgres` and it should say something like `listening on IPv6 address "::", port 6545`. Then doublecheck you have the right password. There are TWO passwords - one for the test db and one for the normal db! See app/postgres.dev.env and app/postgres.test.env
 
 [Here is information for debugging the backend inside VS Code](/docs/backend-in-vscode.md)
+
+### Q: I'm seeing issues with migrations or the database not being up to date!
+
+**A**: This happens when you either switch between branches that mutate the database or something else funny happens. The easiest way is to nuke the database:
+
+1. Stop postgres docker container
+2. Delete the `postgres` folder in `app/data`
+3. Re-run `docker compose up --build`
+
+If you have **any trouble**, send Aapeli a message on Slack. He's more than happy to spend a bit of time helping you set things up!
+
+### Q: How do I log in or sign up when developing?
+
+**A**: If you are using the local backend, you can log in with the username "aapeli" and the password "Aapeli's password". This comes from the [dummy data](https://github.com/Couchers-org/couchers/blob/develop/app/backend/src/data/dummy_users.json). For emails, see the next question.
+
+If you are using the live dev api ("next"/staging), it will send you real emails so you can sign up. However, all links will point to next.couchershq.org. If you want to open them with the couchers frontend you are working on locally, change the links to http://localhost:3000/rest/of/the/url.
+
+### Q: How do I receive emails like the signup confirmation email in local dev?
+
+**A**: We run [MailDev](https://github.com/maildev/maildev) with the docker compose setup: it will receive emails and let you browse them. To view emails, visit <http://localhost:1080>.

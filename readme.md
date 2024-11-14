@@ -16,7 +16,7 @@ If you found an issue with the app, or have a suggestion/feature you'd like to r
 
 If you are a **frontend developer**, we have an up to date Quick Start at [app/web/readme.md](app/web/readme.md).
 
-If you are a **backend developer**, there is also a Quick Start at [app/backend/readme.md](app/backend/readme.md).
+If you are a **backend or full stack developer**, there is a Quick Start at [app/backend/readme.md](app/backend/readme.md).
 
 <!-- If you are a developer, please read [docs/contributing.md](docs/contributing.md) on our development model. -->
 
