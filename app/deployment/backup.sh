@@ -22,8 +22,14 @@ tar cf - *.prod.env \
     aws s3 cp - s3://$AWS_BACKUP_BUCKET_NAME/config/config-$backup_time.tar.age \
   && echo "Done."
 
-echo "Backing up database..."
-# only dump `public` schema
+echo "Backing up database config..."
+docker exec -i app-postgres-1 pg_dumpall -U postgres --roles-only \
+  | age -r $CONFIG_FILE_AGE_PUBKEY \
+  | AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    aws s3 cp - s3://$AWS_BACKUP_BUCKET_NAME/db-roles/roles-$backup_time.sql.age \
+  && echo "Done."
+
+echo "Backing up database data..."
 docker exec -i app-postgres-1 pg_dump -U postgres \
   --exclude-table-data='logging.*' \
   --exclude-table-data='background_jobs' \

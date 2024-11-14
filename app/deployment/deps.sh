@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# works on ubuntu 22.04, tested on AWS
-# installs docker, docker-compose, aws-cli
+# works on ubuntu 24.04, tested on AWS
+# installs docker, docker-compose, aws-cli, age
 
 set -e
 
