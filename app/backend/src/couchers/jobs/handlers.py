@@ -524,7 +524,6 @@ def update_recommendation_scores(payload):
         User.occupation,
         User.education,
         User.about_me,
-        User.my_travels,
         User.things_i_like,
         User.about_place,
         User.additional_information,

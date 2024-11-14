@@ -155,9 +155,6 @@ class User(Base):
     pronouns = Column(String, nullable=True)
     birthdate = Column(Date, nullable=False)  # in the timezone of birthplace
 
-    # name as on official docs for verification, etc. not needed until verification
-    full_name = Column(String, nullable=True)
-
     avatar_key = Column(ForeignKey("uploads.key"), nullable=True)
 
     hosting_status = Column(Enum(HostingStatus), nullable=False)
@@ -169,7 +166,6 @@ class User(Base):
     occupation = Column(String, nullable=True)  # CommonMark without images
     education = Column(String, nullable=True)  # CommonMark without images
     about_me = Column(String, nullable=True)  # CommonMark without images
-    my_travels = Column(String, nullable=True)  # CommonMark without images
     things_i_like = Column(String, nullable=True)  # CommonMark without images
     about_place = Column(String, nullable=True)  # CommonMark without images
     additional_information = Column(String, nullable=True)  # CommonMark without images
