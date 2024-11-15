@@ -78,7 +78,7 @@ cat roles.sql | docker exec -i app-postgres-1 psql -U postgres
 gunzip -c bgjobs_and_emails.sql.gz | grep -v "pg_catalog.setval('public.background_jobs_id_seq'," | docker exec -i app-postgres-1 psql -U postgres
 # finally copy over logging
 # docker exec -i app-postgres-1 pg_dump -U postgres --data-only --table='logging.*' | zstd -11 > logging.sql.zstd
-unzstd -c logging.sql.zstd | docker exec -i app-postgres-1 psql -U postgres | tee restore-logging.log
+unzstd -c logging.sql.zstd | grep -v "pg_catalog.setval('logging.api_calls_id_seq'," | docker exec -i app-postgres-1 psql -U postgres | tee restore-logging.log
 ```
 
 #### GeoIP database
