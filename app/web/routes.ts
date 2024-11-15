@@ -168,3 +168,8 @@ export const strongVerificationURL = `${process.env.NEXT_PUBLIC_CONSOLE_BASE_URL
 export function adminPanelUserLink(username: string) {
   return `${process.env.NEXT_PUBLIC_CONSOLE_BASE_URL}/admin/user/${username}`;
 }
+
+export const howToRespondRequestGuideUrl =
+  "https://help.couchers.org/hc/couchersorg-help-center/articles/1715125658-what-are-some-things-i-should-think-about-before-responding-to-a-request";
+export const howToWriteRequestGuideUrl =
+  "https://help.couchers.org/hc/couchersorg-help-center/articles/1725943310-quick-reference-writing-great-requests";

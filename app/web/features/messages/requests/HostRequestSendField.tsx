@@ -17,7 +17,12 @@ import { HostRequest, RespondHostRequestReq } from "proto/requests_pb";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { UseMutationResult } from "react-query";
-import { leaveReferenceBaseRoute, referenceTypeRoute } from "routes";
+import {
+  howToRespondRequestGuideUrl,
+  howToWriteRequestGuideUrl,
+  leaveReferenceBaseRoute,
+  referenceTypeRoute,
+} from "routes";
 
 interface MessageFormData {
   text: string;
@@ -145,14 +150,10 @@ export default function HostRequestSendField({
         <div className={classes.helpTextContainer}>
           <Typography variant="body1">
             <Trans i18nKey="messages:host_pending_request_help_text">
-              Not sure how to respond? Read some tips on{" "}
-              <StyledLink
-                variant="body1"
-                href="https://help.couchers.org/hc/couchersorg-help-center/articles/1715658357-how-to-write-a-request-that-gets-accepted"
-              >
-                how to respond to a request
-              </StyledLink>
-              .
+              <StyledLink variant="body1" href={howToRespondRequestGuideUrl}>
+                Things to consider
+              </StyledLink>{" "}
+              before responding.
             </Trans>
           </Typography>
         </div>
@@ -161,14 +162,10 @@ export default function HostRequestSendField({
         <div className={classes.helpTextContainer}>
           <Typography variant="body1">
             <Trans i18nKey="messages:surfer_declined_request_help_text">
-              Having trouble getting your requests accepted? Read our{" "}
-              <StyledLink
-                variant="body1"
-                href="https://help.couchers.org/hc/couchersorg-help-center/articles/1715658357-how-to-write-a-request-that-gets-accepted"
-              >
-                guide on how to write a request that gets accepted
+              <StyledLink variant="body1" href={howToWriteRequestGuideUrl}>
+                Read our guide
               </StyledLink>{" "}
-              for some tips!
+              on how to write a request that will get accepted.
             </Trans>
           </Typography>
         </div>

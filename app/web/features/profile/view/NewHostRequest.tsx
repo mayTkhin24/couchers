@@ -24,6 +24,7 @@ import { GLOBAL, PROFILE } from "i18n/namespaces";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
+import { howToWriteRequestGuideUrl } from "routes";
 import { service } from "service";
 import { CreateHostRequestWrapper } from "service/requests";
 import { isSameOrFutureDate } from "utils/date";
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   helpText: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
   request: {
@@ -151,25 +152,6 @@ export default function NewHostRequest({
           t("profile:request_form.send_request", { name: user.name })
         )}
       </Typography>
-      <Typography variant="body1" className={classes.helpText}>
-        <Trans i18nKey="profile:request_form.guide_link_help_text">
-          Not quite sure how to send a great request? Read our{" "}
-          <StyledLink
-            variant="body1"
-            href="https://help.couchers.org/hc/couchersorg-help-center/articles/1715658357-how-to-write-a-request-that-gets-accepted"
-          >
-            quick reference on writing good requests
-          </StyledLink>{" "}
-          or our{" "}
-          <StyledLink
-            variant="body1"
-            href="https://help.couchers.org/hc/couchersorg-help-center/articles/1715658357-how-to-write-a-request-that-gets-accepted"
-          >
-            full guide on sending a request that gets accepted
-          </StyledLink>
-          .
-        </Trans>
-      </Typography>
       {error && <Alert severity="error">{error.message}</Alert>}
       {hostError ? (
         <Alert severity={"error"}>{hostError?.message}</Alert>
@@ -257,6 +239,14 @@ export default function NewHostRequest({
               )}
             </div>
           </div>
+          <Typography variant="body1" className={classes.helpText}>
+            <Trans i18nKey="profile:request_form.guide_link_help_text">
+              <StyledLink variant="body1" href={howToWriteRequestGuideUrl}>
+                Read our guide
+              </StyledLink>{" "}
+              on how to write a request that will get accepted.
+            </Trans>
+          </Typography>
           <TextField
             id="text"
             className={classes.requestField}
