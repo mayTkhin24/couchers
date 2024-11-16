@@ -1,6 +1,6 @@
 import { Divider, IconButton } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
-import { MenuIcon } from "components/Icons";
+import { MenuIcon, SinglePersonIcon } from "components/Icons";
 import Menu, { MenuItem } from "components/Menu";
 import { GLOBAL } from "i18n/namespaces";
 import Link from "next/link";
@@ -27,12 +27,16 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 999,
     backgroundColor: grey[200],
     padding: theme.spacing(1),
-    aspectRatio: "1/1",
     transition: `${theme.transitions.duration.short}ms ${theme.transitions.easing.easeInOut}`,
     "&:hover": {
       opacity: 0.8,
       backgroundColor: grey[300],
     },
+  },
+  userIcon: {
+    height: "2rem",
+    width: "2rem",
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -57,6 +61,7 @@ export default function GuestMenu({
         ref={menuRef}
       >
         <MenuIcon />
+        <SinglePersonIcon className={classes.userIcon} />
       </IconButton>
       <Menu
         id="navigation-menu"
