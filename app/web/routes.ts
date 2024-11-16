@@ -163,3 +163,8 @@ export const routeToEditCommunityPage = (id: number, slug: string) =>
 
 export const composingDiscussionHash = "new";
 export const volunteerRoute = "/volunteer";
+
+export const strongVerificationURL = `${process.env.NEXT_PUBLIC_CONSOLE_BASE_URL}/strong-verification`;
+export function adminPanelUserLink(username: string) {
+  return `${process.env.NEXT_PUBLIC_CONSOLE_BASE_URL}/admin/user/${username}`;
+}

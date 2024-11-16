@@ -22,9 +22,10 @@ import { theme } from "theme";
 import makeStyles from "utils/makeStyles";
 
 import { useProfileUser } from "../hooks/useProfileUser";
+import AdminPanelUserButton from "./AdminPanelUserButton";
 
 const useStyles = makeStyles((theme) => ({
-  flagButton: {
+  modButtons: {
     alignSelf: "center",
   },
 }));
@@ -114,11 +115,13 @@ function DefaultActions({
       <MessageUserButton user={user} setMutationError={setMutationError} />
       <FriendActions user={user} setMutationError={setMutationError} />
 
-      <FlagButton
-        className={classes.flagButton}
-        contentRef={`profile/${user.userId}`}
-        authorUser={user.userId}
-      />
+      <div className={classes.modButtons}>
+        <FlagButton
+          contentRef={`profile/${user.userId}`}
+          authorUser={user.userId}
+        />
+        <AdminPanelUserButton username={user.username} />
+      </div>
 
       {mutationError && <Alert severity="error">{mutationError}</Alert>}
     </>
