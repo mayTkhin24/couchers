@@ -57,7 +57,6 @@ export default function ProfilePage({ tab = "about" }: { tab?: UserTab }) {
             <UserCard
               tab={tab}
               onTabChange={(newTab) => {
-                console.log("ProfilePage onTabChange", newTab);
                 router.push(routeToProfile(newTab));
               }}
             />

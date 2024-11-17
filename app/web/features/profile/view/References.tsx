@@ -111,7 +111,7 @@ export default function References() {
                 }}
                 passHref
               >
-                <Button startIcon={<AddIcon />} component="a">
+                <Button startIcon={<AddIcon />}>
                   {t("profile:write_reference")}
                 </Button>
               </Link>

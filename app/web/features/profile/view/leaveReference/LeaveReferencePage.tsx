@@ -88,7 +88,7 @@ export default function LeaveReferencePage({
           )) ? (
           <div className={classes.root}>
             <ProfileUserProvider user={user}>
-              {isBelowSmall && (
+              {!isBelowSmall && (
                 <UserOverview showHostAndMeetAvailability={false} />
               )}
               <div className={classes.form}>

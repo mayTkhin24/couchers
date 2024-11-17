@@ -60,7 +60,7 @@ function MyApp({ Component, pageProps }: AppWithLayoutProps) {
                 <CssBaseline />
                 <EnvironmentBanner />
                 <HtmlMeta />
-                {getLayout(React.createElement(Component, pageProps))}
+                {getLayout(<Component {...pageProps} />)}
               </AuthProvider>
             </ReactQueryClientProvider>
           </ErrorBoundary>
