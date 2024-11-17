@@ -25,6 +25,7 @@ import { HostingStatus, LanguageAbility, MeetupStatus } from "proto/api_pb";
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
+import { howToMakeGreatProfileUrl } from "routes";
 import { service, UpdateUserProfileData } from "service/index";
 import {
   useIsMounted,
@@ -160,10 +161,7 @@ export default function EditProfileForm() {
             <Typography variant="body1">
               <Trans i18nKey="profile:edit_profile_helper_text">
                 Looking for some inspiration on where to start?{" "}
-                <StyledLink
-                  variant="body1"
-                  href="https://help.couchers.org/hc/couchersorg-help-center/articles/1715658357-how-to-write-a-request-that-gets-accepted"
-                >
+                <StyledLink variant="body1" href={howToMakeGreatProfileUrl}>
                   Check out our guide on creating an awesome profile
                 </StyledLink>
                 .
