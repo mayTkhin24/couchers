@@ -175,7 +175,7 @@ export default function SearchPage({
       <HtmlMeta title={t("global:nav.map_search")} />
       <div className={classes.container}>
         {/* Desktop */}
-        {!isMobile&& (
+        {!isMobile && (
           <SearchResultsList
             searchType={searchType}
             setSearchType={setSearchType}
@@ -192,7 +192,7 @@ export default function SearchPage({
           />
         )}
         {/* Mobile */}
-        {isMobile&& (
+        {isMobile && (
           <Collapse
             in={!!selectedResult}
             timeout={theme.transitions.duration.standard}

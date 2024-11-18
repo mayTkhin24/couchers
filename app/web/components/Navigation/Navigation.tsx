@@ -486,7 +486,9 @@ export default function Navigation() {
                 onClick={handleDrawerOpen}
                 edge="start"
               >
-                <MenuIcon sx={{ color: theme.palette.text.primary, fontSize: 14 }} />
+                <MenuIcon
+                  sx={{ color: theme.palette.text.primary, fontSize: 14 }}
+                />
               </IconButton>
               <Drawer
                 variant="temporary"
