@@ -376,7 +376,18 @@ export default function Navigation() {
           ? loggedInDrawerMenu
           : loggedOutDrawerMenu)(t, pingData).map(
           ({ name, route, notificationCount, externalLink }) => (
-            <ListItem component="button" key={name}>
+            <ListItem
+              component="button"
+              key={name}
+              sx={{
+                background: "transparent",
+                border: "none",
+
+                "&:hover": {
+                  backgroundColor: grey[200],
+                },
+              }}
+            >
               {externalLink ? (
                 <ExternalNavButton
                   route={route}
