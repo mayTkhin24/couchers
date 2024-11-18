@@ -307,7 +307,7 @@ export default function DonationsBox() {
           }}
           defaultValue="monthly"
           render={({ onChange, value }) => (
-            <FormControl className={classes.formGroup}>
+            <FormControl variant="standard" className={classes.formGroup}>
               <RadioGroup
                 className={classes.donationsBoxRow}
                 aria-label={t("donations_box.recurrence_aria_label")}

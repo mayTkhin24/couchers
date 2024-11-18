@@ -54,6 +54,7 @@ export default function Select<T extends Record<string | number, string>>({
     >
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <MuiSelect
+        variant="standard"
         native={native}
         label={label}
         onChange={onChange}

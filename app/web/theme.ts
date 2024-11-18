@@ -1,7 +1,6 @@
 import type {} from "@mui/lab/themeAugmentation";
 import { createTheme, Theme } from "@mui/material";
 import { ThemeOptions } from "@mui/material/styles";
-import { createBreakpoints } from "@mui/system";
 
 declare module "@mui/material/styles/createTypography" {
   interface TypographyOptions {
@@ -16,8 +15,6 @@ const spacing = (factor: number) => `${0.5 * factor}rem`;
 const borderRadius = 4;
 const navBarHeightXs = 3.5; //rem
 const navBarHeightSmUp = 4; //rem
-
-const breakpoints = createBreakpoints({});
 
 declare module "@mui/styles/defaultTheme" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -41,7 +38,6 @@ declare module "@mui/material/styles" {
 }
 
 const themeOptions: ThemeOptions = {
-  breakpoints,
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -61,7 +57,7 @@ const themeOptions: ThemeOptions = {
     MuiInputBase: {
       styleOverrides: {
         input: {
-          fontSize: "1rem",
+          fontSize: "0.875rem",
         },
       },
     },
@@ -70,13 +66,16 @@ const themeOptions: ThemeOptions = {
         disableRipple: true,
       },
     },
-    MuiLink: {
-      defaultProps: {
-        variant: "body1",
+    // Bc this change in v5 https://github.com/mui/material-ui/pull/26458
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          // up-sm
+          "@media screen and (min-width: 600px)": {
+            minWidth: 160,
+          },
+        },
       },
-    },
-    MuiListItem: {
-      styleOverrides: { gutters: { paddingLeft: 0, paddingRight: 0 } },
     },
     MuiTabPanel: {
       styleOverrides: {
@@ -150,57 +149,33 @@ const themeOptions: ThemeOptions = {
     h1: {
       fontSize: "1.25rem", //20px
       fontWeight: "bold",
-      [breakpoints.up("md")]: {
-        fontSize: "1.5rem", //24px
-      },
     },
     h1Large: {
       fontSize: "1.5rem", //24px
-      [breakpoints.up("md")]: {
-        fontSize: "75rem", //28px
-      },
     },
     h2: {
       fontSize: "1rem", //16px
       fontWeight: "bold",
-      [breakpoints.up("md")]: {
-        fontSize: "1.25rem", //20px
-      },
     },
     h3: {
       fontSize: "0.875rem", //14px
       fontWeight: "bold",
-      [breakpoints.up("md")]: {
-        fontSize: "1rem", //16px
-      },
     },
     h4: {
       fontSize: "0.75rem", //12px
       fontWeight: "bold",
-      [breakpoints.up("md")]: {
-        fontSize: "0.875rem", //14px
-      },
     },
     h5: {
       fontSize: "0.75rem", //12px
       fontWeight: "bold",
-      [breakpoints.up("md")]: {
-        fontSize: "0.875rem", //14px
-      },
     },
     h6: {
       fontSize: "0.75rem", //12px
       fontWeight: "bold",
-      [breakpoints.up("md")]: {
-        fontSize: "0.875rem", //14px
-      },
     },
     overline: {
       fontSize: "0.875rem", //14px
       fontStyle: "italic",
-      [breakpoints.up("md")]: {
-        fontSize: "1rem", //14px
-      },
     },
     subtitle1: {
       fontSize: "1rem", //16px

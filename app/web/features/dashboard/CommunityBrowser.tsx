@@ -12,6 +12,7 @@ import { DASHBOARD } from "i18n/namespaces";
 import { Community } from "proto/communities_pb";
 import { useEffect, useRef, useState } from "react";
 import { routeToCommunity } from "routes";
+import { theme } from "theme";
 import makeStyles from "utils/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
@@ -186,6 +187,14 @@ function BrowserColumn({
             component="button"
             onClick={() => handleClick(community)}
             aria-selected={community.communityId === selected}
+            sx={{
+              background: "transparent",
+              border: "none",
+
+              "&:hover": {
+                background: "#3135390A",
+              },
+            }}
           >
             <ListItemText
               primaryTypographyProps={{

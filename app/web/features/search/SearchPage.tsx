@@ -78,7 +78,7 @@ export default function SearchPage({
   const classes = useStyles();
   const theme = useTheme();
   const map = useRef<MaplibreMap>();
-  const isAboveSmall = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   // State
   const [wasSearchPerformed, setWasSearchPerformed] = useState(false);
@@ -175,7 +175,7 @@ export default function SearchPage({
       <HtmlMeta title={t("global:nav.map_search")} />
       <div className={classes.container}>
         {/* Desktop */}
-        {!isAboveSmall && (
+        {!isMobile&& (
           <SearchResultsList
             searchType={searchType}
             setSearchType={setSearchType}
@@ -192,7 +192,7 @@ export default function SearchPage({
           />
         )}
         {/* Mobile */}
-        {isAboveSmall && (
+        {isMobile&& (
           <Collapse
             in={!!selectedResult}
             timeout={theme.transitions.duration.standard}

@@ -130,7 +130,7 @@ export default function CommunityGuidelines({
                       ),
                     }}
                     render={({ onChange, value }) => (
-                      <FormControl>
+                      <FormControl variant="standard">
                         <FormControlLabel
                           label={
                             <Typography variant="body1">

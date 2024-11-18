@@ -49,9 +49,9 @@ function HostingPreferenceCheckbox({
   register,
 }: HostingPreferenceCheckboxProps) {
   return (
-    <FormControl className={className} margin="dense">
+    <FormControl variant="standard" className={className} margin="dense">
       <FormControlLabel
-        control={<Checkbox color="primary" defaultChecked={defaultValue} />}
+        control={<Checkbox defaultChecked={defaultValue} />}
         label={label}
         name={name}
         inputRef={register}

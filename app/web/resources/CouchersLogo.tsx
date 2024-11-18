@@ -11,13 +11,14 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     fill: theme.palette.secondary.main,
-    height: theme.typography.pxToRem(50),
-    width: theme.typography.pxToRem(50),
+    height: theme.typography.pxToRem(40),
+    width: theme.typography.pxToRem(40),
   },
   sticker: {
-    fontSize: "0.8rem",
+    fontSize: "0.65rem",
     position: "absolute",
     transform: `rotate(15deg) translate(1.25rem, -0.625rem)`,
+    paddingTop: theme.spacing(0.1),
   },
 }));
 

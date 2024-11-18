@@ -318,6 +318,7 @@ export default function EditProfileForm() {
                         control={<Radio />}
                         label={
                           <TextField
+                            variant="standard"
                             onChange={(event) => onChange(event.target.value)}
                             value={other}
                           />

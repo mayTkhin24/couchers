@@ -220,6 +220,7 @@ export default function NewHostRequest({
                     {t("profile:request_form.guest_count")}
                   </InputLabel>
                   <Select
+                    variant="standard"
                     name="visitorCount"
                     value={numVisitors}
                     onChange={(event) =>

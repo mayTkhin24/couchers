@@ -269,7 +269,7 @@ export default function GroupChatView({ chatId }: { chatId: number }) {
               onClick={handleBack}
               aria-label={t("messages:chat_view.back_button.a11y_label")}
             >
-              <BackIcon sx={{ fontSize: isMobile ? "small" : "default" }} />
+              <BackIcon sx={{ fontSize: isMobile ? "small" : "large" }} />
             </HeaderButton>
 
             {groupChat?.isDm ? (
@@ -318,7 +318,7 @@ export default function GroupChatView({ chatId }: { chatId: number }) {
                 ref={menuAnchor}
               >
                 <OverflowMenuIcon
-                  sx={{ fontSize: isMobile ? "small" : "default" }}
+                  sx={{ fontSize: isMobile ? "small" : "large" }}
                 />
               </HeaderButton>
               <Menu

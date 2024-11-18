@@ -127,8 +127,7 @@ export default function AppRoute({
                 : "lg"
             }
           >
-            {/* Have to wrap this in a fragment because of https://github.com/mui-org/material-ui/issues/21711 */}
-            <>{children}</>
+            {children}
           </Container>
           {!noFooter && !isNativeEmbed && <Footer />}
         </>

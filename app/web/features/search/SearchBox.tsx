@@ -140,7 +140,11 @@ export default function SearchBox({
         />
       )}
       <div className={classes.flexRow}>
-        <FormControl className={classes.flexRow} component="fieldset">
+        <FormControl
+          variant="standard"
+          className={classes.flexRow}
+          component="fieldset"
+        >
           <RadioGroup
             className={classes.justifyContent}
             row

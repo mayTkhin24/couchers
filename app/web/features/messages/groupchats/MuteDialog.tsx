@@ -68,7 +68,7 @@ export default function MuteDialog({
         {muteMutation.error && (
           <Alert severity="error">{muteMutation.error.message}</Alert>
         )}
-        <FormControl component="fieldset">
+        <FormControl variant="standard" component="fieldset">
           <RadioGroup
             aria-labelledby="mute-dialog-title"
             value={selected ?? null}

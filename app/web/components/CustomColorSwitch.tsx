@@ -13,11 +13,7 @@ interface CustomSwitchProps extends Omit<SwitchProps, "color"> {
 }
 
 const StyledCircle = styled("div", {
-  shouldForwardProp: (prop) =>
-    prop !== "size" &&
-    prop !== "checked" &&
-    prop !== "customColor" &&
-    prop !== "isLoading",
+  shouldForwardProp: (prop) => prop !== "customColor" && prop !== "isLoading",
 })<CustomSwitchProps>(({ theme, size, checked, customColor, isLoading }) => ({
   display: "flex",
   alignItems: "center",
@@ -32,7 +28,7 @@ const StyledCircle = styled("div", {
   }),
 }));
 
-const dontPassProps = ["customColor", "checked", "isLoading", "status"];
+const dontPassProps = ["customColor", "isLoading", "status"];
 
 const StyledSwitch = styled(Switch, {
   shouldForwardProp: (prop) => !dontPassProps.includes(prop as string), // Filter out props that shouldn't be forwarded

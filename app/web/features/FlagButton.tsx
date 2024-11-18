@@ -146,6 +146,7 @@ export default function FlagButton({
                 name="reason"
                 render={({ onChange, value }) => (
                   <Select
+                    variant="standard"
                     className={classes.field}
                     native
                     value={value}

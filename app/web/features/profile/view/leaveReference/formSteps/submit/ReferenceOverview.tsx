@@ -26,16 +26,15 @@ export default function ReferenceOverview({
   const { t } = useTranslation([GLOBAL, PROFILE]);
   const classes = useReferenceStyles();
   const user = useProfileUser();
-  const isAboveSmall = useMediaQuery(theme.breakpoints.up("sm"));
+  const isAboveMedium = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <>
       <TextBody className={classes.text}>
         {t("profile:leave_reference.thank_you_message")}
       </TextBody>
-      {isAboveSmall && (
+      {!isAboveMedium && (
         <>
-          {" "}
           <TextBody className={classes.text}>
             {t("profile:leave_reference.writing_for_text")}
           </TextBody>

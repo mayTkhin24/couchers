@@ -367,7 +367,7 @@ export default function Navigation() {
   const { authState } = useAuthContext();
 
   const [isMounted, setIsMounted] = useState(false);
-  const isBelowSmall = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => setIsMounted(true), []);
 
@@ -482,7 +482,7 @@ export default function Navigation() {
         }}
       >
         <div className={classes.nav}>
-          {isBelowSmall && (
+          {isMobile && (
             <>
               <IconButton
                 className={classes.icon}
@@ -490,7 +490,7 @@ export default function Navigation() {
                 onClick={handleDrawerOpen}
                 edge="start"
               >
-                <MenuIcon sx={{ color: theme.palette.text.primary }} />
+                <MenuIcon sx={{ color: theme.palette.text.primary, fontSize: 14 }} />
               </IconButton>
               <Drawer
                 variant="temporary"
@@ -527,7 +527,7 @@ export default function Navigation() {
             </>
           )}
           <CouchersLogo />
-          {!isBelowSmall && (
+          {!isMobile && (
             <div className={classes.flex}>
               {(authState.authenticated && isMounted
                 ? loggedInNavMenu

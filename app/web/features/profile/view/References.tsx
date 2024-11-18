@@ -81,6 +81,7 @@ export default function References() {
             {t("profile:heading.references")}
           </Typography>
           <Select
+            variant="standard"
             classes={{ select: classes.referenceTypeSelect }}
             displayEmpty
             inputProps={{

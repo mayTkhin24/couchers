@@ -112,7 +112,7 @@ export default function SearchResult({
 }: SearchResultProps) {
   const { t } = useTranslation([GLOBAL, SEARCH]);
   const classes = useStyles();
-  const isBelowSmall = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <Card
@@ -137,7 +137,7 @@ export default function SearchResult({
           </div>
           <Typography noWrap>{user.city}</Typography>
         </UserSummary>
-        {!isBelowSmall && (
+        {!isMobile && (
           <LinesEllipsis
             text={stripMarkdown(aboutText(user, t))}
             maxLine={3}
@@ -145,7 +145,7 @@ export default function SearchResult({
             className={classes.about}
           />
         )}
-        {isBelowSmall && (
+        {isMobile && (
           <>
             <Typography variant="body1" className={classes.about}>
               {stripMarkdown(aboutText(user, t))}

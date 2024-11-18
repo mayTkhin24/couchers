@@ -114,7 +114,7 @@ export default function SearchResultsList({
   const selectedUserData = useUser(selectedResult?.userId);
   const { t } = useTranslation(SEARCH);
   const classes = useStyles();
-  const isBelowSmall = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const hasAtLeastOnePageResults =
     results && results?.pages[0]?.resultsList?.length !== 0;
@@ -135,7 +135,7 @@ export default function SearchResultsList({
   return (
     <Paper className={classes.mapResults}>
       {error && <Alert severity="error">{error}</Alert>}
-      {!isBelowSmall && (
+      {!isMobile && (
         <SearchBox
           searchType={searchType}
           setSearchType={setSearchType}
