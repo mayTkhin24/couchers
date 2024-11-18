@@ -286,8 +286,8 @@ const useStyles = makeStyles((theme) => ({
   },
   gutters: {
     [theme.breakpoints.up("md")]: {
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
     },
     justifyContent: "space-between",
     paddingLeft: 0,
@@ -342,10 +342,6 @@ const useStyles = makeStyles((theme) => ({
       opacity: 0.8,
       backgroundColor: grey[300],
     },
-  },
-  avatar: {
-    height: "2rem",
-    width: "2rem",
   },
   badge: {
     "& .MuiBadge-badge": {

@@ -1,6 +1,5 @@
 import { Divider, IconButton } from "@mui/material";
-import { grey } from "@mui/material/colors";
-import { MenuIcon } from "components/Icons";
+import { MenuIcon, SinglePersonIcon } from "components/Icons";
 import Menu, { MenuItem } from "components/Menu";
 import { GLOBAL } from "i18n/namespaces";
 import Link from "next/link";
@@ -23,16 +22,18 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    border: `1px solid ${grey[300]}`,
+    border: `1px solid ${theme.palette.grey[300]}`,
     borderRadius: 999,
-    backgroundColor: grey[200],
+    backgroundColor: theme.palette.grey[200],
     padding: theme.spacing(1),
-    aspectRatio: "1/1",
     transition: `${theme.transitions.duration.short}ms ${theme.transitions.easing.easeInOut}`,
     "&:hover": {
       opacity: 0.8,
-      backgroundColor: grey[300],
+      backgroundColor: theme.palette.grey[300],
     },
+  },
+  userIcon: {
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -56,7 +57,8 @@ export default function GuestMenu({
         onClick={() => setMenuOpen((prevMenuOpen: boolean) => !prevMenuOpen)}
         ref={menuRef}
       >
-        <MenuIcon />
+        <MenuIcon sx={{ fontSize: 18 }} />
+        <SinglePersonIcon className={classes.userIcon} sx={{ fontSize: 24 }} />
       </IconButton>
       <Menu
         id="navigation-menu"

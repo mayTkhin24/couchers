@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.65rem",
     position: "absolute",
     transform: `rotate(15deg) translate(1.25rem, -0.625rem)`,
-    paddingTop: theme.spacing(0.1),
   },
 }));
 
