@@ -56,8 +56,7 @@ export const useGroupChatViewStyles = makeStyles((theme) => ({
     },
 
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
+      padding: theme.spacing(0, 2),
     },
   },
   messageLoader: {
@@ -69,13 +68,13 @@ export const useGroupChatViewStyles = makeStyles((theme) => ({
   },
   pageWrapper: {
     height: `calc(100vh - ${theme.shape.navPaddingSmUp})`,
-    
-    [theme.breakpoints.down("sm")]: {
-      height: `calc(100vh - ${theme.shape.navPaddingXs} - 80px)`, // 80 is space for mobile browser url bar
-    },
     alignItems: "stretch",
     display: "flex",
     flexDirection: "column",
+
+    [theme.breakpoints.down("sm")]: {
+      height: `calc(100vh - ${theme.shape.navPaddingXs} - 80px)`, // 80 is space for mobile browser url bar
+    },
   },
   requestedDatesWrapper: {
     display: "flex",

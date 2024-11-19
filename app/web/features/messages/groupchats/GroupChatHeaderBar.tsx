@@ -27,7 +27,7 @@ import { theme } from "theme";
 import makeStyles from "utils/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
-  title: {
+  titleBox: {
     flexGrow: 1,
     width: "100%",
     display: "flex",
@@ -35,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
     marginInlineEnd: theme.spacing(2),
     marginInlineStart: theme.spacing(2),
     "& > *": { marginInlineEnd: theme.spacing(2) },
+  },
 
+  titleText: {
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.9rem",
     },
@@ -120,12 +122,13 @@ export default function GroupChatHeaderBar({
       <HeaderButton
         onClick={handleBack}
         aria-label={t("messages:chat_view.back_button.a11y_label")}
+        {...(isMobile ? { size: "small" } : {})}
       >
-        <BackIcon fontSize={isMobile ? "small" : "default"} />
+        <BackIcon fontSize={isMobile ? "small" : "medium"} />
       </HeaderButton>
 
       {groupChat?.isDm ? (
-        <div className={classes.title}>
+        <div className={classes.titleBox}>
           <Link
             href={`/user/${getDmUsername(
               groupChatMembersQuery,
@@ -133,7 +136,9 @@ export default function GroupChatHeaderBar({
             )}`}
           >
             <a>
-              <PageTitle>{title || <Skeleton width={100} />}</PageTitle>
+              <PageTitle className={classes.titleText}>
+                {title || <Skeleton width={100} />}
+              </PageTitle>
             </a>
           </Link>
           {unmuteMutation.isLoading ? (
@@ -143,17 +148,21 @@ export default function GroupChatHeaderBar({
               <MuteIcon
                 data-testid="mute-icon"
                 titleAccess={t("messages:chat_view.muted_icon.a11y_label")}
+                fontSize={isMobile ? "small" : "large"}
               />
             )
           )}
         </div>
       ) : (
-        <div className={classes.title}>
-          <PageTitle>{title || <Skeleton width={100} />}</PageTitle>
+        <div className={classes.titleBox}>
+          <PageTitle className={classes.titleText}>
+            {title || <Skeleton width={100} />}
+          </PageTitle>
           {groupChat?.muteInfo?.muted && (
             <MuteIcon
               data-testid="mute-icon"
               titleAccess={t("messages:chat_view.muted_icon.a11y_label")}
+              fontSize={isMobile ? "small" : "medium"}
             />
           )}
         </div>
@@ -166,8 +175,9 @@ export default function GroupChatHeaderBar({
           aria-haspopup="true"
           aria-controls="more-menu"
           innerRef={menuAnchor}
+          {...(isMobile ? { size: "small" } : {})}
         >
-          <OverflowMenuIcon fontSize={isMobile ? "small" : "default"} />
+          <OverflowMenuIcon fontSize={isMobile ? "small" : "medium"} />
         </HeaderButton>
         <Menu
           id="more-menu"

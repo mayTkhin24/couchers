@@ -51,6 +51,20 @@ const useLocalStyles = makeStyles((theme) => ({
     height: "2rem",
     width: "2rem",
   },
+  header: {
+    padding: theme.spacing(1, 2),
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    alignItems: "center",
+    display: "flex",
+    flexGrow: 0,
+    "& > * + *": {
+      marginInlineStart: theme.spacing(2),
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(0, 2),
+    },
+  },
   largeUserSummary: {
     borderBottom: `1px solid ${theme.palette.divider}`,
 
@@ -73,6 +87,19 @@ const useLocalStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     marginLeft: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    marginInlineEnd: theme.spacing(2),
+    marginInlineStart: theme.spacing(2),
+    "& > *": { marginInlineEnd: theme.spacing(2) },
+
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.9rem",
+    },
   },
 }));
 
@@ -262,15 +289,16 @@ export default function HostRequestView({
     <Alert severity="error">{t("host_request_view.error_message")}</Alert>
   ) : (
     <div className={classes.pageWrapper}>
-      <div className={classes.header}>
+      <div className={localClasses.header}>
         <HeaderButton
           onClick={handleBack}
           aria-label={t("host_request_view.back_button_a11y_label")}
+          {...(isMobile ? { size: "small" } : {})}
         >
-          <BackIcon fontSize={isMobile ? "small" : "default"} />
+          <BackIcon fontSize={isMobile ? "small" : "medium"} />
         </HeaderButton>
 
-        <PageTitle className={classes.title}>
+        <PageTitle className={localClasses.title}>
           {!title || hostRequestError ? <Skeleton width="100" /> : title}
         </PageTitle>
       </div>
@@ -308,28 +336,14 @@ export default function HostRequestView({
                     .map((page) => page.messagesList)
                     .flat()}
                 />
-                {isMobile && (
-                  <div className={classes.footer}>
-                    <HostRequestSendField
-                      hostRequest={hostRequest}
-                      sendMutation={sendMutation}
-                      respondMutation={respondMutation}
-                    />
-                  </div>
-                )}
               </InfiniteMessageLoader>
-              {/**
-               * If it's mobile we don't want the send field to be sticky, rather show in scrollable area at the bottom
-               */}
-              {!isMobile && (
-                <div className={classes.footer}>
-                  <HostRequestSendField
-                    hostRequest={hostRequest}
-                    sendMutation={sendMutation}
-                    respondMutation={respondMutation}
-                  />
-                </div>
-              )}
+              <div className={classes.footer}>
+                <HostRequestSendField
+                  hostRequest={hostRequest}
+                  sendMutation={sendMutation}
+                  respondMutation={respondMutation}
+                />
+              </div>
             </>
           )}
         </>
