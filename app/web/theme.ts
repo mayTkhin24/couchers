@@ -110,28 +110,6 @@ const themeOptions: ThemeOptions = {
     borderRadius,
     navPaddingSmUp: `${navBarHeightSmUp}rem`,
     navPaddingXs: `${navBarHeightXs}rem`,
-    scrollBar: {
-      "&::-webkit-scrollbar": {
-        background: "rgba(0,0,0,0)",
-        height: "0.5rem",
-        width: "0.5rem",
-      },
-      "&::-webkit-scrollbar:hover": {
-        background: "rgba(0,0,0,0.1)",
-        width: "0.5rem",
-      },
-      "&::-webkit-scrollbar-thumb": {
-        background: "rgba(0,0,0,0.2)",
-        borderRadius: "20px",
-      },
-      "&::-webkit-scrollbar-thumb:hover": {
-        background: "rgba(0,0,0,0.3)",
-      },
-      overflow: "auto",
-      paddingInlineEnd: spacing(1),
-      scrollbarHeight: "thin",
-      scrollbarWidth: "thin",
-    },
   },
   spacing: spacing,
   typography: {
