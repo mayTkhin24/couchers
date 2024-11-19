@@ -68,17 +68,14 @@ export const useGroupChatViewStyles = makeStyles((theme) => ({
     },
   },
   pageWrapper: {
-    [theme.breakpoints.up("sm")]: {
-      height: `calc(100vh - ${theme.shape.navPaddingSmUp})`,
-    },
+    height: `calc(100vh - ${theme.shape.navPaddingSmUp})`,
+    
     [theme.breakpoints.down("sm")]: {
-      height: `calc(100vh - ${theme.shape.navPaddingXs})`,
+      height: `calc(100vh - ${theme.shape.navPaddingXs} - 80px)`, // 80 is space for mobile browser url bar
     },
     alignItems: "stretch",
     display: "flex",
     flexDirection: "column",
-    // 56px = address bar height on mobile - https://dev.to/peiche/100vh-behavior-on-chrome-2hm8
-    height: `calc(100vh - ${theme.shape.navPaddingXs} - 56px - 80px)`,
   },
   requestedDatesWrapper: {
     display: "flex",
