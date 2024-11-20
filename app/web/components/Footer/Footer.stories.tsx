@@ -12,7 +12,7 @@ export default {
 const Template: Story = (args) => (
   <AppRoute isPrivate={false} variant={args.variant}>
     <Typography variant="h1">Page title</Typography>
-    <Typography>Page body</Typography>
+    <Typography variant="body1">Page body</Typography>
   </AppRoute>
 );
 
