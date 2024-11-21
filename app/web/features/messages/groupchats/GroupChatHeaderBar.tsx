@@ -1,5 +1,4 @@
-import { useMediaQuery } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
+import { Skeleton, styled, useMediaQuery } from "@mui/material";
 import CircularProgress from "components/CircularProgress";
 import HeaderButton from "components/HeaderButton";
 import { BackIcon, MuteIcon, OverflowMenuIcon } from "components/Icons";
@@ -24,25 +23,16 @@ import { useMutation, useQueryClient } from "react-query";
 import { groupChatsRoute } from "routes";
 import { service } from "service";
 import { theme } from "theme";
-import makeStyles from "utils/makeStyles";
 
-const useStyles = makeStyles((theme) => ({
-  titleBox: {
-    flexGrow: 1,
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    marginInlineEnd: theme.spacing(2),
-    marginInlineStart: theme.spacing(2),
-    "& > *": { marginInlineEnd: theme.spacing(2) },
-  },
-
-  titleText: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.9rem",
-    },
-  },
-}));
+const StyledTitleBox = styled("div")({
+  flexGrow: 1,
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  marginInlineEnd: theme.spacing(2),
+  marginInlineStart: theme.spacing(2),
+  "& > *": { marginInlineEnd: theme.spacing(2) },
+});
 
 export default function GroupChatHeaderBar({
   chatId,
@@ -58,7 +48,6 @@ export default function GroupChatHeaderBar({
   groupChatMembersQuery: any;
   title: string | undefined;
 }) {
-  const classes = useStyles();
   const router = useRouter();
   const queryClient = useQueryClient();
   const { t } = useTranslation([GLOBAL, MESSAGES]);
@@ -66,7 +55,7 @@ export default function GroupChatHeaderBar({
   const isChatAdmin = groupChat?.adminUserIdsList.includes(currentUserId);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const menuAnchor = useRef<HTMLAnchorElement>(null);
+  const menuAnchor = useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = useState({
     admins: false,
     invite: false,
@@ -122,13 +111,13 @@ export default function GroupChatHeaderBar({
       <HeaderButton
         onClick={handleBack}
         aria-label={t("messages:chat_view.back_button.a11y_label")}
-        {...(isMobile ? { size: "small" } : {})}
+        size={isMobile ? "small" : "medium"}
       >
         <BackIcon fontSize={isMobile ? "small" : "medium"} />
       </HeaderButton>
 
       {groupChat?.isDm ? (
-        <div className={classes.titleBox}>
+        <StyledTitleBox>
           <Link
             href={`/user/${getDmUsername(
               groupChatMembersQuery,
@@ -136,7 +125,13 @@ export default function GroupChatHeaderBar({
             )}`}
           >
             <a>
-              <PageTitle className={classes.titleText}>
+              <PageTitle
+                sx={{
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "0.9rem",
+                  },
+                }}
+              >
                 {title || <Skeleton width={100} />}
               </PageTitle>
             </a>
@@ -152,10 +147,16 @@ export default function GroupChatHeaderBar({
               />
             )
           )}
-        </div>
+        </StyledTitleBox>
       ) : (
-        <div className={classes.titleBox}>
-          <PageTitle className={classes.titleText}>
+        <StyledTitleBox>
+          <PageTitle
+            sx={{
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "0.9rem",
+              },
+            }}
+          >
             {title || <Skeleton width={100} />}
           </PageTitle>
           {groupChat?.muteInfo?.muted && (
@@ -165,7 +166,7 @@ export default function GroupChatHeaderBar({
               fontSize={isMobile ? "small" : "medium"}
             />
           )}
-        </div>
+        </StyledTitleBox>
       )}
 
       <>
@@ -174,10 +175,10 @@ export default function GroupChatHeaderBar({
           aria-label={t("messages:chat_view.actions_menu.a11y_label")}
           aria-haspopup="true"
           aria-controls="more-menu"
-          innerRef={menuAnchor}
-          {...(isMobile ? { size: "small" } : {})}
+          ref={menuAnchor}
+          size={isMobile ? "small" : "medium"}
         >
-          <OverflowMenuIcon fontSize={isMobile ? "small" : "medium"} />
+          <OverflowMenuIcon sx={{ fontSize: isMobile ? "small" : "medium" }} />
         </HeaderButton>
         <Menu
           id="more-menu"

@@ -1,11 +1,8 @@
-import makeStyles from "@mui/styles/makeStyles";
+import { styled } from "@mui/material";
 import Alert from "components/Alert";
-import CircularProgress from "components/CircularProgress";
 import HtmlMeta from "components/HtmlMeta";
 import { useAuthContext } from "features/auth/AuthProvider";
 import GroupChatSendField from "features/messages/groupchats/GroupChatSendField";
-import InfiniteMessageLoader from "features/messages/messagelist/InfiniteMessageLoader";
-import MessageList from "features/messages/messagelist/MessageList";
 import useMarkLastSeen, {
   MarkLastSeenVariables,
 } from "features/messages/useMarkLastSeen";
@@ -29,77 +26,56 @@ import {
 } from "react-query";
 import { service } from "service";
 
+import ChatContent from "./ChatContent";
 import { GROUP_CHAT_REFETCH_INTERVAL } from "./constants";
 import GroupChatHeaderBar from "./GroupChatHeaderBar";
 
-export const useGroupChatViewStyles = makeStyles((theme) => ({
-  footer: {
-    marginTop: "auto",
-    flexGrow: 0,
-    paddingBottom: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+const StyledHeader = styled("div")(({ theme }) => ({
+  padding: theme.spacing(1, 2),
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  alignItems: "center",
+  display: "flex",
+  flexGrow: 0,
+  "& > * + *": {
+    marginInlineStart: theme.spacing(2),
+  },
 
-    [theme.breakpoints.down("md")]: {
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
-    },
-  },
-  header: {
-    padding: theme.spacing(1, 2),
-    borderBottom: `1px solid ${theme.palette.divider}`,
-    alignItems: "center",
-    display: "flex",
-    flexGrow: 0,
-    "& > * + *": {
-      marginInlineStart: theme.spacing(2),
-    },
-
-    [theme.breakpoints.down("md")]: {
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
-    },
-  },
-  messageLoader: {
-    padding: theme.spacing(2, 2),
-
-    [theme.breakpoints.down("md")]: {
-      padding: theme.spacing(1, 1),
-    },
-  },
-  pageWrapper: {
-    height: `calc(100vh - ${theme.shape.navPaddingSmUp})`,
-    alignItems: "stretch",
-    display: "flex",
-    flexDirection: "column",
-
-    [theme.breakpoints.down("md")]: {
-      height: `calc(100vh - ${theme.shape.navPaddingXs} - 80px)`, // 80 is space for mobile browser url bar
-    },
-  },
-  requestedDatesWrapper: {
-    display: "flex",
-    "& > *": {
-      margin: 0,
-    },
-  },
-  numNights: {
-    fontWeight: "initial",
-  },
-  requestedDates: {
+  [theme.breakpoints.down("md")]: {
+    paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
   },
-  loadingBox: {
-    display: "flex",
-    justifyContent: "center",
-    padding: theme.spacing(2),
-    width: "100%",
+}));
+
+const StyledPageWrapper = styled("div")(({ theme }) => ({
+  alignItems: "stretch",
+  display: "flex",
+  flexDirection: "column",
+  overflow: "hidden",
+  height: `calc(100vh - ${theme.shape.navPaddingXs})`,
+
+  [theme.breakpoints.up("sm")]: {
+    height: `calc(100vh - ${theme.shape.navPaddingSmUp})`,
+  },
+}));
+
+const StyledFooter = styled("div")(({ theme }) => ({
+  background: theme.palette.common.white,
+  position: "sticky",
+  bottom: 0,
+  marginTop: "auto",
+  flexGrow: 0,
+  paddingBottom: theme.spacing(2),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+
+  [theme.breakpoints.down("md")]: {
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
   },
 }));
 
 export default function GroupChatView({ chatId }: { chatId: number }) {
   const { t } = useTranslation([GLOBAL, MESSAGES]);
-  const classes = useGroupChatViewStyles();
 
   const queryClient = useQueryClient();
 
@@ -169,6 +145,8 @@ export default function GroupChatView({ chatId }: { chatId: number }) {
     ? groupChatTitleText(groupChat, groupChatMembersQuery, currentUserId)
     : undefined;
 
+  const hasError = groupChatError || messagesError || sendMutation.error;
+
   return (
     <>
       <HtmlMeta title={title} />
@@ -177,8 +155,8 @@ export default function GroupChatView({ chatId }: { chatId: number }) {
           {t("messages:chat_view.invalid_id_error")}
         </Alert>
       ) : (
-        <div className={classes.pageWrapper}>
-          <div className={classes.header}>
+        <StyledPageWrapper>
+          <StyledHeader>
             <GroupChatHeaderBar
               chatId={chatId}
               currentUserId={currentUserId}
@@ -186,8 +164,8 @@ export default function GroupChatView({ chatId }: { chatId: number }) {
               groupChatMembersQuery={groupChatMembersQuery}
               title={title}
             />
-          </div>
-          {(groupChatError || messagesError || sendMutation.error) && (
+          </StyledHeader>
+          {hasError && (
             <Alert severity="error">
               {groupChatError?.message ||
                 messagesError?.message ||
@@ -195,43 +173,24 @@ export default function GroupChatView({ chatId }: { chatId: number }) {
                 t("global:error.fallback.title")}
             </Alert>
           )}
-          {isMessagesLoading ? (
-            <div className={classes.loadingBox}>
-              <CircularProgress />
-            </div>
-          ) : (
-            messagesRes && (
-              <>
-                <InfiniteMessageLoader
-                  className={classes.messageLoader}
-                  earliestMessageId={
-                    messagesRes.pages[messagesRes.pages.length - 1]
-                      .lastMessageId
-                  }
-                  latestMessage={messagesRes.pages[0].messagesList[0]}
-                  fetchNextPage={fetchNextPage}
-                  isFetchingNextPage={isFetchingNextPage}
-                  hasNextPage={!!hasNextPage}
-                  isError={!!messagesError}
-                >
-                  <MessageList
-                    markLastSeen={markLastSeen}
-                    messages={messagesRes.pages
-                      .map((page) => page.messagesList)
-                      .flat()}
-                  />
-                </InfiniteMessageLoader>
-                <div className={classes.footer}>
-                  <GroupChatSendField
-                    sendMutation={sendMutation}
-                    chatId={chatId}
-                    currentUserId={currentUserId}
-                  />
-                </div>
-              </>
-            )
-          )}
-        </div>
+          <ChatContent
+            isHostRequest={false}
+            isLoading={isMessagesLoading}
+            messages={messagesRes}
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+            hasNextPage={!!hasNextPage}
+            markLastSeen={markLastSeen}
+            isError={!!messagesError}
+          />
+          <StyledFooter>
+            <GroupChatSendField
+              sendMutation={sendMutation}
+              chatId={chatId}
+              currentUserId={currentUserId}
+            />
+          </StyledFooter>
+        </StyledPageWrapper>
       )}
     </>
   );
