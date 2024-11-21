@@ -4,7 +4,7 @@ import {
   RadioGroup,
   TextField,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import CircularProgress from "components/CircularProgress";
@@ -318,6 +318,7 @@ export default function EditProfileForm() {
                         control={<Radio />}
                         label={
                           <TextField
+                            variant="standard"
                             onChange={(event) => onChange(event.target.value)}
                             value={other}
                           />

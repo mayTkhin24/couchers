@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@mui/styles/makeStyles";
 import Alert from "components/Alert";
 import CircularProgress from "components/CircularProgress";
 import HtmlMeta from "components/HtmlMeta";
@@ -40,7 +40,7 @@ export const useGroupChatViewStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
 
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
     },
@@ -55,14 +55,15 @@ export const useGroupChatViewStyles = makeStyles((theme) => ({
       marginInlineStart: theme.spacing(2),
     },
 
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(0, 2),
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
     },
   },
   messageLoader: {
     padding: theme.spacing(2, 2),
 
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       padding: theme.spacing(1, 1),
     },
   },
@@ -72,7 +73,7 @@ export const useGroupChatViewStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
 
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       height: `calc(100vh - ${theme.shape.navPaddingXs} - 80px)`, // 80 is space for mobile browser url bar
     },
   },

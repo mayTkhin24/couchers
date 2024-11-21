@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   scroll: {
     position: "relative",
     minHeight: "80px",
+    
     "&::-webkit-scrollbar": {
       background: "rgba(0,0,0,0)",
       height: "0.5rem",
@@ -44,8 +45,9 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar-thumb:hover": {
       background: "rgba(0,0,0,0.3)",
     },
-    overflow: "auto",
-    paddingInlineEnd: theme.spacing(1),
+    overflowY: "auto",
+    overflowX: "hidden",
+    paddingInlineEnd: `0.5rem`,
     scrollbarHeight: "thin",
     scrollbarWidth: "thin",
   },
