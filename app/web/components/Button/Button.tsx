@@ -104,5 +104,5 @@ function _Button<D extends ElementType = "button">(
   );
 }
 
-const Button = forwardRef(_Button) as typeof _Button;
+const Button = forwardRef(_Button) as typeof MuiButton;
 export default Button;
