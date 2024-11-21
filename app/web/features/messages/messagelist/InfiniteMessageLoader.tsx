@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   scroll: {
     position: "relative",
     minHeight: "80px",
-    
+
     "&::-webkit-scrollbar": {
       background: "rgba(0,0,0,0)",
       height: "0.5rem",
