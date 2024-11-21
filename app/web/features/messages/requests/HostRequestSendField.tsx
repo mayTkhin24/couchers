@@ -1,12 +1,13 @@
-import { styled } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 import Button, { AppButtonProps } from "components/Button";
 import ConfirmationDialogWrapper from "components/ConfirmationDialogWrapper";
+import StyledLink from "components/StyledLink";
 import TextField from "components/TextField";
 import { useAuthContext } from "features/auth/AuthProvider";
 import { useListAvailableReferences } from "features/profile/hooks/referencesHooks";
 import { Empty } from "google-protobuf/google/protobuf/empty_pb";
 import { RpcError } from "grpc-web";
-import { useTranslation } from "i18n";
+import { Trans, useTranslation } from "i18n";
 import { GLOBAL, MESSAGES } from "i18n/namespaces";
 import Link from "next/link";
 import { HostRequestStatus } from "proto/conversations_pb";
@@ -15,7 +16,12 @@ import { HostRequest, RespondHostRequestReq } from "proto/requests_pb";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { UseMutationResult } from "react-query";
-import { leaveReferenceBaseRoute, referenceTypeRoute } from "routes";
+import {
+  howToRespondRequestGuideUrl,
+  howToWriteRequestGuideUrl,
+  leaveReferenceBaseRoute,
+  referenceTypeRoute,
+} from "routes";
 import { theme } from "theme";
 
 import FieldButton from "./FieldButton";
@@ -57,6 +63,13 @@ const StyledContainer = styled("div")(({ theme }) => ({
   alignItems: "flex-start",
   display: "flex",
   marginTop: theme.spacing(3),
+}));
+
+const StyledHelpTextContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  marginBottom: theme.spacing(2),
 }));
 
 export default function HostRequestSendField({
@@ -127,8 +140,40 @@ export default function HostRequestSendField({
     }
   };
 
+  const isHostPending =
+    isHost &&
+    hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_PENDING;
+
+  const isSurferRejected =
+    !isHost &&
+    hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_REJECTED;
+
   return (
     <form onSubmit={onSubmit}>
+      {isHostPending && (
+        <StyledHelpTextContainer>
+          <Typography variant="body1">
+            <Trans i18nKey="messages:host_pending_request_help_text">
+              <StyledLink variant="body1" href={howToRespondRequestGuideUrl}>
+                Things to consider
+              </StyledLink>{" "}
+              before responding.
+            </Trans>
+          </Typography>
+        </StyledHelpTextContainer>
+      )}
+      {isSurferRejected && (
+        <StyledHelpTextContainer>
+          <Typography variant="body1">
+            <Trans i18nKey="messages:surfer_declined_request_help_text">
+              <StyledLink variant="body1" href={howToWriteRequestGuideUrl}>
+                Read our guide
+              </StyledLink>{" "}
+              on how to write a request that will get accepted.
+            </Trans>
+          </Typography>
+        </StyledHelpTextContainer>
+      )}
       <StyledButtonContainer>
         {isHost ? (
           <>
