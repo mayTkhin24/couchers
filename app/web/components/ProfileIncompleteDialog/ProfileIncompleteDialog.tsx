@@ -64,7 +64,7 @@ export default function ProfileIncompleteDialog({
             {t("dashboard:complete_profile_dialog.edit_profile_button")}
           </Button>
         </Link>
-        <Button onClick={onClose} color="default">
+        <Button onClick={onClose}>
           {t("dashboard:complete_profile_dialog.cancel_button")}
         </Button>
       </DialogActions>
