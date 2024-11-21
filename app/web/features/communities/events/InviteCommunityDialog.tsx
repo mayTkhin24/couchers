@@ -15,6 +15,7 @@ import { useTranslation } from "i18n";
 import { COMMUNITIES, GLOBAL } from "i18n/namespaces";
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { howToInviteCommunityUrl } from "routes";
 import { service } from "service";
 
 export default function InviteCommunityDialog({
@@ -56,9 +57,7 @@ export default function InviteCommunityDialog({
             key={"link_invite_community"}
             target="_blank"
             rel="noreferrer"
-            href={
-              "https://help.couchers.org/hc/couchersorg-help-center/articles/1720304409-how-does-the-invite-the-community-feature-work"
-            }
+            href={howToInviteCommunityUrl}
             underline="hover"
           >
             {t("communities:invite_community_dialog.link")}
