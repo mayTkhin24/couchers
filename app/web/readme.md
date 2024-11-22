@@ -185,7 +185,7 @@ It's possible to run your local dev environment on your phone, for example if yo
 
 1. Find your local IP address:
     - Mac: Click Apple icon menu => System Settings => Network => Wi-Fi => Details button => IP Address
-    - Linus: In the terminal type command `hostname -I` and hit Enter.
+    - Linux: In the terminal type command `hostname -I` and hit Enter.
     - Windows: Click Start Menu => Settings => Network and internet => Properties => IPv4 address
 2. In `envoy.yaml`, under the line `envoy.filters.http.cors` add a line after localhost:3000
     - `- exact: http://{YOUR_IP_ADDRESS}:3000`
