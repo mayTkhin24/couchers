@@ -72,10 +72,10 @@ const StyledPageWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   overflow: "hidden",
-  height: `calc(100vh - ${theme.shape.navPaddingXs})`,
+  height: `calc(var(--vh, 1vh) * 100 - ${theme.shape.navPaddingXs})`,
 
   [theme.breakpoints.up("sm")]: {
-    height: `calc(100vh - ${theme.shape.navPaddingSmUp})`,
+    height: `calc(var(--vh, 1vh) * 100 - ${theme.shape.navPaddingSmUp})`,
   },
 }));
 
