@@ -62,6 +62,10 @@ function MyApp({ Component, pageProps }: AppWithLayoutProps) {
         "--vh",
         `${window.innerHeight * 0.01}px`
       );
+
+      if (/Firefox/i.test(navigator.userAgent)) {
+        document?.activeElement?.scrollIntoView({ behavior: "smooth" });
+      }
     };
 
     const resetScroll = () => {
