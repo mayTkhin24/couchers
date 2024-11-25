@@ -159,7 +159,7 @@ export default function SearchResultsList({
 
         {!isLoading && hasAtLeastOnePageResults && (
           <HorizontalScroller
-            breakpoint="sm"
+            breakpoint="md" // below md, the scroller is disabled
             className={classes.scroller}
             isFetching={isLoading}
             // fetchNext={fetchNextPage} // TODO: disabled for now (until pagination)
