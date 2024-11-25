@@ -34,7 +34,14 @@ updates:
       - "bakeiro"
 
   - package-ecosystem: "docker"
-    directory: "/app"
+    directories
+      - "/app/backend"
+      - "/app/media"
+      - "/app/mobile/src"
+      - "/app/nginx"
+      - "/app/prometheus"
+      - "/app/proxy"
+      - "/app/web"
     schedule:
       interval: "monthly"
     labels:
