@@ -51,7 +51,9 @@ service API {
     // Initiate a media upload
   }
 
-  rpc ListBadgeUsers(ListBadgeUsersReq) returns (ListBadgeUsersRes);
+  rpc ListBadgeUsers(ListBadgeUsersReq) returns (ListBadgeUsersRes) {
+    // Lists users with a given badge
+  }
 }
 
 message SendFriendRequestReq {

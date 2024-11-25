@@ -45,6 +45,7 @@ from couchers.utils import (
 from proto import api_pb2, api_pb2_grpc, media_pb2, notification_data_pb2
 
 MAX_USERS_PER_QUERY = 200
+MAX_PAGINATION_LENGTH = 50
 
 hostingstatus2sql = {
     api_pb2.HOSTING_STATUS_UNKNOWN: None,
@@ -768,31 +769,29 @@ class API(api_pb2_grpc.APIServicer):
             expiry=Timestamp_from_datetime(expiry),
         )
 
-    def ListBadgeUsers(self, request, context):
-        MAX_PAGINATION_LENGTH = 50
+    def ListBadgeUsers(self, request, context, session):
         page_size = min(MAX_PAGINATION_LENGTH, request.page_size or MAX_PAGINATION_LENGTH)
         next_user_id = int(request.page_token) if request.page_token else 0
         badge = get_badge_dict().get(request.badge_id)
         if not badge:
             context.abort(grpc.StatusCode.NOT_FOUND, errors.BADGE_NOT_FOUND)
 
-        with session_scope() as session:
-            user_badges = (
-                session.execute(
-                    select(UserBadge)
-                    .where(UserBadge.badge_id == badge["id"])
-                    .where(UserBadge.user_id >= next_user_id)
-                    .order_by(UserBadge.user_id)
-                    .limit(page_size + 1)
-                )
-                .scalars()
-                .all()
+        badge_user_ids = (
+            session.execute(
+                select(UserBadge.user_id)
+                .where(UserBadge.badge_id == badge["id"])
+                .where(UserBadge.user_id >= next_user_id)
+                .order_by(UserBadge.user_id)
+                .limit(page_size + 1)
             )
+            .scalars()
+            .all()
+        )
 
-            return api_pb2.ListBadgeUsersRes(
-                user_ids=[user_badge.user_id for user_badge in user_badges[:page_size]],
-                next_page_token=str(user_badges[-1].user_id) if len(user_badges) > page_size else None,
-            )
+        return api_pb2.ListBadgeUsersRes(
+            user_ids=badge_user_ids[:page_size],
+            next_page_token=str(badge_user_ids[-1]) if len(badge_user_ids) > page_size else None,
+        )
 
 
 def user_model_to_pb(db_user, session, context):
