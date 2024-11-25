@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 import { GroupChat } from "proto/conversations_pb";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { groupChatsRoute } from "routes";
+import { groupChatsRoute, routeToUser } from "routes";
 import { service } from "service";
 import { theme } from "theme";
 
@@ -51,6 +51,7 @@ export default function GroupChatHeaderBar({
   const router = useRouter();
   const queryClient = useQueryClient();
   const { t } = useTranslation([GLOBAL, MESSAGES]);
+  const username = getDmUsername(groupChatMembersQuery, currentUserId);
 
   const isChatAdmin = groupChat?.adminUserIdsList.includes(currentUserId);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -118,12 +119,7 @@ export default function GroupChatHeaderBar({
 
       {groupChat?.isDm ? (
         <StyledTitleBox>
-          <Link
-            href={`/user/${getDmUsername(
-              groupChatMembersQuery,
-              currentUserId
-            )}`}
-          >
+          <Link href={username ? routeToUser(username) : ""}>
             <a>
               <PageTitle
                 sx={{

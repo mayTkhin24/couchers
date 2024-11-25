@@ -1,4 +1,10 @@
-import { Skeleton, styled, Typography, useMediaQuery } from "@mui/material";
+import {
+  Skeleton,
+  styled,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import Avatar from "components/Avatar";
 import UserSummary from "components/UserSummary";
 import { useTranslation } from "i18n";
@@ -8,6 +14,7 @@ import { HostRequest } from "proto/requests_pb";
 import { theme } from "theme";
 import { numNights } from "utils/date";
 import dayjs from "utils/dayjs";
+import truncateTextEllipsis from "utils/truncateTextEllipsis";
 
 const StyledRequestedDatesWrapper = styled("div")(({ theme }) => ({
   display: "flex",
@@ -68,11 +75,15 @@ const HostRequestUserSummarySection = ({
           {!otherUser ? (
             <Skeleton />
           ) : (
-            `${
-              (otherUser?.name.length ?? 0) < 25
-                ? otherUser?.name
-                : otherUser?.name.substring(0, 25) + "..."
-            }, ${otherUser?.age}, ${otherUser?.city.split(",")[2]}` // get only country
+            <Tooltip
+              title={`${otherUser.name}, ${otherUser.age}, ${otherUser.city}`}
+            >
+              <div>
+                {`${truncateTextEllipsis(otherUser.name, 25)}, ${
+                  otherUser.age
+                }, ${truncateTextEllipsis(otherUser.city, 25)}`}
+              </div>
+            </Tooltip>
           )}
         </Typography>
         {hostRequest && (
@@ -82,7 +93,7 @@ const HostRequestUserSummarySection = ({
             sx={{ paddingRight: theme.spacing(1) }}
           >
             {`${dayjs(hostRequest.fromDate).format("ll")} - ${dayjs(
-              hostRequest.fromDate
+              hostRequest.toDate
             ).format("ll")}`}
           </Typography>
         )}
