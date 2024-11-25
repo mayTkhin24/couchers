@@ -1,6 +1,6 @@
 import { CircularProgress, styled, Typography } from "@mui/material";
 import Alert from "components/Alert";
-import Button from "components/Button";
+import Button, { AppButtonProps } from "components/Button";
 import { activeLoginsKey } from "features/queryKeys";
 import { RpcError } from "grpc-web";
 import { AUTH, GLOBAL } from "i18n/namespaces";
@@ -9,7 +9,6 @@ import { ListActiveSessionsRes } from "proto/account_pb";
 import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { service } from "service";
 import { timestamp2Date } from "utils/date";
-import makeStyles from "utils/makeStyles";
 
 import LoginCard from "./LoginCard";
 
@@ -24,15 +23,12 @@ const StyledLoginsContainer = styled("div")(({ theme }) => ({
   },
 }));
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
+const StyledButton = styled(Button)<AppButtonProps>(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  marginBottom: theme.spacing(1),
 }));
 
 export default function LoginsPage() {
-  const classes = useStyles();
   const { t } = useTranslation([GLOBAL, AUTH]);
   const queryClient = useQueryClient();
 
@@ -89,22 +85,20 @@ export default function LoginsPage() {
         ))
       )}
       {hasNextPage && (
-        <Button
+        <StyledButton
           loading={isFetchingNextPage}
           onClick={() => fetchNextPage()}
-          className={classes.button}
         >
           {t("global:load_more")}
-        </Button>
+        </StyledButton>
       )}
-      <Button
+      <StyledButton
         color="secondary"
         loading={logoutAllIsLoading}
         onClick={() => logoutAll()}
-        className={classes.button}
       >
         {t("auth:active_logins.log_out_of_all_session")}
-      </Button>
+      </StyledButton>
     </StyledLoginsContainer>
   );
 }
