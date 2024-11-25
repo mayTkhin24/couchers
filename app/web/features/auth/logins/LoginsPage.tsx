@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from "@material-ui/core";
+import { CircularProgress, Typography } from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import { activeLoginsKey } from "features/queryKeys";
