@@ -32,3 +32,13 @@ updates:
       - "aapeliv"
       - "nabramow"
       - "bakeiro"
+
+  - package-ecosystem: "docker"
+    directory: "/app"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "1.topic devops"
+      - "dependencies"
+    reviewers:
+      - "aapeliv"
