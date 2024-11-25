@@ -80,8 +80,6 @@ export default function SearchPage({
   const map = useRef<MaplibreMap>();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  console.log("SearchPage isMobile", isMobile);
-
   // State
   const [wasSearchPerformed, setWasSearchPerformed] = useState(false);
   const [locationResult, setLocationResult] = useState<GeocodeResult>({

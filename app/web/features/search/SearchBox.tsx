@@ -68,11 +68,7 @@ export default function SearchBox({
         bbox: [bbox[2], bbox[3], bbox[0], bbox[1]], //sw long, sw lat, ne long, ne lat
       };
 
-      console.log(
-        "handleOnChange autocomplete newLocationResult",
-        newLocationResult
-      );
-      setLocationResult(event);
+      setLocationResult(newLocationResult);
     }
   };
 
