@@ -28,9 +28,10 @@ from couchers.models import (
     SleepingArrangement,
     SmokingLocation,
     User,
+    UserBadge,
 )
 from couchers.notifications.notify import notify
-from couchers.resources import language_is_allowed, region_is_allowed
+from couchers.resources import get_badge_dict, language_is_allowed, region_is_allowed
 from couchers.servicers.account import get_strong_verification_fields
 from couchers.sql import couchers_select as select
 from couchers.sql import is_valid_user_id, is_valid_username
@@ -44,6 +45,7 @@ from couchers.utils import (
 from proto import api_pb2, api_pb2_grpc, media_pb2, notification_data_pb2
 
 MAX_USERS_PER_QUERY = 200
+MAX_PAGINATION_LENGTH = 50
 
 hostingstatus2sql = {
     api_pb2.HOSTING_STATUS_UNKNOWN: None,
@@ -765,6 +767,30 @@ class API(api_pb2_grpc.APIServicer):
         return api_pb2.InitiateMediaUploadRes(
             upload_url=urls.media_upload_url(path=path),
             expiry=Timestamp_from_datetime(expiry),
+        )
+
+    def ListBadgeUsers(self, request, context, session):
+        page_size = min(MAX_PAGINATION_LENGTH, request.page_size or MAX_PAGINATION_LENGTH)
+        next_user_id = int(request.page_token) if request.page_token else 0
+        badge = get_badge_dict().get(request.badge_id)
+        if not badge:
+            context.abort(grpc.StatusCode.NOT_FOUND, errors.BADGE_NOT_FOUND)
+
+        badge_user_ids = (
+            session.execute(
+                select(UserBadge.user_id)
+                .where(UserBadge.badge_id == badge["id"])
+                .where(UserBadge.user_id >= next_user_id)
+                .order_by(UserBadge.user_id)
+                .limit(page_size + 1)
+            )
+            .scalars()
+            .all()
+        )
+
+        return api_pb2.ListBadgeUsersRes(
+            user_ids=badge_user_ids[:page_size],
+            next_page_token=str(badge_user_ids[-1]) if len(badge_user_ids) > page_size else None,
         )
 
 

@@ -9,6 +9,7 @@ from couchers.db import session_scope
 from couchers.jobs.handlers import update_badges
 from couchers.materialized_views import refresh_materialized_views_rapid
 from couchers.models import FriendRelationship, FriendStatus
+from couchers.resources import get_badge_dict
 from couchers.sql import couchers_select as select
 from couchers.utils import create_coordinate, to_aware_datetime
 from proto import api_pb2, jail_pb2, notifications_pb2
@@ -1187,7 +1188,18 @@ def test_badges(db):
 
     update_badges(empty_pb2.Empty())
 
+    founder_badge = get_badge_dict()["founder"]
+    board_member_badge = get_badge_dict()["board_member"]
+
     with api_session(token) as api:
         assert api.GetUser(api_pb2.GetUserReq(user=user1.username)).badges == ["founder", "board_member"]
         assert api.GetUser(api_pb2.GetUserReq(user=user2.username)).badges == ["founder", "board_member"]
         assert api.GetUser(api_pb2.GetUserReq(user=user3.username)).badges == []
+
+        assert api.ListBadgeUsers(api_pb2.ListBadgeUsersReq(badge_id=founder_badge["id"])).user_ids == [1, 2]
+        res = api.ListBadgeUsers(api_pb2.ListBadgeUsersReq(badge_id=board_member_badge["id"], page_size=1))
+        assert res.user_ids == [1]
+        res2 = api.ListBadgeUsers(
+            api_pb2.ListBadgeUsersReq(badge_id=board_member_badge["id"], page_token=res.next_page_token)
+        )
+        assert res2.user_ids == [2]
