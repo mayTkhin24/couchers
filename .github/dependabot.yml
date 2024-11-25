@@ -31,7 +31,6 @@ updates:
     reviewers:
       - "aapeliv"
       - "nabramow"
-      - "bakeiro"
 
   - package-ecosystem: "docker"
     directories:
