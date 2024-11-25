@@ -104,14 +104,6 @@ export default function SearchPage({
     Pick<User.AsObject, "userId" | "lng" | "lat"> | undefined
   >();
 
-  const hasSearchFilters = !!(
-    hostingStatusFilter.length ||
-    lastActiveFilter !== 0 ||
-    (locationResult.location.lng !== 0 && locationResult.location.lat !== 0) ||
-    numberOfGuestFilter !== undefined ||
-    queryName !== ""
-  );
-
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   // Loads the list of users
@@ -164,7 +156,9 @@ export default function SearchPage({
         lastActiveFilter !== 0 ||
         hostingStatusFilter.length !== 0 ||
         numberOfGuestFilter !== undefined ||
-        completeProfileFilter !== false
+        completeProfileFilter !== false ||
+        queryName !== "" ||
+        (locationResult.location.lng !== 0 && locationResult.location.lat !== 0)
       ) {
         setWasSearchPerformed(true);
       }
@@ -175,6 +169,9 @@ export default function SearchPage({
     numberOfGuestFilter,
     completeProfileFilter,
     wasSearchPerformed,
+    queryName,
+    locationResult.location.lng,
+    locationResult.location.lat,
   ]);
 
   const errorMessage = error?.message;
@@ -203,7 +200,7 @@ export default function SearchPage({
         {/* Mobile */}
         {isMobile && (
           <Collapse
-            in={hasSearchFilters || !!selectedResult}
+            in={wasSearchPerformed || !!selectedResult}
             timeout={theme.transitions.duration.standard}
             className={classes.mobileCollapse}
           >
