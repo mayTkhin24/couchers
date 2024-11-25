@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, styled, Typography } from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import { activeLoginsKey } from "features/queryKeys";
@@ -13,21 +13,18 @@ import makeStyles from "utils/makeStyles";
 
 import LoginCard from "./LoginCard";
 
+const StyledLoginsContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  padding: theme.spacing(4),
+  margin: "0 auto",
+  width: "100%",
+  [theme.breakpoints.up("md")]: {
+    width: "50%",
+  },
+}));
+
 const useStyles = makeStyles((theme) => ({
-  loginsContainer: {
-    display: "flex",
-    flexDirection: "column",
-    padding: theme.spacing(4),
-    margin: "0 auto",
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "50%",
-    },
-  },
-  card: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
   button: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
@@ -70,7 +67,7 @@ export default function LoginsPage() {
   );
 
   return (
-    <div className={classes.loginsContainer}>
+    <StyledLoginsContainer>
       <Typography variant="h1" gutterBottom>
         {t("auth:active_logins.heading")}
       </Typography>
@@ -88,7 +85,6 @@ export default function LoginsPage() {
           <LoginCard
             key={timestamp2Date(session.created!).toString()}
             session={session}
-            className={classes.card}
           />
         ))
       )}
@@ -109,6 +105,6 @@ export default function LoginsPage() {
       >
         {t("auth:active_logins.log_out_of_all_session")}
       </Button>
-    </div>
+    </StyledLoginsContainer>
   );
 }

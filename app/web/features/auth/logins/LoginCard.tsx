@@ -1,4 +1,10 @@
-import { Card, CardActions, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  styled,
+  Typography,
+} from "@mui/material";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import {
@@ -19,12 +25,15 @@ import { service } from "service";
 import { dateFormatter, dateTimeFormatter, timestamp2Date } from "utils/date";
 import { timeAgoI18n } from "utils/timeAgo";
 
+const StyledCard = styled(Card)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  marginBottom: theme.spacing(1),
+}));
+
 export default function LoginsPage({
   session,
-  className,
 }: {
   session: ActiveSession.AsObject;
-  className: string;
 }) {
   const {
     t,
@@ -59,7 +68,7 @@ export default function LoginsPage({
   );
 
   return (
-    <Card className={className}>
+    <StyledCard>
       <CardContent>
         <Typography variant="h2">
           <Trans t={t} i18nKey="auth:active_logins.login_header">
@@ -116,6 +125,6 @@ export default function LoginsPage({
           </Button>
         </CardActions>
       )}
-    </Card>
+    </StyledCard>
   );
 }
