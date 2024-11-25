@@ -80,6 +80,8 @@ export default function SearchPage({
   const map = useRef<MaplibreMap>();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
+  console.log("SearchPage isMobile", isMobile);
+
   // State
   const [wasSearchPerformed, setWasSearchPerformed] = useState(false);
   const [locationResult, setLocationResult] = useState<GeocodeResult>({
@@ -103,6 +105,15 @@ export default function SearchPage({
   const [selectedResult, setSelectedResult] = useState<
     Pick<User.AsObject, "userId" | "lng" | "lat"> | undefined
   >();
+
+  const hasSearchFilters = !!(
+    hostingStatusFilter.length ||
+    lastActiveFilter !== 0 ||
+    (locationResult.location.lng !== 0 && locationResult.location.lat !== 0) ||
+    numberOfGuestFilter !== undefined ||
+    queryName !== ""
+  );
+
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   // Loads the list of users
@@ -194,7 +205,7 @@ export default function SearchPage({
         {/* Mobile */}
         {isMobile && (
           <Collapse
-            in={!!selectedResult}
+            in={hasSearchFilters || !!selectedResult}
             timeout={theme.transitions.duration.standard}
             className={classes.mobileCollapse}
           >
