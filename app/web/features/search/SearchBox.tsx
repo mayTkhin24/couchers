@@ -67,7 +67,6 @@ export default function SearchBox({
         ...event,
         bbox: [bbox[2], bbox[3], bbox[0], bbox[1]], //sw long, sw lat, ne long, ne lat
       };
-
       setLocationResult(newLocationResult);
     }
   };
