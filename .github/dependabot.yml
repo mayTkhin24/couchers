@@ -34,7 +34,7 @@ updates:
       - "bakeiro"
 
   - package-ecosystem: "docker"
-    directories
+    directories:
       - "/app/backend"
       - "/app/media"
       - "/app/mobile/src"
