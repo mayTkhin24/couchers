@@ -131,6 +131,7 @@ class User(Base):
     geom_radius = Column(Float, nullable=True)
     # the display address (text) shown on their profile
     city = Column(String, nullable=False)
+    # "Grew up in" on profile
     hometown = Column(String, nullable=True)
 
     regions_visited = relationship("Region", secondary="regions_visited", order_by="Region.name")
@@ -155,9 +156,6 @@ class User(Base):
     pronouns = Column(String, nullable=True)
     birthdate = Column(Date, nullable=False)  # in the timezone of birthplace
 
-    # name as on official docs for verification, etc. not needed until verification
-    full_name = Column(String, nullable=True)
-
     avatar_key = Column(ForeignKey("uploads.key"), nullable=True)
 
     hosting_status = Column(Enum(HostingStatus), nullable=False)
@@ -168,10 +166,14 @@ class User(Base):
 
     occupation = Column(String, nullable=True)  # CommonMark without images
     education = Column(String, nullable=True)  # CommonMark without images
+
+    # "Who I am" under "About Me" tab
     about_me = Column(String, nullable=True)  # CommonMark without images
-    my_travels = Column(String, nullable=True)  # CommonMark without images
+    # "What I do in my free time" under "About Me" tab
     things_i_like = Column(String, nullable=True)  # CommonMark without images
+    # "About my home" under "My Home" tab
     about_place = Column(String, nullable=True)  # CommonMark without images
+    # "Additional information" under "About Me" tab
     additional_information = Column(String, nullable=True)  # CommonMark without images
 
     is_banned = Column(Boolean, nullable=False, server_default=text("false"))
@@ -201,11 +203,16 @@ class User(Base):
     smokes_at_home = Column(Boolean, nullable=True)
     drinking_allowed = Column(Boolean, nullable=True)
     drinks_at_home = Column(Boolean, nullable=True)
+    # "Additional information" under "My Home" tab
     other_host_info = Column(String, nullable=True)  # CommonMark without images
 
+    # "Sleeping privacy" (not long-form text)
     sleeping_arrangement = Column(Enum(SleepingArrangement), nullable=True)
+    # "Sleeping arrangement" under "My Home" tab
     sleeping_details = Column(String, nullable=True)  # CommonMark without images
+    # "Local area information" under "My Home" tab
     area = Column(String, nullable=True)  # CommonMark without images
+    # "House rules" under "My Home" tab
     house_rules = Column(String, nullable=True)  # CommonMark without images
     parking = Column(Boolean, nullable=True)
     parking_details = Column(Enum(ParkingDetails), nullable=True)  # CommonMark without images
