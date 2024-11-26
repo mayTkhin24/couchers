@@ -56,6 +56,7 @@ describe("when the listFriends query succeeds", () => {
   });
 
   it("returns isLoading as true with no errors if some getLiteUsers query is loading", async () => {
+    // eslint-disable-next-line unused-imports/no-unused-vars
     getLiteUsersMock.mockImplementation((userIds: number[]) => {
       return new Promise(() => void 0);
     });
