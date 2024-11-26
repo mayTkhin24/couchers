@@ -94,7 +94,7 @@ def make_lite_users_selectable(create=False):
         geom_column = User.geom
 
     strong_verification_subquery = (
-        sa_select(User.id, literal(True).label("has_strong_verification"))
+        sa_select(User.id, literal(True).label("true"))
         .select_from(StrongVerificationAttempt)
         .where(StrongVerificationAttempt.has_strong_verification(User))
         .distinct()
@@ -113,7 +113,7 @@ def make_lite_users_selectable(create=False):
             User.is_visible.label("is_visible"),
             Upload.filename.label("avatar_filename"),
             User.has_completed_profile.label("has_completed_profile"),
-            strong_verification_subquery.c.has_strong_verification.label("has_strong_verification"),
+            func.coalesce(strong_verification_subquery.c.true, False).label("has_strong_verification"),
         )
         .select_from(User)
         .outerjoin(Upload, Upload.key == User.avatar_key)
