@@ -8,7 +8,11 @@ import userEvent from "@testing-library/user-event";
 import { USER_TITLE_SKELETON_TEST_ID } from "components/UserSummary";
 import { service } from "service";
 import wrapper from "test/hookWrapper";
-import { getEventOrganizers, getUser } from "test/serviceMockDefaults";
+import {
+  getEventOrganizers,
+  getLiteUsers,
+  getUser,
+} from "test/serviceMockDefaults";
 import { assertErrorAlert, mockConsoleError, t } from "test/utils";
 
 import EventOrganizers from "./EventOrganizers";
@@ -20,10 +24,14 @@ const listEventOrganizersMock = service.events
 const getUserMock = service.user.getUser as jest.MockedFunction<
   typeof service.user.getUser
 >;
+const getLiteUsersMock = service.user.getLiteUsers as jest.MockedFunction<
+  typeof service.user.getLiteUsers
+>;
 
 describe("Event organizers", () => {
   beforeEach(() => {
     getUserMock.mockImplementation(getUser);
+    getLiteUsersMock.mockImplementation(getLiteUsers);
     listEventOrganizersMock.mockImplementation(getEventOrganizers);
   });
 

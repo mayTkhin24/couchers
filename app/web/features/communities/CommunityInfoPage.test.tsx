@@ -12,7 +12,11 @@ import { service } from "service";
 import community from "test/fixtures/community.json";
 import users from "test/fixtures/users.json";
 import wrapper from "test/hookWrapper";
-import { getUser, listCommunityAdmins } from "test/serviceMockDefaults";
+import {
+  getLiteUsers,
+  getUser,
+  listCommunityAdmins,
+} from "test/serviceMockDefaults";
 import { assertErrorAlert, keyPress, mockConsoleError, t } from "test/utils";
 
 import CommunityInfoPage from "./CommunityInfoPage";
@@ -22,6 +26,9 @@ const listAdminsMock = service.communities.listAdmins as jest.MockedFunction<
 >;
 const getUserMock = service.user.getUser as jest.MockedFunction<
   typeof service.user.getUser
+>;
+const getLiteUsersMock = service.user.getLiteUsers as jest.MockedFunction<
+  typeof service.user.getLiteUsers
 >;
 const [, firstAdmin, secondAdmin, thirdAdmin] = users;
 
@@ -43,6 +50,7 @@ function assertAdminsShown(element: typeof screen | ReturnType<typeof within>) {
 describe("Community info page", () => {
   beforeEach(() => {
     getUserMock.mockImplementation(getUser);
+    getLiteUsersMock.mockImplementation(getLiteUsers);
     listAdminsMock.mockImplementation(listCommunityAdmins);
     process.env.NEXT_PUBLIC_MEDIA_BASE_URL = "http://mymedia.com";
   });
