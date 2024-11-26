@@ -311,6 +311,8 @@ message LiteUser {
   double lat = 8;
   double lng = 9;
   double radius = 10; // meters
+
+  bool has_strong_verification = 11;
 }
 
 message GetLiteUserReq {

@@ -986,4 +986,5 @@ def lite_user_to_pb(lite_user):
         lat=lat,
         lng=lng,
         radius=lite_user.radius,
+        has_strong_verification=lite_user.has_strong_verification,
     )
