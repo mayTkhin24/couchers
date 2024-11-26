@@ -31,13 +31,17 @@ function assertAdminsShown(element: typeof screen | ReturnType<typeof within>) {
       name: getProfileLinkA11yLabel(firstAdmin.name),
     })
   ).toBeVisible();
-  expect(element.getByText(firstAdmin.name)).toBeVisible();
+  expect(
+    element.getByText(`${firstAdmin.name}, ${firstAdmin.age}`)
+  ).toBeVisible();
   expect(
     element.getByRole("link", {
       name: getProfileLinkA11yLabel(secondAdmin.name),
     })
   ).toBeVisible();
-  expect(element.getByText(secondAdmin.name)).toBeVisible();
+  expect(
+    element.getByText(`${secondAdmin.name}, ${secondAdmin.age}`)
+  ).toBeVisible();
 }
 
 describe("Community info page", () => {
@@ -197,7 +201,9 @@ describe("Community info page", () => {
           name: getProfileLinkA11yLabel(thirdAdmin.name),
         })
       ).toBeVisible();
-      expect(adminDialog.getByText(thirdAdmin.name)).toBeVisible();
+      expect(
+        adminDialog.getByText(`${thirdAdmin.name}, ${thirdAdmin.age}`)
+      ).toBeVisible();
 
       // Check it doesn't affect the underlying page
       userEvent.click(document.querySelector(".MuiBackdrop-root")!);
