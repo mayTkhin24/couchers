@@ -19,13 +19,7 @@ function useLiteUsers(ids: (number | undefined)[]) {
       return result;
     },
     staleTime: userStaleTime,
-    enabled: uniqueIds.length > 0, // run only if there are valid liteUserIds
-    retry: (failureCount, error) => {
-      // don't retry if the user isn't found
-      return (
-        error.code !== StatusCode.NOT_FOUND && failureCount < reactQueryRetries
-      );
-    },
+    enabled: uniqueIds.length > 0, // run only if there are valid userIds
   });
 
   const isDataUndefined = !query.data || !query.data.responsesList;
