@@ -513,7 +513,7 @@ class StrongVerificationAttempt(Base):
     @is_valid.expression
     def is_valid(cls):
         return (cls.status == StrongVerificationAttemptStatus.succeeded) & (
-            func.coalesce(cls.passport_expiry_datetime >= now(), False)
+            func.coalesce(cls.passport_expiry_datetime >= func.now(), False)
         )
 
     @hybrid_property
@@ -532,7 +532,7 @@ class StrongVerificationAttempt(Base):
     @hybrid_method
     def _raw_gender_match(self, user):
         """Does not check whether the SV attempt itself is not expired"""
-        return self.is_valid & (
+        return (
             ((user.gender == "Woman") & (self.passport_sex == PassportSex.female))
             | ((user.gender == "Man") & (self.passport_sex == PassportSex.male))
             | (self.passport_sex == PassportSex.unspecified)

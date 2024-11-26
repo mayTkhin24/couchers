@@ -98,7 +98,7 @@ def make_lite_users_selectable(create=False):
         .select_from(StrongVerificationAttempt)
         .where(StrongVerificationAttempt.has_strong_verification(User))
         .distinct()
-        .subquery()
+        .subquery(name="sv_subquery")
     )
 
     return (
@@ -129,7 +129,19 @@ lite_users = create_materialized_view_with_different_ddl(
     lite_users_selectable_select,
     lite_users_selectable_create,
     Base.metadata,
-    [Index("uq_lite_users_id", lite_users_selectable_create.c.id, unique=True)],
+    [
+        Index("uq_lite_users_id", lite_users_selectable_create.c.id, unique=True),
+        Index(
+            "uq_lite_users_id_visible",
+            lite_users_selectable_create.c.id,
+            postgresql_where=lite_users_selectable_create.c.is_visible,
+        ),
+        Index(
+            "uq_lite_users_username_visible",
+            lite_users_selectable_create.c.username,
+            postgresql_where=lite_users_selectable_create.c.is_visible,
+        ),
+    ],
 )
 
 

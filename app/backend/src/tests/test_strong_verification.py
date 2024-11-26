@@ -24,7 +24,6 @@ from couchers.models import (
     User,
 )
 from couchers.sql import couchers_select as select
-from couchers.utils import now
 from proto import account_pb2, admin_pb2, api_pb2
 from proto.google.api import httpbody_pb2
 from tests.test_fixtures import (  # noqa
@@ -544,40 +543,40 @@ def test_strong_verification_expiry(db, monkeypatch):
         assert res.birthdate_verification_status == api_pb2.BIRTHDATE_VERIFICATION_STATUS_VERIFIED
         assert res.gender_verification_status == api_pb2.GENDER_VERIFICATION_STATUS_VERIFIED
 
-    def after_expiry():
-        return now() + timedelta(days=15)
+    with session_scope() as session:
+        attempt = session.execute(select(StrongVerificationAttempt)).scalars().one()
+        attempt.passport_expiry_date = date.today() - timedelta(days=2)
 
-    with patch("couchers.models.now", after_expiry):
-        with api_session(token) as api:
-            res = api.GetUser(api_pb2.GetUserReq(user=user.username))
-            assert not res.has_strong_verification
-            assert res.birthdate_verification_status == api_pb2.BIRTHDATE_VERIFICATION_STATUS_UNVERIFIED
-            assert res.gender_verification_status == api_pb2.GENDER_VERIFICATION_STATUS_UNVERIFIED
+    with api_session(token) as api:
+        res = api.GetUser(api_pb2.GetUserReq(user=user.username))
+        assert not res.has_strong_verification
+        assert res.birthdate_verification_status == api_pb2.BIRTHDATE_VERIFICATION_STATUS_UNVERIFIED
+        assert res.gender_verification_status == api_pb2.GENDER_VERIFICATION_STATUS_UNVERIFIED
 
-            res = api.GetUser(api_pb2.GetUserReq(user=user.username))
-            assert not res.has_strong_verification
-            assert not res.has_strong_verification
+        res = api.GetUser(api_pb2.GetUserReq(user=user.username))
+        assert not res.has_strong_verification
+        assert not res.has_strong_verification
 
-        do_and_check_sv(
-            user,
-            token,
-            verification_id=5731012934821985,
-            sex="MALE",
-            dob="1988-01-01",
-            document_type="PASSPORT",
-            document_number="PA41323412",
-            document_expiry=date.today() + timedelta(days=365),
-            nationality="AU",
-        )
+    do_and_check_sv(
+        user,
+        token,
+        verification_id=5731012934821985,
+        sex="MALE",
+        dob="1988-01-01",
+        document_type="PASSPORT",
+        document_number="PA41323412",
+        document_expiry=date.today() + timedelta(days=365),
+        nationality="AU",
+    )
 
-        refresh_materialized_views_rapid(None)
+    refresh_materialized_views_rapid(None)
 
-        with api_session(token) as api:
-            assert api.GetUser(api_pb2.GetUserReq(user=user.username)).has_strong_verification
-        assert (
-            api.GetLiteUser(api_pb2.GetLiteUserReq(user=user.username)).has_strong_verification
-            == api.GetUser(api_pb2.GetUserReq(user=user.username)).has_strong_verification
-        )
+    with api_session(token) as api:
+        assert api.GetUser(api_pb2.GetUserReq(user=user.username)).has_strong_verification
+    assert (
+        api.GetLiteUser(api_pb2.GetLiteUserReq(user=user.username)).has_strong_verification
+        == api.GetUser(api_pb2.GetUserReq(user=user.username)).has_strong_verification
+    )
 
 
 def test_strong_verification_regression(db, monkeypatch):
