@@ -4,18 +4,16 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { service } from "service";
 import users from "test/fixtures/liteUsers.json";
 import wrapper from "test/hookWrapper";
-import { getLiteUsers, getUser, listFriends } from "test/serviceMockDefaults";
+import { getLiteUsers, listFriends } from "test/serviceMockDefaults";
 import { mockConsoleError, wait } from "test/utils";
 
 import useFriendList from "./useFriendList";
 
 const listFriendsMock = service.api.listFriends as jest.Mock;
-const getUserMock = service.user.getUser as jest.Mock;
 const getLiteUsersMock = service.user.getLiteUsers as jest.Mock;
 
 beforeEach(() => {
   listFriendsMock.mockImplementation(listFriends);
-  getUserMock.mockImplementation(getUser);
   getLiteUsersMock.mockImplementation(getLiteUsers);
 });
 
@@ -38,7 +36,7 @@ describe("when the listFriends query is loading", () => {
 });
 
 describe("when the listFriends query succeeds", () => {
-  it("returns the friends data with no errors if all getUser queries succeed", async () => {
+  it("returns the friends data with no errors if getLiteUsers query succeeds", async () => {
     const { result, waitForNextUpdate } = renderHook(() => useFriendList(), {
       wrapper,
     });
@@ -55,11 +53,8 @@ describe("when the listFriends query succeeds", () => {
     });
   });
 
-  it("returns isLoading as true with no errors if some getLiteUsers query is loading", async () => {
-    // eslint-disable-next-line unused-imports/no-unused-vars
-    getLiteUsersMock.mockImplementation((userIds: number[]) => {
-      return new Promise(() => void 0);
-    });
+  it("returns isLoading as true with no errors if getLiteUsers query is loading", async () => {
+    getLiteUsersMock.mockImplementation(() => new Promise(() => void 0));
 
     const { result, waitForNextUpdate } = renderHook(() => useFriendList(), {
       wrapper,
@@ -74,7 +69,7 @@ describe("when the listFriends query succeeds", () => {
     });
   });
 
-  it("returns isError as true with errors if all getUser queries fail", async () => {
+  it("returns isError as true with errors if getLiteUsers query fails", async () => {
     mockConsoleError();
     getLiteUsersMock.mockRejectedValue(new Error("Error fetching user data"));
 
