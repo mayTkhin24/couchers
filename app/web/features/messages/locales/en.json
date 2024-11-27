@@ -1,6 +1,6 @@
 {
   "mark_all_read_button_text": "Mark all as read",
-  "request_closed_message": "This host request is closed or in the past. To continue chatting, send the other person a normal message.",
+  "request_closed_message": "This host request is closed. To continue chatting, send the other person a normal message.",
   "write_reference_button_text": "Write a Reference",
   "close_request_dialog_title": "Are you done messaging?",
   "close_request_dialog_host": "Please make sure you are done chatting before you decline their request.",

@@ -19,8 +19,8 @@ import { UseMutationResult } from "react-query";
 import {
   howToRespondRequestGuideUrl,
   howToWriteRequestGuideUrl,
-  leaveReferenceBaseRoute,
   referenceTypeRoute,
+  routeToLeaveReference,
 } from "routes";
 import { theme } from "theme";
 
@@ -121,7 +121,6 @@ export default function HostRequestSendField({
   const isButtonLoading = isLoading || isResponseLoading;
 
   const isRequestClosed =
-    hostRequest.toDate < new Date().toISOString().split("T")[0] ||
     hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_CANCELLED ||
     hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_REJECTED;
 
@@ -133,20 +132,33 @@ export default function HostRequestSendField({
       ({ hostRequestId }) => hostRequestId === hostRequest.hostRequestId
     );
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter" && event.ctrlKey) {
-      event.preventDefault();
-      onSubmit();
-    }
-  };
+  const referenceRoute = routeToLeaveReference(
+    referenceTypeRoute[
+      isHost
+        ? ReferenceType.REFERENCE_TYPE_HOSTED
+        : ReferenceType.REFERENCE_TYPE_SURFED
+    ],
+    isHost ? hostRequest.surferUserId : hostRequest.hostUserId,
+    hostRequest.hostRequestId
+  );
+
+  const isPast = hostRequest.toDate < new Date().toISOString().split("T")[0];
 
   const isHostPending =
+    !isPast &&
     isHost &&
     hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_PENDING;
 
   const isSurferRejected =
     !isHost &&
     hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_REJECTED;
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" && event.ctrlKey) {
+      event.preventDefault();
+      onSubmit();
+    }
+  };
 
   return (
     <form onSubmit={onSubmit}>
@@ -175,99 +187,85 @@ export default function HostRequestSendField({
         </StyledHelpTextContainer>
       )}
       <StyledButtonContainer>
-        {isHost ? (
-          <>
-            {(hostRequest.status ===
-              HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
-              hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_REJECTED) && (
-              <FieldButton callback={handleAccept} isLoading={isButtonLoading}>
-                {t("global:accept")}
-              </FieldButton>
-            )}
-            {(hostRequest.status ===
-              HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
-              hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED ||
-              hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED) && (
-              <ConfirmationDialogWrapper
-                title={t("messages:close_request_dialog_title")}
-                message={t("messages:close_request_dialog_host")}
-                onConfirm={handleReject}
-              >
-                {(setIsOpen) => (
-                  <FieldButton
-                    isLoading={isButtonLoading}
-                    callback={() => setIsOpen(true)}
-                  >
-                    {t("messages:close_request_button_text")}
-                  </FieldButton>
-                )}
-              </ConfirmationDialogWrapper>
-            )}
-            {isReferenceAvailable && (
-              <Link
-                href={{
-                  pathname: `${leaveReferenceBaseRoute}/${
-                    referenceTypeRoute[ReferenceType.REFERENCE_TYPE_HOSTED]
-                  }/${hostRequest.surferUserId}/${hostRequest.hostRequestId}`,
-                }}
-                passHref
-              >
-                <StyledButton color="primary" component="a">
-                  {t("messages:write_reference_button_text")}
-                </StyledButton>
-              </Link>
-            )}
-          </>
-        ) : (
-          //user is the surfer
-          <>
-            {hostRequest.status ===
-              HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED && (
-              <FieldButton callback={handleConfirm} isLoading={isButtonLoading}>
-                {t("messages:confirm_request_button_text")}
-              </FieldButton>
-            )}
-            {(hostRequest.status ===
-              HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
-              hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED ||
-              hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_REJECTED ||
-              hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED) && (
-              <ConfirmationDialogWrapper
-                title={t("messages:close_request_dialog_title")}
-                message={t("messages:close_request_dialog_surfer")}
-                onConfirm={handleCancel}
-              >
-                {(setIsOpen) => (
-                  <FieldButton
-                    isLoading={isButtonLoading}
-                    callback={() => setIsOpen(true)}
-                  >
-                    {t("global:cancel")}
-                  </FieldButton>
-                )}
-              </ConfirmationDialogWrapper>
-            )}
-            {isReferenceAvailable && (
-              <Link
-                href={{
-                  pathname: `${leaveReferenceBaseRoute}/${
-                    referenceTypeRoute[ReferenceType.REFERENCE_TYPE_SURFED]
-                  }/${hostRequest.hostUserId}/${hostRequest.hostRequestId}`,
-                }}
-                passHref
-              >
-                <StyledButton color="primary" component="a">
-                  {t("messages:write_reference_button_text")}
-                </StyledButton>
-              </Link>
-            )}
-          </>
+        {!isPast &&
+          (isHost ? (
+            <>
+              {(hostRequest.status ===
+                HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
+                hostRequest.status ===
+                  HostRequestStatus.HOST_REQUEST_STATUS_REJECTED) && (
+                <FieldButton
+                  callback={handleAccept}
+                  isLoading={isButtonLoading}
+                >
+                  {t("global:accept")}
+                </FieldButton>
+              )}
+              {(hostRequest.status ===
+                HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
+                hostRequest.status ===
+                  HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED ||
+                hostRequest.status ===
+                  HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED) && (
+                <ConfirmationDialogWrapper
+                  title={t("messages:close_request_dialog_title")}
+                  message={t("messages:close_request_dialog_host")}
+                  onConfirm={handleReject}
+                >
+                  {(setIsOpen) => (
+                    <FieldButton
+                      isLoading={isButtonLoading}
+                      callback={() => setIsOpen(true)}
+                    >
+                      {t("messages:close_request_button_text")}
+                    </FieldButton>
+                  )}
+                </ConfirmationDialogWrapper>
+              )}
+            </>
+          ) : (
+            //user is the surfer
+            <>
+              {hostRequest.status ===
+                HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED && (
+                <FieldButton
+                  callback={handleConfirm}
+                  isLoading={isButtonLoading}
+                >
+                  {t("messages:confirm_request_button_text")}
+                </FieldButton>
+              )}
+              {(hostRequest.status ===
+                HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
+                hostRequest.status ===
+                  HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED ||
+                hostRequest.status ===
+                  HostRequestStatus.HOST_REQUEST_STATUS_REJECTED ||
+                hostRequest.status ===
+                  HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED) && (
+                <ConfirmationDialogWrapper
+                  title={t("messages:close_request_dialog_title")}
+                  message={t("messages:close_request_dialog_surfer")}
+                  onConfirm={handleCancel}
+                >
+                  {(setIsOpen) => (
+                    <FieldButton
+                      isLoading={isButtonLoading}
+                      callback={() => setIsOpen(true)}
+                    >
+                      {t("global:cancel")}
+                    </FieldButton>
+                  )}
+                </ConfirmationDialogWrapper>
+              )}
+            </>
+          ))}
+        {isReferenceAvailable && (
+          <Link href={referenceRoute} passHref>
+            <StyledButton color="primary" component="a">
+              {t("messages:write_reference_button_text")}
+            </StyledButton>
+          </Link>
         )}
       </StyledButtonContainer>
       <StyledContainer>
