@@ -33,8 +33,12 @@ describe("Event organizers", () => {
     expect(
       await screen.findByRole("heading", { name: t("communities:organizers") })
     ).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Funny Dog" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Funny Kid" })).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Funny Dog, 35" })
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Funny Kid, 28" })
+    ).toBeVisible();
   });
 
   describe("when there are multiple pages of organizers", () => {
@@ -60,10 +64,10 @@ describe("Event organizers", () => {
         await screen.findByRole("dialog", { name: t("communities:organizers") })
       ).toBeVisible();
       expect(
-        screen.getByRole("heading", { name: "Funny Chicken" })
+        screen.getByRole("heading", { name: "Funny Chicken, 28" })
       ).toBeVisible();
       expect(
-        screen.getByRole("heading", { name: "Friendly Cow" })
+        screen.getByRole("heading", { name: "Friendly Cow, 25" })
       ).toBeVisible();
     });
 
@@ -83,9 +87,11 @@ describe("Event organizers", () => {
       );
 
       expect(
-        await dialog.findByRole("heading", { name: "Funny Dog" })
+        await dialog.findByRole("heading", { name: "Funny Dog, 35" })
       ).toBeVisible();
-      expect(dialog.getByRole("heading", { name: "Funny Kid" })).toBeVisible();
+      expect(
+        dialog.getByRole("heading", { name: "Funny Kid, 28" })
+      ).toBeVisible();
     });
 
     it("should hide unknown users in the dialog", async () => {

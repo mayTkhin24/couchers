@@ -34,10 +34,10 @@ describe("Event attendees", () => {
       await screen.findByRole("heading", { name: t("communities:attendees") })
     ).toBeVisible();
     expect(
-      screen.getByRole("heading", { name: "Funny Cat current User" })
+      screen.getByRole("heading", { name: "Funny Cat current User, 28" })
     ).toBeVisible();
     expect(
-      screen.getByRole("heading", { name: "Funny Chicken" })
+      screen.getByRole("heading", { name: "Funny Chicken, 28" })
     ).toBeVisible();
   });
 
@@ -63,8 +63,12 @@ describe("Event attendees", () => {
       expect(
         await screen.findByRole("dialog", { name: t("communities:attendees") })
       ).toBeVisible();
-      expect(screen.getByRole("heading", { name: "Funny Dog" })).toBeVisible();
-      expect(screen.getByRole("heading", { name: "Funny Kid" })).toBeVisible();
+      expect(
+        screen.getByRole("heading", { name: "Funny Dog, 35" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("heading", { name: "Funny Kid, 28" })
+      ).toBeVisible();
     });
 
     it("should load the next page of attendees when the 'Load more attendees' button is clicked", async () => {
@@ -83,10 +87,12 @@ describe("Event attendees", () => {
       );
 
       expect(
-        await screen.findByRole("heading", { name: "Funny Cat current User" })
+        await screen.findByRole("heading", {
+          name: "Funny Cat current User, 28",
+        })
       ).toBeVisible();
       expect(
-        screen.getByRole("heading", { name: "Funny Chicken" })
+        screen.getByRole("heading", { name: "Funny Chicken, 28" })
       ).toBeVisible();
     });
 
