@@ -27,7 +27,7 @@ function useFriendList() {
   }
 
   return {
-    data: friendIds && data,
+    data: friendIds ? data : undefined,
     friendIds,
     errors: errors,
     isError: !!listFriendsError || isLiteUserError,
