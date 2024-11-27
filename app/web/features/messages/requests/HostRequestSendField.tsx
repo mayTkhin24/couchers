@@ -120,7 +120,10 @@ export default function HostRequestSendField({
 
   const isButtonLoading = isLoading || isResponseLoading;
 
+  const isPast = hostRequest.toDate < new Date().toISOString().split("T")[0];
+
   const isRequestClosed =
+    isPast ||
     hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_CANCELLED ||
     hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_REJECTED;
 
@@ -141,8 +144,6 @@ export default function HostRequestSendField({
     isHost ? hostRequest.surferUserId : hostRequest.hostUserId,
     hostRequest.hostRequestId
   );
-
-  const isPast = hostRequest.toDate < new Date().toISOString().split("T")[0];
 
   const isHostPending =
     !isPast &&
