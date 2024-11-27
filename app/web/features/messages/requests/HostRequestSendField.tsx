@@ -72,6 +72,153 @@ const StyledHelpTextContainer = styled("div")(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
+function ResponseGuideLinks({
+  isPast,
+  isHost,
+  status,
+}: {
+  isPast: boolean;
+  isHost: boolean;
+  status: HostRequestStatus;
+}) {
+  const isHostPending =
+    !isPast &&
+    isHost &&
+    status === HostRequestStatus.HOST_REQUEST_STATUS_PENDING;
+
+  const isSurferRejected =
+    !isHost && status === HostRequestStatus.HOST_REQUEST_STATUS_REJECTED;
+
+  return (
+    <>
+      {isHostPending && (
+        <StyledHelpTextContainer>
+          <Typography variant="body1">
+            <Trans i18nKey="messages:host_pending_request_help_text">
+              <StyledLink variant="body1" href={howToRespondRequestGuideUrl}>
+                Things to consider
+              </StyledLink>{" "}
+              before responding.
+            </Trans>
+          </Typography>
+        </StyledHelpTextContainer>
+      )}
+      {isSurferRejected && (
+        <StyledHelpTextContainer>
+          <Typography variant="body1">
+            <Trans i18nKey="messages:surfer_declined_request_help_text">
+              <StyledLink variant="body1" href={howToWriteRequestGuideUrl}>
+                Read our guide
+              </StyledLink>{" "}
+              on how to write a request that will get accepted.
+            </Trans>
+          </Typography>
+        </StyledHelpTextContainer>
+      )}
+    </>
+  );
+}
+
+function RespondButtons({
+  isHost,
+  status,
+  isLoading,
+  handleStatus,
+}: {
+  isHost: boolean;
+  status: HostRequestStatus;
+  isLoading: boolean;
+  handleStatus: (status: HostRequestStatus) => any;
+}) {
+  const { t } = useTranslation([MESSAGES, GLOBAL]);
+
+  const handleAccept = handleStatus(
+    HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED
+  );
+  const handleReject = handleStatus(
+    HostRequestStatus.HOST_REQUEST_STATUS_REJECTED
+  );
+  const handleCancel = handleStatus(
+    HostRequestStatus.HOST_REQUEST_STATUS_CANCELLED
+  );
+  const handleConfirm = handleStatus(
+    HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED
+  );
+
+  if (isHost) {
+    const canAccept =
+      status === HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
+      status === HostRequestStatus.HOST_REQUEST_STATUS_REJECTED;
+
+    const canReject =
+      status === HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
+      status === HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED ||
+      status === HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED;
+
+    return (
+      <>
+        {canAccept && (
+          <FieldButton callback={handleAccept} isLoading={isLoading}>
+            {t("global:accept")}
+          </FieldButton>
+        )}
+        {canReject && (
+          <ConfirmationDialogWrapper
+            title={t("messages:close_request_dialog_title")}
+            message={t("messages:close_request_dialog_host")}
+            onConfirm={handleReject}
+          >
+            {(setIsOpen) => (
+              <FieldButton
+                isLoading={isLoading}
+                callback={() => setIsOpen(true)}
+              >
+                {t("messages:close_request_button_text")}
+              </FieldButton>
+            )}
+          </ConfirmationDialogWrapper>
+        )}
+      </>
+    );
+  } else {
+    //user is the surfer
+    const canConfirm =
+      status === HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED;
+
+    const canCancel =
+      status === HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
+      status === HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED ||
+      status === HostRequestStatus.HOST_REQUEST_STATUS_REJECTED ||
+      status === HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED;
+
+    return (
+      <>
+        {canConfirm && (
+          <FieldButton callback={handleConfirm} isLoading={isLoading}>
+            {t("messages:confirm_request_button_text")}
+          </FieldButton>
+        )}
+        {canCancel && (
+          <ConfirmationDialogWrapper
+            title={t("messages:close_request_dialog_title")}
+            message={t("messages:close_request_dialog_surfer")}
+            onConfirm={handleCancel}
+          >
+            {(setIsOpen) => (
+              <FieldButton
+                isLoading={isLoading}
+                callback={() => setIsOpen(true)}
+              >
+                {t("global:cancel")}
+              </FieldButton>
+            )}
+          </ConfirmationDialogWrapper>
+        )}
+      </>
+    );
+  }
+}
+
 export default function HostRequestSendField({
   hostRequest,
   sendMutation,
@@ -105,18 +252,6 @@ export default function HostRequestSendField({
       });
       reset();
     });
-  const handleAccept = handleStatus(
-    HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED
-  );
-  const handleReject = handleStatus(
-    HostRequestStatus.HOST_REQUEST_STATUS_REJECTED
-  );
-  const handleCancel = handleStatus(
-    HostRequestStatus.HOST_REQUEST_STATUS_CANCELLED
-  );
-  const handleConfirm = handleStatus(
-    HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED
-  );
 
   const isButtonLoading = isLoading || isResponseLoading;
 
@@ -145,15 +280,6 @@ export default function HostRequestSendField({
     hostRequest.hostRequestId
   );
 
-  const isHostPending =
-    !isPast &&
-    isHost &&
-    hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_PENDING;
-
-  const isSurferRejected =
-    !isHost &&
-    hostRequest.status === HostRequestStatus.HOST_REQUEST_STATUS_REJECTED;
-
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "Enter" && event.ctrlKey) {
       event.preventDefault();
@@ -163,104 +289,20 @@ export default function HostRequestSendField({
 
   return (
     <form onSubmit={onSubmit}>
-      {isHostPending && (
-        <StyledHelpTextContainer>
-          <Typography variant="body1">
-            <Trans i18nKey="messages:host_pending_request_help_text">
-              <StyledLink variant="body1" href={howToRespondRequestGuideUrl}>
-                Things to consider
-              </StyledLink>{" "}
-              before responding.
-            </Trans>
-          </Typography>
-        </StyledHelpTextContainer>
-      )}
-      {isSurferRejected && (
-        <StyledHelpTextContainer>
-          <Typography variant="body1">
-            <Trans i18nKey="messages:surfer_declined_request_help_text">
-              <StyledLink variant="body1" href={howToWriteRequestGuideUrl}>
-                Read our guide
-              </StyledLink>{" "}
-              on how to write a request that will get accepted.
-            </Trans>
-          </Typography>
-        </StyledHelpTextContainer>
-      )}
+      <ResponseGuideLinks
+        isPast={isPast}
+        isHost={isHost}
+        status={hostRequest.status}
+      />
       <StyledButtonContainer>
-        {!isPast &&
-          (isHost ? (
-            <>
-              {(hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
-                hostRequest.status ===
-                  HostRequestStatus.HOST_REQUEST_STATUS_REJECTED) && (
-                <FieldButton
-                  callback={handleAccept}
-                  isLoading={isButtonLoading}
-                >
-                  {t("global:accept")}
-                </FieldButton>
-              )}
-              {(hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
-                hostRequest.status ===
-                  HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED ||
-                hostRequest.status ===
-                  HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED) && (
-                <ConfirmationDialogWrapper
-                  title={t("messages:close_request_dialog_title")}
-                  message={t("messages:close_request_dialog_host")}
-                  onConfirm={handleReject}
-                >
-                  {(setIsOpen) => (
-                    <FieldButton
-                      isLoading={isButtonLoading}
-                      callback={() => setIsOpen(true)}
-                    >
-                      {t("messages:close_request_button_text")}
-                    </FieldButton>
-                  )}
-                </ConfirmationDialogWrapper>
-              )}
-            </>
-          ) : (
-            //user is the surfer
-            <>
-              {hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED && (
-                <FieldButton
-                  callback={handleConfirm}
-                  isLoading={isButtonLoading}
-                >
-                  {t("messages:confirm_request_button_text")}
-                </FieldButton>
-              )}
-              {(hostRequest.status ===
-                HostRequestStatus.HOST_REQUEST_STATUS_PENDING ||
-                hostRequest.status ===
-                  HostRequestStatus.HOST_REQUEST_STATUS_ACCEPTED ||
-                hostRequest.status ===
-                  HostRequestStatus.HOST_REQUEST_STATUS_REJECTED ||
-                hostRequest.status ===
-                  HostRequestStatus.HOST_REQUEST_STATUS_CONFIRMED) && (
-                <ConfirmationDialogWrapper
-                  title={t("messages:close_request_dialog_title")}
-                  message={t("messages:close_request_dialog_surfer")}
-                  onConfirm={handleCancel}
-                >
-                  {(setIsOpen) => (
-                    <FieldButton
-                      isLoading={isButtonLoading}
-                      callback={() => setIsOpen(true)}
-                    >
-                      {t("global:cancel")}
-                    </FieldButton>
-                  )}
-                </ConfirmationDialogWrapper>
-              )}
-            </>
-          ))}
+        {!isPast && (
+          <RespondButtons
+            isHost={isHost}
+            status={hostRequest.status}
+            isLoading={isButtonLoading}
+            handleStatus={handleStatus}
+          />
+        )}
         {isReferenceAvailable && (
           <Link href={referenceRoute} passHref>
             <StyledButton color="primary" component="a">
