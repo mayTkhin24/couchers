@@ -180,13 +180,20 @@ const AgeAndGenderRenderer = ({ user }: Props) => {
     }
   };
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+      }}
+    >
       <span>{age}</span>
-      {getBirthdateVerificationIcon(birthdateVerificationStatus)} /&nbsp;
+      {getBirthdateVerificationIcon(birthdateVerificationStatus)}
+      <span>/</span>
       <span>{gender}</span>
       {getGenderVerificationIcon(genderVerificationStatus)}
-      <span> {pronouns && ` (${pronouns})`}</span>
-    </>
+      {pronouns && <span>({pronouns})</span>}
+    </div>
   );
 };
 
@@ -248,3 +255,4 @@ export const RemainingAboutLabels = ({ user }: Props) => {
     </>
   );
 };
+
