@@ -189,7 +189,7 @@ const AgeAndGenderRenderer = ({ user }: Props) => {
     >
       <span>{age}</span>
       {getBirthdateVerificationIcon(birthdateVerificationStatus)}
-      <span>/</span>
+      <span>/&nbsp;</span>
       <span>{gender}</span>
       {getGenderVerificationIcon(genderVerificationStatus)}
       {pronouns && <span>({pronouns})</span>}
