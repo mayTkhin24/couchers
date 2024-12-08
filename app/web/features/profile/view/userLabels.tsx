@@ -107,6 +107,11 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0.5),
     alignSelf: "center",
   },
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+  },
 }));
 
 const AgeAndGenderRenderer = ({ user }: Props) => {
@@ -180,13 +185,7 @@ const AgeAndGenderRenderer = ({ user }: Props) => {
     }
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
-      }}
-    >
+    <div className={useStyles().container}>
       <span>{age}</span>
       {getBirthdateVerificationIcon(birthdateVerificationStatus)}
       <span>/&nbsp;</span>
