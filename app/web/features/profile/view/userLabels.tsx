@@ -191,7 +191,7 @@ const AgeAndGenderRenderer = ({ user }: Props) => {
       <span>/&nbsp;</span>
       <span>{gender}</span>
       {getGenderVerificationIcon(genderVerificationStatus)}
-      {pronouns && <span>({pronouns})</span>}
+      {pronouns && <span>({pronouns.replace(/\s+/g, "")})</span>}
     </div>
   );
 };
