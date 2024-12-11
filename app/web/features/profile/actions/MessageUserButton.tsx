@@ -1,5 +1,11 @@
 import Button from "components/Button";
-import ProfileIncompleteDialog from "components/ProfileIncompleteDialog/ProfileIncompleteDialog";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+} from "@mui/material";
 import useAccountInfo from "features/auth/useAccountInfo";
 import { useTranslation } from "i18n";
 import { PROFILE } from "i18n/namespaces";
@@ -7,8 +13,8 @@ import { useRouter } from "next/router";
 import { User } from "proto/api_pb";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { routeToCreateMessage, routeToGroupChat } from "routes";
-import { service } from "service";
+import { getDirectMessage, sendMessage, createGroupChat } from "service/conversations";
+import { routeToCreateMessage } from "routes";
 
 export default function MessageUserButton({
   user,
@@ -19,8 +25,10 @@ export default function MessageUserButton({
 }) {
   const { t } = useTranslation(PROFILE);
   const router = useRouter();
+  const [message, setMessage] = useState<string>("");
+  const [showMessageDialog, setShowMessageDialog] = useState<boolean>(false);
   const { mutate, isLoading } = useMutation<number | false, Error>(
-    () => service.conversations.getDirectMessage(user.userId),
+    () => getDirectMessage(user.userId),
     {
       onMutate() {
         setMutationError("");
@@ -56,11 +64,34 @@ export default function MessageUserButton({
 
   return (
     <>
-      <ProfileIncompleteDialog
-        open={showCantMessageDialog}
-        onClose={() => setShowCantMessageDialog(false)}
-        attempted_action="send_message"
-      />
+         <>
+      {/* Message Dialog for entering a message */}
+      <Dialog
+        open={showMessageDialog}
+        onClose={() => setShowMessageDialog(false)}
+        maxWidth="sm" // Sets dialog width
+        fullWidth // Expands dialog to full width
+      >
+        <DialogTitle>Message {user.name}</DialogTitle>
+        <DialogContent>
+          <TextField
+            label={t("actions.message_input_label", "Enter your message")} // Fallback label
+            fullWidth
+            multiline
+            rows={5} // Increase input size
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowMessageDialog(false)}>
+            {t("actions.cancel", "Cancel")}
+          </Button>
+          <Button onClick={handleSendMessage} disabled={isSending}>
+            {t("actions.send", "Send")}
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Button
         loading={isLoading}
         onClick={onClick}
