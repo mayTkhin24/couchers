@@ -76,26 +76,12 @@ export default function MessageUserButton({
     mutate(); // Trigger mutation to check if the thread exists or needs to be created
   };
 
-  
-
-
-  const [showCantMessageDialog, setShowCantMessageDialog] =
-    useState<boolean>(false);
-
-  const { data: accountInfo, isLoading: isAccountInfoLoading } =
-    useAccountInfo();
-
   const onClick = () => {
-    if (!accountInfo?.profileComplete) {
-      setShowCantMessageDialog(true);
-    } else {
-      mutate();
-    }
+    setShowMessageDialog(true);
   };
 
   return (
     <>
-         <>
       {/* Message Dialog for entering a message */}
       <Dialog
         open={showMessageDialog}
