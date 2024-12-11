@@ -70,11 +70,13 @@ export default function MessageUserButton({
 
   const handleSendMessage = () => {
     if (!message.trim()) {
-      alert("Message cannot be empty!");
+      alert(t("actions.message_empty_warning", "Message cannot be empty!")); // Fallback alert
       return;
     }
-    mutate();
+    mutate(); // Trigger mutation to check if the thread exists or needs to be created
   };
+
+  
 
 
   const [showCantMessageDialog, setShowCantMessageDialog] =
