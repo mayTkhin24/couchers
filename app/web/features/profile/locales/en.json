@@ -1,6 +1,9 @@
 {
     "actions": {
         "message_label": "Message",
+        "message_input_label": "Enter your message",
+        "send": "Send",
+        "cancel": "Cancel",
         "accept_friend_label": "Accept",
         "decline_friend_label": "Decline",
         "request": "Request"
