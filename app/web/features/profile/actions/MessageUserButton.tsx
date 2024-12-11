@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { User } from "proto/api_pb";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { getDirectMessage, createGroupChat, sendMessage } from "service/conversations";
+import { getDirectMessage, sendMessage, createGroupChat } from "service/conversations";
 import { routeToCreateMessage } from "routes";
 
 export default function MessageUserButton({
@@ -52,7 +52,6 @@ export default function MessageUserButton({
       },
     }
   );
-
   const sendMessageToThread = (threadId: number) => {
     const req = {
       groupChatId: threadId,
@@ -67,7 +66,7 @@ export default function MessageUserButton({
         setMutationError(e.message); // Handle errors
       });
   };
-
+  
   const handleSendMessage = () => {
     if (!message.trim()) {
       alert(t("actions.message_empty_warning", "Message cannot be empty!")); // Fallback alert
@@ -109,13 +108,6 @@ export default function MessageUserButton({
           </Button>
         </DialogActions>
       </Dialog>
-      <Button
-        loading={isLoading}
-        onClick={onClick}
-        disabled={isAccountInfoLoading}
-      >
-        {t("actions.message_label")}
-      </Button>
     </>
   );
 }
