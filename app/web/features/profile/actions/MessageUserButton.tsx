@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { User } from "proto/api_pb";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { getDirectMessage, sendMessage, createGroupChat } from "service/conversations";
+import { getDirectMessage, createGroupChat, sendMessage } from "service/conversations";
 import { routeToCreateMessage } from "routes";
 
 export default function MessageUserButton({
@@ -27,7 +27,8 @@ export default function MessageUserButton({
   const router = useRouter();
   const [message, setMessage] = useState<string>("");
   const [showMessageDialog, setShowMessageDialog] = useState<boolean>(false);
-  const { mutate, isLoading } = useMutation<number | false, Error>(
+
+  const { mutate, isLoading: isSending } = useMutation<number | false, Error>(
     () => getDirectMessage(user.userId),
     {
       onMutate() {
@@ -38,15 +39,43 @@ export default function MessageUserButton({
       },
       onSuccess(data) {
         if (!data) {
-          //no existing thread
-          router.push(routeToCreateMessage(user.username));
+          // If no existing thread, create a new group chat
+          createGroupChat(user.name, [user])
+            .then((newThreadId) => {
+              sendMessageToThread(newThreadId); // Send the message to the new thread
+            })
+            .catch((e) => setMutationError(e.message));
         } else {
-          //has thread
-          router.push(routeToGroupChat(data));
+          // If thread exists, send message to the existing thread
+          sendMessageToThread(data);
         }
       },
     }
   );
+
+  const sendMessageToThread = (threadId: number) => {
+    const req = {
+      groupChatId: threadId,
+      text: message,
+    };
+    sendMessage(req.groupChatId, req.text)
+      .then(() => {
+        setMessage(""); // Clear the input after sending
+        setShowMessageDialog(false); // Close the dialog
+      })
+      .catch((e) => {
+        setMutationError(e.message); // Handle errors
+      });
+  };
+
+  const handleSendMessage = () => {
+    if (!message.trim()) {
+      alert("Message cannot be empty!");
+      return;
+    }
+    mutate();
+  };
+
 
   const [showCantMessageDialog, setShowCantMessageDialog] =
     useState<boolean>(false);
