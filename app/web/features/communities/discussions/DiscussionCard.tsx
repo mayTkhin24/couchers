@@ -13,6 +13,7 @@ import makeStyles from "utils/makeStyles";
 import { timeAgo } from "utils/timeAgo";
 
 import getContentSummary from "../getContentSummary";
+import FlagButton from "../../FlagButton"; // Importing FlagButton
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -47,6 +48,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.grey[50],
     },
     width: "100%",
+  },
+  actionButtons: {
+    display: "flex",
+    alignItems: "center",
+    gap: theme.spacing(1), // Add spacing between buttons
   },
 }));
 
@@ -106,11 +112,17 @@ export default function DiscussionCard({
                 {discussion.title}
               </Typography>
               <Typography variant="body1">{truncatedContent}</Typography>
-              <Typography className={classes.commentsCount} variant="body1">
-                {t("communities:comments_count", {
-                  count: discussion.thread?.numResponses,
-                })}
-              </Typography>
+              <div className={classes.actionButtons}>
+                <Typography className={classes.commentsCount} variant="body1">
+                  {t("communities:comments_count", {
+                    count: discussion.thread?.numResponses,
+                  })}
+                </Typography>
+                <FlagButton
+                  contentRef={`discussion-${discussion.discussionId}`}
+                  authorUser={discussion.creatorUserId}
+                />
+              </div>
             </div>
           </CardContent>
         </a>

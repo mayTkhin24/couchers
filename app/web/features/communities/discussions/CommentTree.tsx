@@ -9,6 +9,7 @@ import makeStyles from "utils/makeStyles";
 import { useThread } from "../hooks";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
+import FlagButton from "../../FlagButton"; // Importing FlagButton
 
 const useStyles = makeStyles((theme) => ({
   commentsListContainer: {
@@ -51,6 +52,12 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     height: "3rem",
     width: "3rem",
+  },
+  threadActions: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -104,7 +111,13 @@ export default function CommentTree({ threadId }: CommentTreeProps) {
           </Typography>
         )
       )}
-      <CommentForm shown threadId={threadId} />
+      <div className={classes.threadActions}>
+        <CommentForm shown threadId={threadId} />
+        <FlagButton
+          contentRef={`thread-${threadId}`}
+          authorUser={comments?.pages[0]?.repliesList[0]?.authorUserId || 0}
+        />
+      </div>
     </>
   );
 }

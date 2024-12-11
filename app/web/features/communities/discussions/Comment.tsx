@@ -14,6 +14,7 @@ import { timeAgo } from "utils/timeAgo";
 
 import { useThread } from "../hooks";
 import CommentForm from "./CommentForm";
+import FlagButton from "../../FlagButton"; // Importing FlagButton
 
 const useStyles = makeStyles((theme) => ({
   commentContainer: {
@@ -128,14 +129,19 @@ export default function Comment({ topLevel = false, comment }: CommentProps) {
           {isUserLoading ? <Skeleton /> : <Markdown source={comment.content} />}
         </div>
         {topLevel && (
-          <Button
-            className={classes.replyButton}
-            onClick={() => {
-              setShowCommentForm(true);
-            }}
-          >
-            {t("global:reply")}
-          </Button>
+          <div className={classes.replyButton}>
+            <Button
+              onClick={() => {
+                setShowCommentForm(true);
+              }}
+            >
+              {t("global:reply")}
+            </Button>
+            <FlagButton
+              contentRef={`comment-${comment.threadId}`}
+              authorUser={comment.authorUserId}
+            />
+          </div>
         )}
       </Card>
       {isCommentsLoading ? (

@@ -23,6 +23,7 @@ import CommunityBase from "../CommunityBase";
 import CommunityPageSubHeader from "../CommunityPage/CommunityPageSubHeader";
 import PageHeader from "../PageHeader";
 import CommentTree from "./CommentTree";
+import FlagButton from "../../FlagButton"; // Importing FlagButton
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -115,6 +116,10 @@ export default function DiscussionPage({
                     <PageTitle className={classes.discussionTitle}>
                       {discussion.title}
                     </PageTitle>
+                    <FlagButton
+                      contentRef={`discussion-${discussion.discussionId}`}
+                      authorUser={discussion.creatorUserId}
+                    />
                   </div>
                   <Markdown
                     className={classes.discussionContent}
