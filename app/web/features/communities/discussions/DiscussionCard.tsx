@@ -11,6 +11,7 @@ import { routeToDiscussion } from "routes";
 import { timestamp2Date } from "utils/date";
 import makeStyles from "utils/makeStyles";
 import { timeAgo } from "utils/timeAgo";
+import FlagButton from "features/FlagButton";
 
 import getContentSummary from "../getContentSummary";
 
@@ -88,6 +89,11 @@ export default function DiscussionCard({
               user={creator}
               className={classes.avatar}
               isProfileLink={false}
+            />
+            {/* Adding the FlagButton below the avatar */}
+            <FlagButton
+              contentRef={`discussion/${discussion.discussionId}`}
+              authorUser={discussion.creatorUserId}
             />
             <div className={classes.discussionSummary}>
               <Typography
