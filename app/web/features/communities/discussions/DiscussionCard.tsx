@@ -85,16 +85,19 @@ export default function DiscussionCard({
       <Link href={routeToDiscussion(discussion.discussionId, discussion.slug)}>
         <a>
           <CardContent className={classes.cardContent}>
-            <Avatar
-              user={creator}
-              className={classes.avatar}
-              isProfileLink={false}
-            />
-            {/* Adding the FlagButton below the avatar */}
-            <FlagButton
-              contentRef={`discussion/${discussion.discussionId}`}
-              authorUser={discussion.creatorUserId}
-            />
+            {/* Wrapping Avatar and FlagButton in a container for alignment */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <Avatar
+                user={creator}
+                className={classes.avatar}
+                isProfileLink={false}
+              />
+              {/* Adding the FlagButton below the avatar */}
+              <FlagButton
+                contentRef={`discussion/${discussion.discussionId}`}
+                authorUser={discussion.creatorUserId}
+              />
+            </div>
             <div className={classes.discussionSummary}>
               <Typography
                 variant="body2"
