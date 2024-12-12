@@ -34,6 +34,13 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateRows: "auto",
     padding: theme.spacing(2),
     width: "100%",
+
+    // Align avatar and flag button in a column
+    "& > .avatar-container": {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center", // Center-align Avatar and FlagButton
+    },
   },
   commentContent: {
     "& > * + *": {
@@ -115,7 +122,7 @@ export default function Comment({ topLevel = false, comment }: CommentProps) {
     <>
       <Card className={classes.commentContainer} data-testid={COMMENT_TEST_ID}>
       {/* Wrapping Avatar and FlagButton in a container for alignment */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div className="avatar-container">
         <Avatar user={user} className={classes.avatar} />
         <FlagButton
           contentRef={`comment/${comment.threadId}`}

@@ -27,6 +27,11 @@ const useStyles = makeStyles((theme) => ({
     },
     width: "100%",
   },
+  avatarFlagContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
   discussionSummary: {
     display: "flex",
     flexDirection: "column",
@@ -86,7 +91,7 @@ export default function DiscussionCard({
         <a>
           <CardContent className={classes.cardContent}>
             {/* Wrapping Avatar and FlagButton in a container for alignment */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div className={classes.avatarFlagContainer}>
               <Avatar
                 user={creator}
                 className={classes.avatar}
