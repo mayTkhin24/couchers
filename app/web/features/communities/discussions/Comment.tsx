@@ -11,6 +11,7 @@ import { timestamp2Date } from "utils/date";
 import hasAtLeastOnePage from "utils/hasAtLeastOnePage";
 import makeStyles from "utils/makeStyles";
 import { timeAgo } from "utils/timeAgo";
+import FlagButton from "features/FlagButton";
 
 import { useThread } from "../hooks";
 import CommentForm from "./CommentForm";
@@ -113,7 +114,14 @@ export default function Comment({ topLevel = false, comment }: CommentProps) {
   return (
     <>
       <Card className={classes.commentContainer} data-testid={COMMENT_TEST_ID}>
+      {/* Wrapping Avatar and FlagButton in a container for alignment */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <Avatar user={user} className={classes.avatar} />
+        <FlagButton
+          contentRef={`comment/${comment.threadId}`}
+          authorUser={comment.authorUserId}
+        />
+      </div>
         <div className={classes.commentContent}>
           {isUserLoading ? (
             <Skeleton />
