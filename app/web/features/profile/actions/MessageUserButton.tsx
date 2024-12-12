@@ -108,6 +108,10 @@ export default function MessageUserButton({
           </Button>
         </DialogActions>
       </Dialog>
+      {/* Message Button */}
+      <Button loading={isSending} onClick={onClick} disabled={isSending}>
+        {t("actions.message_label", "Message")}
+      </Button>
     </>
   );
 }
